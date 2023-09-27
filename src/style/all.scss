@@ -1,0 +1,10 @@
+@import "../../node_modules/bootstrap/scss/functions";
+@import "./helpers/variables";
+@import "../../node_modules/bootstrap/scss/bootstrap.scss";
+
+
+@import "./config/base";
+@import "./helpers/mui";
+@import "./components/fonts";
+@import "./components/table";
+@import "./components/btn";

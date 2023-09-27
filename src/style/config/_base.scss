@@ -1,0 +1,81 @@
+body {
+    background-color: #EDF4F8;
+    font: normal 16px/140% Arial, Helvetica, "微軟正黑體";
+    color: #636363;
+}
+
+input {
+    border-color: #CCCCCC
+}
+
+input:focus {
+    outline: none;
+}
+
+input:-webkit-autofill {
+    box-shadow: 0 0 0px 1000px white inset !important;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+    object-fit: cover;
+    vertical-align: middle;
+    border-radius: 16px;
+}
+
+a {
+    text-decoration: none;
+    display: block;
+}
+
+p {
+    margin: 0;
+    font-size: 1rem;
+}
+
+i {
+    line-height: 1;
+}
+
+ul {
+    list-style: none;
+    margin-bottom: 0;
+    padding: 0;
+}
+
+*,
+*::before,
+*::after {
+    box-sizing: border-box;
+}
+
+fieldset {
+    legend {
+        width: unset;
+    }
+}
+
+.h1,
+.h2,
+.h3,
+.h4,
+.h5,
+.h6 {
+    margin-bottom: 0;
+    font-weight: normal;
+}
+
+.w- {
+    &15 {
+        width: 15%;
+    }
+
+    &30 {
+        width: 30%;
+    }
+
+    &40 {
+        width: 40%;
+    }
+}

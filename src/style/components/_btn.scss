@@ -1,0 +1,24 @@
+.btn- {
+    &cancel {
+        color: $info;
+        cursor: pointer;
+    }
+
+    &reserve {
+        color: $warning;
+        cursor: pointer;
+    }
+
+    &success {
+        color: $success;
+        cursor: pointer;
+    }
+
+    &danger {
+        background-color: $danger;
+        color: $white;
+        border-radius: 6px;
+        cursor: pointer;
+        padding: 2px;
+    }
+}

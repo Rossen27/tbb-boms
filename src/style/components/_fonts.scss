@@ -1,0 +1,63 @@
+/*借款金額標題*/
+.load {
+    color: #717A8C;
+    font-size: 1rem;
+
+    /*借款金額 $2,000,000*/
+    &-num {
+        color: #0270CF;
+        font-size: 1.125rem
+    }
+}
+
+/*查詢時間*/
+.time {
+    color: #919295;
+    font-size: 0.875rem
+}
+
+/*申請書編號*/
+.num- {
+    &cancel {
+        color: #717A8C;
+        background-color: #F1F5F8;
+    }
+
+    &normal {
+        color: #386BE6;
+        background-color: #F1F5F8;
+    }
+}
+
+/*還款申請-還款種類/賣股張數*/
+.pay-kind {
+    color: #0270CF;
+    border: 1px solid #0270CF;
+    padding: 2px;
+
+    &:hover {
+        background-color: #0270CF;
+        color: #ffffff
+    }
+
+    &:active {
+        background-color: #0270CF;
+        color: #ffffff
+    }
+}
+
+/*擔保品/庫存查詢switch-menu*/
+.switch-menu {
+    border: 1px solid #BE1E2D;
+
+    li {
+        .active {
+            background: #BE1E2D;
+        }
+    }
+}
+
+/*字型小*/
+.fs-xs {
+    font-size: 10px;
+}

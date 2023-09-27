@@ -1,0 +1,47 @@
+{
+  
+  "plugins": [
+    [
+      "module-resolver",
+      {
+        "alias": {
+          "@root": "./",
+          "@static": "./static",
+          "@store": "./src/store",
+          "@pages": "./src/pages",
+          "@api": "./src/api/api",
+          "@containers": "./src/containers",
+          "@image": "./public/image",
+          "@components": "./src/components",
+          "@constants": "./src/constants",
+          "@util": "./src/util",
+          "@StoreAction": "./src/store/StoreAction",
+          "@images": "./src/images",
+          "@service": "./src/service",
+          "@helper": "./src/utility/helper",      
+          "@style": "./src/style"          
+        }
+      }
+    ],
+    [
+      "@emotion"
+    ],
+    "@babel/plugin-proposal-optional-chaining",
+    "@babel/plugin-proposal-nullish-coalescing-operator"
+  ],
+  "env": {
+    "production": {
+      "plugins": [
+        [
+          "transform-remove-console",
+          {
+            "exclude": [
+              "error",
+              "warn"
+            ]
+          }
+        ]
+      ]
+    }
+  }
+}

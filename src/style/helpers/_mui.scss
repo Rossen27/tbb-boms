@@ -1,0 +1,13 @@
+.MuiButton-label {
+    color: $secondary;
+}
+
+
+.MuiButton-root:focus {
+    border-color: $secondary;
+}
+
+.Mui-focused .MuiOutlinedInput-notchedOutline {
+    color: $secondary;
+    border-color: $secondary;
+}
