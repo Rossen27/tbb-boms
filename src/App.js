@@ -7,6 +7,7 @@ import Admin from '@containers/Admin';
 import Broker from '@containers/Broker';
 import Stock from '@containers/Stock';
 import History from '@containers/History';
+import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 function App() {
     return (
         <div className="App">

@@ -1,14 +1,12 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction } from 'mobx';
-import { callLoginUser, callLdapLogin } from '@api';
+import { callLoginUser, getOptionsQuery } from '@api';
 const initialState = {
     msg: '',
 };
 
-const api = {
-    // uploadPhoto: callUploadPhoto,
-};
+const api = {};
 const AuthStore = () =>
     useLocalObservable(() => ({
         /* observables */
@@ -30,7 +28,7 @@ const AuthStore = () =>
         // },
         async ldapLogin(isAccount, isPwd) {
             const postData = {
-                userId: isAccount,
+                adid: isAccount,
                 password: isPwd,
             };
             const res = await callLoginUser(postData);

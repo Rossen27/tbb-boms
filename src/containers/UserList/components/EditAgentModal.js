@@ -12,9 +12,9 @@ const EditAgentModal = () => {
             editAgentModalVisible,
             closeEditAgentModal,
             updateData,
-            payoffModalData,
-            repaymentDetailList,
-            statusDisabled,
+            userList,
+            assignedAgentList,
+            unassignedAgentList,
             field,
             keyOptions,
         },
@@ -22,8 +22,8 @@ const EditAgentModal = () => {
 
     const columns = [
         {
-            field: 'bhno',
-            headerName: '經理人代號',
+            field: 'accID',
+            headerName: '代理人代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -31,8 +31,8 @@ const EditAgentModal = () => {
             flex: 1,
         },
         {
-            field: 'name',
-            headerName: '經理人名稱',
+            field: 'accName',
+            headerName: '代理人名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -51,7 +51,8 @@ const EditAgentModal = () => {
             sortable: false,
             renderCell: params => (
                 <Button
-                    onClick={() => {
+                    onClick={e => {
+                        e.preventDefault();
                         closeEditAgentModal();
                         updateData('agentInfoModalVisible', true);
                     }}
@@ -67,10 +68,10 @@ const EditAgentModal = () => {
         <ModalEdit open={editAgentModalVisible} onClose={closeEditAgentModal} title={'代理人設定'}>
             <form action="">
                 <section>
-                    <Table header={columns} data={repaymentDetailList} hideFooter={true} />
+                    <Table header={columns} data={userList} getRowId={row => row.userID} />
                 </section>
                 <ul className="d-flex align-items-center m-5">
-                    <li className="col-6">
+                    {/* <li className="col-6">
                         <SelectInput
                             options={keyOptions}
                             selectVal={field}
@@ -78,7 +79,7 @@ const EditAgentModal = () => {
                                 updateData('field', e.target.value);
                             }}
                         />
-                    </li>
+                    </li> */}
                     <li className="col-3">
                         <Button
                             onClick={() => {

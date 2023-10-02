@@ -1,11 +1,12 @@
 import React, { useEffect } from 'react';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@containers/Layout';
 import {
     PersistentDrawer,
-    CustomDatePicker,
-    SelectInput,
+    Loading,
+    CompleteInfo,
     SelectMultiple,
     ButtonQuery,
     ButtonReset,
@@ -25,6 +26,7 @@ import CreateUserModal from './components/CreateUserModal';
 import CreateAgentModal from './components/CreateAgentModal';
 import EditAgentModal from './components/EditAgentModal';
 import AgentInfoModal from './components/AgentInfoModal';
+import { runInAction } from 'mobx';
 
 // import ExcelJS from 'exceljs';
 
@@ -40,10 +42,15 @@ const UserList = () => {
             params,
             paramsUpdate,
             userData,
+            resetUserData,
+            updateComplete,
+            isLoading,
+            loadingFail,
+            msg,
+            allowTypeOptions,
         },
     } = useStore();
-    const { keyword, startDate, repaymentAccountType, status, applyType, endDate, field } = params;
-
+    const { userID, allowType } = params;
     const columns = [
         {
             field: 'userID',
@@ -133,6 +140,7 @@ const UserList = () => {
         }
     };
     useEffect(() => {
+        resetUserData();
         getQryUserList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
@@ -140,51 +148,30 @@ const UserList = () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        getQryUserList();
+        if (updateComplete) {
+            setTimeout(() => {
+                navigate(0);
+            }, 3000);
+        }
+    }, [updateComplete]);
     return (
         <PersistentDrawer>
             <div>
                 <Layout title={'經理人登入系統基本資料維護'}>
                     <div className="d-flex justify-content-between">
                         <ul className="d-flex align-items-center">
-                            {/* <li>
-                            <CustomDatePicker
-                                date={startDate}
-                                onChange={value => {
-                                    paramsUpdate('startDate', value);
-                                }}
-                                start={undefined}
-                                label={'申請日期(起)'}
-                            />
-                        </li>
-                        <li>
-                            <CustomDatePicker
-                                date={endDate}
-                                onChange={value => {
-                                    paramsUpdate('endDate', value);
-                                }}
-                                start={startDate}
-                                label={'申請日期(迄)'}
-                            />
-                        </li>
-                        <li>
-                            <SelectInput
-                                options={keyOptions}
-                                selectVal={field}
-                                onChange={e => {
-                                    paramsUpdate('field', e.target.value);
-                                }}
-                            />
-                        </li> */}
                             <li className="me-3">
                                 <TextField
                                     id="outlined-basic"
                                     label="經理人代號"
                                     variant="outlined"
                                     size="small"
-                                    value={keyword}
+                                    value={userID}
                                     onChange={e => {
-                                        paramsUpdate('keyword', e.target.value);
+                                        paramsUpdate('userID', e.target.value);
                                     }}
                                     sx={{ width: '120px' }}
                                 />
@@ -192,9 +179,9 @@ const UserList = () => {
                             <li>
                                 <SelectMultiple
                                     title={'過濾權限'}
-                                    options={statusOptions}
-                                    onChange={value => paramsUpdate('repaymentAccountType', value)}
-                                    selectArr={repaymentAccountType}
+                                    options={allowTypeOptions}
+                                    onChange={value => paramsUpdate('allowType', value)}
+                                    selectArr={allowType}
                                 />
                             </li>
                             <li>
@@ -308,11 +295,12 @@ const UserList = () => {
                         </li> */}
                         </ul>
                         <ButtonCreate
-                            onClick={() => {
-                                updateData('createUserModalVisible', true);
-                                userData.actionFlag = 'C';
-                                updateData('userData', userData);
-                                // getQryRepaymentDetail();
+                            onClick={e => {
+                                runInAction(() => {
+                                    e.preventDefault();
+                                    updateData('createUserModalVisible', true);
+                                    updateData('aFlag', 'C');
+                                });
                             }}
                         />
                     </div>
@@ -324,18 +312,26 @@ const UserList = () => {
                         </p>
                     </div>
                     <section>
-                        <Table
-                            header={columns}
-                            data={userList}
-                            getRowId={row => row.userID}
-                            onRowClick={params => {
-                                updateData('userData', {
-                                    ...params.row,
-                                });
-                                updateData('editUserModalVisible', true);
-                                updateData('actionFlag', 'U');
-                            }}
-                        />
+                        {isLoading ? (
+                            <Loading isLoading={isLoading} />
+                        ) : !updateComplete ? (
+                            <Table
+                                header={columns}
+                                data={userList}
+                                getRowId={row => row.userID}
+                                onRowClick={params => {
+                                    runInAction(() => {
+                                        updateData('aFlag', 'U');
+                                        updateData('userData', {
+                                            ...params.row,
+                                        });
+                                        updateData('editUserModalVisible', true);
+                                    });
+                                }}
+                            />
+                        ) : (
+                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                        )}
                     </section>
                 </Layout>
                 <EditUserModal />

@@ -9,7 +9,8 @@ import ButtonReset from './ButtonReset';
 import Table from './Table';
 import ModalEdit from './Modal';
 import ButtonExport from './ButtonExport';
-
+import Loading from './Loading/Loading';
+import CompleteInfo from './CompleteInfo';
 export {
     PersistentDrawer,
     CustomDatePicker,
@@ -22,4 +23,6 @@ export {
     Table,
     ModalEdit,
     ButtonExport,
+    Loading,
+    CompleteInfo,
 };

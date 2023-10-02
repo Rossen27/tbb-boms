@@ -25,7 +25,10 @@ export const callLoginTest = postData =>
  */
 export const callGetCustomerInfo = () => post('/SCLOAN090/customerInfo', {});
 
-/** ---------------------------經理人資料 -------------------------   */
+/** ---------------------------使用者基本資料維護 -------------------------   */
+/*  下拉選單查詢 [GET]
+ */
+export const getOptionsQuery = params => get('/manager/optionQuery', params);
 /*  查詢經理人清單 [GET]
  */
 export const queryUserList = params => get('/manager/getUserList', params);
@@ -34,6 +37,13 @@ export const queryUserList = params => get('/manager/getUserList', params);
  */
 export const updateUser = postData => post('/manager/updateUser', postData);
 
+/*  查詢代理人清單 [GET]
+ */
+export const queryAgentList = params => get('/manager/getAgentList', params);
+
+/* 維護代理人  [POST]
+ */
+export const updateAgent = postData => post('/manager/updateAgent', postData);
 /** ---------------------------還款申請 -------------------------  */
 /* repaymentOptionQuery 客戶還款選單查詢 [GET]
  */
