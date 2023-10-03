@@ -2,38 +2,25 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { getRepaymentQuery, callRepaymentUpdate, getRepaymentOptionQuery } from '@api';
+import { queryBrokerList, callRepaymentUpdate } from '@api';
 
 const initialState = {
-    // applyTypeOptions: {},
-    keyOptions: {},
-    statusOptions: {},
-    repaymentAccountTypeOptions: {},
-    repaymentDetailList: [],
-    totalNetPayAmount: 0,
-    totalRepayMentAmount: 0,
-    totalRepayMentInterest: 0,
+    brokerList: [],
     queryTime: '',
+    brokerData: {},
     editBrokerModalVisible: false,
-    editBrokerInfoModalVisible: false,
+    brokerInfoModalVisible: false,
     statusDisabled: false,
     payoffModalData: {},
     params: {
-        startDate: new Date(),
-        endDate: new Date(),
-        field: 'bhno',
-        keyword: '',
-        applyType: [],
-        repaymentAccountType: [],
-        status: [],
-        taskId: '00201',
+        userID: '',
+        brkID: '',
     },
 };
 
 const api = {
-    qryRepayment: getRepaymentQuery,
+    qryBrokerList: queryBrokerList,
     repaymentUpdate: callRepaymentUpdate,
-    qryRepaymentOption: getRepaymentOptionQuery,
 };
 const BrokerStore = () =>
     useLocalObservable(() => ({
@@ -47,38 +34,15 @@ const BrokerStore = () =>
         closeEditInfoModal() {
             this.editBrokerInfoModalVisible = false;
         },
-        async getRepaymentOptionQuery() {
+
+        async getQryBrokerList() {
             runInAction(async () => {
-                const authParams = {
-                    taskId: this.params.taskId,
-                };
-                const res = await this.qryRepaymentOption(authParams);
-                const repaymentOptions = res.item;
-                this.assignData({ ...repaymentOptions });
-            });
-        },
-        async getQryRepaymentDetail() {
-            runInAction(async () => {
-                await this.getRepaymentOptionQuery();
                 const passParams = JSON.parse(JSON.stringify(this.params));
-                // const applyTypeOptionKeys = Object.keys(this.applyTypeOptions).filter(key =>
-                //     toJS(passParams).applyType.includes(this.applyTypeOptions[key])
-                // );
-                // passParams.applyType = passParams.applyType && applyTypeOptionKeys.join(',');
-                const statusOptionKeys = Object.keys(this.statusOptions).filter(key =>
-                    toJS(passParams).status.includes(this.statusOptions[key])
-                );
-                passParams.status = passParams.status && statusOptionKeys.join(',');
-                const repaymentAccountTypeOptionKeys = Object.keys(this.repaymentAccountTypeOptions).filter(key =>
-                    toJS(passParams).repaymentAccountType.includes(this.repaymentAccountTypeOptions[key])
-                );
-                passParams.repaymentAccountType =
-                    passParams.repaymentAccountType && repaymentAccountTypeOptionKeys.join(',');
-                passParams.startDate = passParams.startDate && new Date(passParams.startDate).toLocaleDateString();
-                passParams.endDate = passParams.endDate && new Date(passParams.endDate).toLocaleDateString();
-                const res = await this.qryRepayment(passParams);
-                const payoffDetails = res.item;
-                this.assignData({ ...payoffDetails });
+                const res = await this.qryBrokerList(passParams);
+                console.log(res);
+                const brokerList = res.items;
+                this.updateData('queryTime', res.queryTime);
+                this.assignData({ brokerList });
             });
         },
         async updateRepayment() {

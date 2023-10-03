@@ -7,7 +7,7 @@ import { btnStyle } from '../constant/broker';
 
 const BrokerInfoModal = () => {
     const {
-        AdminStore: { brokerInfoModalVisible, closeBrokerInfoModal, updateData, actions },
+        BrokerStore: { brokerInfoModalVisible, closeBrokerInfoModal, updateData, actions },
     } = useStore();
 
     const [isClicked, setIsClicked] = useState(true);

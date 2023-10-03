@@ -11,6 +11,7 @@ const EditBrokerModal = () => {
         BrokerStore: {
             editBrokerModalVisible,
             closeEditBrokerModal,
+            brokerData,
             updateData,
             payoffModalData,
             updateRepayment,
@@ -26,73 +27,73 @@ const EditBrokerModal = () => {
         <ModalEdit open={editBrokerModalVisible} onClose={closeEditBrokerModal} title={'編輯可下單券商資料'}>
             <form action="">
                 <div className="mb-4 row">
-                    <label htmlFor="userAccount" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="brkid" className="col-sm-2 col-form-label fs-5">
                         券商代號
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={payoffModalData.account}
-                            id="userAccount"
+                            value={brokerData.brkid}
+                            id="brkid"
                             onChange={e => {
                                 runInAction(e => {
-                                    console.log(e.target.value);
-                                    updateData('payoffModalData', e.target.value);
+                                    brokerData.brkid = e.target.value;
+                                    updateData('brokerData', brokerData);
                                 });
                             }}
                         />
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="userName" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="brkName" className="col-sm-2 col-form-label fs-5">
                         券商名稱
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={payoffModalData.name}
-                            id="userName"
+                            value={brokerData.brkName}
+                            id="brkName"
                             onChange={e => {
                                 runInAction(e => {
-                                    console.log(e.target.value);
-                                    updateData('payoffModalData', e.target.value);
+                                    brokerData.brkName = e.target.value;
+                                    updateData('brokerData', brokerData);
                                 });
                             }}
                         />
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="payoffAmount" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="account" className="col-sm-2 col-form-label fs-5">
                         券商帳號
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control col-sm-4 w-40 fs-5"
-                            id="payoffAmount"
-                            value={payoffModalData.repayMentAmount ? addCommas(payoffModalData.repayMentAmount) : 0}
+                            id="account"
+                            value={brokerData.account}
                             onChange={e => {
                                 runInAction(e => {
-                                    console.log(e.target.value);
-                                    updateData('payoffModalData', e.target.value);
+                                    brokerData.account = e.target.value;
+                                    updateData('brokerData', brokerData);
                                 });
                             }}
                         />
                     </div>
                 </div>
                 <div className="mb-4 row align-items-center">
-                    <label htmlFor="payoffFee" className="col-sm-2  fs-5">
+                    <label htmlFor="accID" className="col-sm-2  fs-5">
                         經理人
                     </label>
                     <div className="col-sm-10">
-                        <SelectMultiple
+                        {/* <SelectMultiple
                             title={'經理人名單'}
                             options={statusOptions}
                             onChange={value => paramsUpdate('repaymentAccountType', value)}
                             selectArr={repaymentAccountType}
-                        />
+                        /> */}
                     </div>
                 </div>
 

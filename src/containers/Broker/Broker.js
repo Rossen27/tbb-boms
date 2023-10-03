@@ -12,30 +12,14 @@ import BrokerInfoModal from './components/BrokerInfoModal';
 // import ExcelJS from 'exceljs';
 
 const Broker = () => {
-    const btnStyle = {
-        btn: {
-            borderRadius: '36px',
-            px: 4,
-            minWidth: '120px',
-        },
-        btnDelete: {
-            color: 'white',
-            borderColor: '#E24041',
-            backgroundColor: '#E24041',
-            '&:hover': {
-                borderColor: '#E24041',
-                backgroundColor: '#f86060',
-            },
-        },
-    };
     const {
-        BrokerStore: { repaymentDetailList, queryTime, updateData, getQryRepaymentDetail, reset, params, paramsUpdate },
+        BrokerStore: { getQryBrokerList, brokerList, queryTime, updateData, reset, params, paramsUpdate },
     } = useStore();
-    const { keyword, startDate, repaymentAccountType, status, applyType, endDate, field } = params;
+    const { brkID, userID } = params;
 
     const columns = [
         {
-            field: 'bhno',
+            field: 'brkid',
             headerName: '券商代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -44,7 +28,7 @@ const Broker = () => {
             flex: 1,
         },
         {
-            field: 'name',
+            field: 'brkName',
             headerName: '券商名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -54,17 +38,17 @@ const Broker = () => {
             sortable: false,
         },
         {
-            field: 'repayMentInterest',
+            field: 'account',
             headerName: '券商帳號',
             headerClassName: 'table-header',
-            headerAlign: 'right',
-            align: 'right',
+            headerAlign: 'center',
+            align: 'center',
             sortable: false,
             minWidth: 100,
             flex: 1,
         },
         {
-            field: 'collateralNumber',
+            field: 'userID',
             headerName: '經理人代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -73,35 +57,14 @@ const Broker = () => {
             minWidth: 150,
             flex: 1,
         },
-        // {
-        //     field: 'cancelBtn',
-        //     headerName: '編輯',
-        //     headerClassName: 'table-header',
-        //     headerAlign: 'center',
-        //     align: 'center',
-        //     minWidth: 140,
-        //     flex: 1,
-        //     sortable: false,
-        //     renderCell: params => (
-        //         <Button
-        //             onClick={() => {
-        //                 updateData('editBrokerModalVisible', true);
-        //             }}
-        //             variant="outlined"
-        //             sx={[btnStyle.btn, btnStyle.btnDelete]}
-        //         >
-        //             刪除
-        //         </Button>
-        //     ),
-        // },
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            getQryRepaymentDetail();
+            getQryBrokerList();
         }
     };
     useEffect(() => {
-        getQryRepaymentDetail();
+        getQryBrokerList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -121,9 +84,9 @@ const Broker = () => {
                                     label="券商代號"
                                     variant="outlined"
                                     size="small"
-                                    value={keyword}
+                                    value={brkID}
                                     onChange={e => {
-                                        paramsUpdate('keyword', e.target.value);
+                                        paramsUpdate('brkID', e.target.value);
                                     }}
                                     sx={{ width: '120px' }}
                                 />
@@ -134,9 +97,9 @@ const Broker = () => {
                                     label="經理人代號"
                                     variant="outlined"
                                     size="small"
-                                    value={keyword}
+                                    value={userID}
                                     onChange={e => {
-                                        paramsUpdate('keyword', e.target.value);
+                                        paramsUpdate('userID', e.target.value);
                                     }}
                                     sx={{ width: '120px' }}
                                 />
@@ -144,7 +107,7 @@ const Broker = () => {
                             <li>
                                 <ButtonQuery
                                     onClick={() => {
-                                        getQryRepaymentDetail();
+                                        getQryBrokerList();
                                     }}
                                 />
                             </li>
@@ -152,7 +115,7 @@ const Broker = () => {
                                 <ButtonReset
                                     onClick={() => {
                                         reset();
-                                        getQryRepaymentDetail();
+                                        getQryBrokerList();
                                     }}
                                 />
                             </li>
@@ -168,17 +131,13 @@ const Broker = () => {
                     <section>
                         <Table
                             header={columns}
-                            data={repaymentDetailList}
+                            data={brokerList}
+                            getRowId={row => row.brkid}
                             onRowClick={params => {
-                                updateData('payoffModalData', {
+                                updateData('brokerData', {
                                     ...params.row,
                                 });
                                 updateData('editBrokerModalVisible', true);
-                                if (parseInt(params.row.status) !== 3) {
-                                    updateData('statusDisabled', true);
-                                } else {
-                                    updateData('statusDisabled', false);
-                                }
                             }}
                         />
                     </section>

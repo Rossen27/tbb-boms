@@ -173,7 +173,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                     <List className="text-white">
                         {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00201' ? ( */}
-                        <ListItem component={Link} to="/UserList">
+                        <ListItem component={Link} to="/UserList" sx={{ color: 'white' }}>
                             <ListItemIcon>
                                 <PeopleAltIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
@@ -185,60 +185,60 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                         })} */}
                         {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00101' ? ( */}
-                        {/* <ListItem component={Link} to="/Admin">
+                        <ListItem component={Link} to="/Admin" sx={{ color: 'white' }}>
                             <ListItemIcon>
                                 <AdminPanelSettingsIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="管理員資料維護" />
-                        </ListItem> */}
+                        </ListItem>
                         {/* ) : (
                                 ''
                             );
                         })} */}
                         {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00301' ? ( */}
-                        {/* <ListItem component={Link} to="/Broker">
+                        <ListItem component={Link} to="/Broker" sx={{ color: 'white' }}>
                             <ListItemIcon>
                                 <AssessmentIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="可下單券商資料維護" />
-                        </ListItem> */}
+                        </ListItem>
                         {/* ) : (
                                 ''
                             );
                         })} */}
                         {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00401' ? ( */}
-                        {/* <ListItem component={Link} to="/Stock">
+                        <ListItem component={Link} to="/Stock" sx={{ color: 'white' }}>
                             <ListItemIcon>
                                 <BalanceIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="可交易股票維護" />
-                        </ListItem> */}
+                        </ListItem>
                         {/* ) : (
                                 ''
                             );
                         })} */}
-                        {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
-                            return id === '00601' ? (
-                                <ListItem key={`idList${index}`} button component={Link} to="/Version">
-                                    <ListItemIcon>
-                                        <ToggleOnIcon sx={{ color: 'white' }} />
-                                    </ListItemIcon>
-                                    <ListItemText primary="交易介面程式版本資料維護" />
-                                </ListItem>
-                            ) : (
-                                ''
-                            );
-                        })} */}
+                        {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => { */}
+                        {/* return id === '00601' ? ( */}
+                        {/* <ListItem key={`idList${index}`} button component={Link} to="/Version">
+                            <ListItemIcon>
+                                <ToggleOnIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="交易介面程式版本資料維護" />
+                        </ListItem> */}
+                        {/* ) : ( */}
+                        {/* '' */}
+                        {/* ); */}
+                        {/* })} */}
                         {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00601' ? ( */}
-                        {/* <ListItem component={Link} to="/History">
+                        <ListItem component={Link} to="/History" sx={{ color: 'white' }}>
                             <ListItemIcon>
                                 <HistoryIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="異動修改紀錄" />
-                        </ListItem> */}
+                        </ListItem>
                         {/* ) : (
                                 ''
                             );
