@@ -1,9 +1,9 @@
 import React from 'react';
-import { ModalEdit, Table, SelectInput } from '@components';
+import { ModalEdit, Table } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { addCommas, removeNonNumeric } from '@helper';
-import { Button } from '@mui/material';
+import { Button, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/userList';
 const CreateAgentModal = () => {
@@ -12,18 +12,18 @@ const CreateAgentModal = () => {
             createAgentModalVisible,
             closeCreateAgentModal,
             updateData,
-            payoffModalData,
-            repaymentDetailList,
-            statusDisabled,
-            field,
+            agentData,
+            assignedAgentList,
+            unassignedAgentList,
+            resetAgentData,
             keyOptions,
-            actions,
         },
     } = useStore();
+
     const columns = [
         {
-            field: 'bhno',
-            headerName: '經理人代號',
+            field: 'accID',
+            headerName: '代理人代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -31,8 +31,8 @@ const CreateAgentModal = () => {
             flex: 1,
         },
         {
-            field: 'name',
-            headerName: '經理人名稱',
+            field: 'accName',
+            headerName: '代理人名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -51,9 +51,14 @@ const CreateAgentModal = () => {
             sortable: false,
             renderCell: params => (
                 <Button
-                    onClick={() => {
+                    onClick={e => {
+                        e.preventDefault();
                         closeCreateAgentModal();
                         updateData('agentInfoModalVisible', true);
+                        updateData('agentAFlag', 'D');
+                        agentData.accID = params.row.accID;
+                        agentData.accName = params.row.accName;
+                        updateData('agentData', agentData);
                     }}
                     variant="outlined"
                     sx={[btnStyle.btn, btnStyle.btnDelete]}
@@ -64,26 +69,55 @@ const CreateAgentModal = () => {
         },
     ];
     return (
-        <ModalEdit open={createAgentModalVisible} onClose={closeCreateAgentModal} title={'新增代理人設定'}>
+        <ModalEdit
+            open={createAgentModalVisible}
+            onClose={e => {
+                e.preventDefault();
+                closeCreateAgentModal();
+                resetAgentData();
+            }}
+            title={'代理人設定'}
+        >
             <form action="">
                 <section>
-                    <Table header={columns} data={repaymentDetailList} hideFooter={true} />
+                    <Table header={columns} data={assignedAgentList} getRowId={row => row.accID} />
                 </section>
                 <ul className="d-flex align-items-center m-5">
                     <li className="col-6">
-                        <SelectInput
-                            options={keyOptions}
-                            selectVal={field}
-                            onChange={e => {
-                                updateData('field', e.target.value);
-                            }}
-                        />
+                        <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
+                            <InputLabel id="demo-controlled-open-select-label">代理人</InputLabel>
+                            <Select
+                                labelId="demo-controlled-open-select-label"
+                                id="demo-controlled-open-select"
+                                value={agentData.accID}
+                                label="代理人"
+                                displayEmpty
+                                onChange={e => {
+                                    runInAction(() => {
+                                        agentData.accID = e.target.value;
+                                        agentData.accName = unassignedAgentList.find(
+                                            item => item.accID === e.target.value
+                                        ).accName;
+                                        updateData('agentData', agentData);
+                                    });
+                                }}
+                            >
+                                {unassignedAgentList.map(({ accID, accName }, index) => {
+                                    return (
+                                        <MenuItem key={`agentOptions ${index}`} value={accID}>
+                                            {accName}
+                                        </MenuItem>
+                                    );
+                                })}
+                            </Select>
+                        </FormControl>
                     </li>
                     <li className="col-3">
                         <Button
                             onClick={() => {
                                 closeCreateAgentModal();
-                                updateData('createUserModalVisible', true);
+                                updateData('editUserModalVisible', true);
+                                resetAgentData();
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
@@ -98,7 +132,6 @@ const CreateAgentModal = () => {
                                 closeCreateAgentModal();
                                 updateData('agentInfoModalVisible', true);
                             }}
-                            variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
                         >
                             新增

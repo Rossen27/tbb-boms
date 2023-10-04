@@ -32,10 +32,11 @@ const AuthStore = () =>
                 password: isPwd,
             };
             const res = await callLoginUser(postData);
-            const { token, code, userId, userName } = res.data;
+            const { token, code, userId, userName, unit } = res.data;
             localStorage.setItem('loginCode', code);
             localStorage.setItem('loginUserId', userId);
             localStorage.setItem('loginUserName', userName);
+            localStorage.setItem('loginUnit', unit);
             // localStorage.setItem('loginAuth', JSON.stringify(items));
             localStorage.setItem('token', token);
             // localStorage.setItem('prevDate', prevDate);

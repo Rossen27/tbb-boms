@@ -17,9 +17,7 @@ const CreateUserModal = () => {
             cUserName,
             cADID,
             resetUserData,
-            aFlag,
-            createDisabled,
-            userInfoModalVisible,
+            userAFlag,
         },
     } = useStore();
 
@@ -238,8 +236,8 @@ const CreateUserModal = () => {
                         </label>
                     </div>
                 </div>
-                <ul className="d-flex  m-5">
-                    <li>
+                <ul className="d-flex justify-content-center m-5">
+                    {/* <li>
                         <Button
                             onClick={() => {
                                 closeCreateUserModal();
@@ -250,8 +248,8 @@ const CreateUserModal = () => {
                         >
                             代理人設定
                         </Button>
-                    </li>
-                    <li className="offset-2">
+                    </li> */}
+                    <li>
                         <Button
                             onClick={() => {
                                 closeCreateUserModal();
@@ -270,7 +268,7 @@ const CreateUserModal = () => {
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
                             onClick={e => {
                                 e.preventDefault();
-                                if (aFlag === 'C') {
+                                if (userAFlag === 'C') {
                                     if (
                                         removeSpace(cUserID) &&
                                         removeSpace(cUserName) &&

@@ -132,7 +132,7 @@ const Broker = () => {
                         <Table
                             header={columns}
                             data={brokerList}
-                            getRowId={row => row.brkid}
+                            getRowId={row => row.brkid + row.userID + row.account}
                             onRowClick={params => {
                                 updateData('brokerData', {
                                     ...params.row,

@@ -2,7 +2,7 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { queryUserList, updateUser, queryAgentList, getOptionsQuery } from '@api';
+import { queryUserList, updateUser, queryAgentList, getOptionsQuery, updateAgent } from '@api';
 
 const initialState = {
     allowTypeOptions: {},
@@ -12,7 +12,12 @@ const initialState = {
     cUserName: '',
     cUserID: '',
     cADID: '',
-    aFlag: '',
+    userAFlag: '',
+    agentAFlag: '',
+    agentData: {
+        accID: '',
+        accName: '',
+    },
     assignedAgentList: [],
     unassignedAgentList: [],
     editUserModalVisible: false,
@@ -20,8 +25,8 @@ const initialState = {
     agentInfoModalVisible: false,
     createUserModalVisible: false,
     createAgentModalVisible: false,
-    editAgentModalVisible: false,
     applyDisabled: false,
+    applyAgentDisabled: false,
     isLoading: false,
     updateComplete: false,
     loadingFail: false,
@@ -40,6 +45,7 @@ const api = {
     updateUser: updateUser,
     qryAgentList: queryAgentList,
     getOptions: getOptionsQuery,
+    updateAgent: updateAgent,
 };
 const UserListStore = () =>
     useLocalObservable(() => ({
@@ -55,6 +61,14 @@ const UserListStore = () =>
                 userData: {},
             });
         },
+        resetAgentData() {
+            this.reset({
+                agentData: {
+                    accID: '',
+                    accName: '',
+                },
+            });
+        },
         closeEditUserModal() {
             this.editUserModalVisible = false;
         },
@@ -66,9 +80,6 @@ const UserListStore = () =>
         },
         closeCreateAgentModal() {
             this.createAgentModalVisible = false;
-        },
-        closeEditAgentModal() {
-            this.editAgentModalVisible = false;
         },
         closeAgentInfoModal() {
             this.agentInfoModalVisible = false;
@@ -92,9 +103,10 @@ const UserListStore = () =>
                 );
                 passParams.allowType = passParams.allowType && allowTypeOptionKeys.join(',');
                 const res = await this.qryUserList(passParams);
+                console.log(res);
                 const userList = res.items;
-
-                this.assignData({ userList });
+                const queryTime = res.queryTime;
+                this.assignData({ userList, queryTime });
             });
         },
         async updateUserData(postData) {
@@ -117,10 +129,26 @@ const UserListStore = () =>
         async getQryAgentList(userID) {
             runInAction(async () => {
                 const res = await this.qryAgentList({ userID: userID });
-                console.log(res);
-                const agentList = res.item;
-                console.log(agentList);
-                this.assignData({ ...agentList });
+                const unassignedAgentList = res.item.unassignedAgentList;
+                const assignedAgentList = res.item.assignedAgentList;
+                this.assignData({ unassignedAgentList, assignedAgentList });
+            });
+        },
+        async updateAgentData(postData) {
+            runInAction(async () => {
+                this.updateData('isLoading', true);
+                const res = await this.updateAgent(postData);
+                const code = parseInt(res.data.code);
+                const message = res.data.message;
+                if (res) {
+                    this.updateData('applyAgentDisabled', false);
+                    this.updateData('updateComplete', true);
+                    this.updateData('isLoading', false);
+                    if (code) {
+                        this.updateData('loadingFail', true);
+                        this.updateData('msg', message);
+                    }
+                }
             });
         },
     })); // 3

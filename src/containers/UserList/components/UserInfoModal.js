@@ -17,7 +17,7 @@ const UserInfoModal = () => {
             resetUserData,
             updateUserData,
             applyDisabled,
-            aFlag,
+            userAFlag,
         },
     } = useStore();
     let allowTypeText = '';
@@ -43,26 +43,26 @@ const UserInfoModal = () => {
                     <tbody>
                         <tr>
                             <th className="title fw-bolder mb-4 text-danger text-end fs-４">
-                                {aFlag === 'C' ? '新增' : '更新'}資料，請確認：
+                                {userAFlag === 'C' ? '新增' : '更新'}資料，請確認：
                             </th>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 代號
                             </th>
-                            <td>{aFlag === 'C' ? cUserID : userData.userID}</td>
+                            <td>{userAFlag === 'C' ? cUserID : userData.userID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 名稱
                             </th>
-                            <td>{aFlag === 'C' ? cUserName : userData.userName}</td>
+                            <td>{userAFlag === 'C' ? cUserName : userData.userName}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 AD帳號
                             </th>
-                            <td>{aFlag === 'C' ? cADID : userData.adid}</td>
+                            <td>{userAFlag === 'C' ? cADID : userData.adid}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
@@ -82,9 +82,9 @@ const UserInfoModal = () => {
                     <li>
                         <Button
                             onClick={() => {
-                                if (aFlag === 'C') {
+                                if (userAFlag === 'C') {
                                     updateData('createUserModalVisible', true);
-                                } else if (aFlag === 'U') {
+                                } else if (userAFlag === 'U') {
                                     updateData('editUserModalVisible', true);
                                 }
                                 closeUserInfoModal();
@@ -104,23 +104,23 @@ const UserInfoModal = () => {
                                 e.preventDefault();
                                 updateData('applyDisabled', true);
                                 let postData = {};
-                                if (aFlag === 'C') {
+                                if (userAFlag === 'C') {
                                     postData = {
                                         userID: cUserID,
                                         userName: cUserName,
                                         adid: cADID,
                                         allowType: userData.allowType,
                                         pGroup: userData.pGroup,
-                                        actionFlag: aFlag,
+                                        actionFlag: userAFlag,
                                     };
-                                } else if (aFlag === 'U') {
+                                } else if (userAFlag === 'U') {
                                     postData = {
                                         userID: userData.userID,
                                         userName: userData.userName,
                                         adid: userData.adid,
                                         allowType: userData.allowType,
                                         pGroup: userData.pGroup,
-                                        actionFlag: aFlag,
+                                        actionFlag: userAFlag,
                                     };
                                 }
                                 await updateUserData(postData);

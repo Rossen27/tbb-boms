@@ -14,17 +14,13 @@ import {
     Table,
     ButtonExport,
 } from '@components';
-import { addCommas, removeNonNumeric } from '@helper';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { pGroupText } from './constant/userList';
+import { pGroupText, btnStyle } from './constant/userList';
 import EditUserModal from './components/EditUserModal';
-import { TextField } from '@mui/material';
+import { TextField, Button } from '@mui/material';
 import UserInfoModal from './components/UserInfoModal';
 import CreateUserModal from './components/CreateUserModal';
 import CreateAgentModal from './components/CreateAgentModal';
-import EditAgentModal from './components/EditAgentModal';
 import AgentInfoModal from './components/AgentInfoModal';
 import { runInAction } from 'mobx';
 
@@ -34,7 +30,6 @@ const UserList = () => {
     const {
         UserListStore: {
             getQryUserList,
-            statusOptions,
             userList,
             queryTime,
             updateData,
@@ -42,6 +37,7 @@ const UserList = () => {
             params,
             paramsUpdate,
             userData,
+            getQryAgentList,
             resetUserData,
             updateComplete,
             isLoading,
@@ -294,15 +290,18 @@ const UserList = () => {
                             />
                         </li> */}
                         </ul>
-                        <ButtonCreate
-                            onClick={e => {
-                                runInAction(() => {
-                                    e.preventDefault();
-                                    updateData('createUserModalVisible', true);
-                                    updateData('aFlag', 'C');
-                                });
-                            }}
-                        />
+                        {localStorage.getItem('loginUnit') === '1' && (
+                            <ButtonCreate
+                                onClick={e => {
+                                    runInAction(() => {
+                                        e.preventDefault();
+                                        resetUserData();
+                                        updateData('createUserModalVisible', true);
+                                        updateData('userAFlag', 'C');
+                                    });
+                                }}
+                            />
+                        )}
                     </div>
 
                     <div className="d-flex justify-content-end mt-2 align-items-center">
@@ -321,7 +320,7 @@ const UserList = () => {
                                 getRowId={row => row.userID}
                                 onRowClick={params => {
                                     runInAction(() => {
-                                        updateData('aFlag', 'U');
+                                        updateData('userAFlag', 'U');
                                         updateData('userData', {
                                             ...params.row,
                                         });
@@ -339,7 +338,6 @@ const UserList = () => {
                 <AgentInfoModal />
                 <CreateUserModal />
                 <CreateAgentModal />
-                <EditAgentModal />
             </div>
         </PersistentDrawer>
     );

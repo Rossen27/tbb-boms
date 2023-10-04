@@ -12,16 +12,12 @@ const EditUserModal = () => {
             editUserModalVisible,
             closeEditUserModal,
             updateData,
-            aFlag,
-            cUserID,
-            cUserName,
-            cADID,
+            userAFlag,
             userData,
             getQryAgentList,
             agentParams,
         },
     } = useStore();
-    const { userID } = agentParams;
     return (
         <ModalEdit open={editUserModalVisible} onClose={closeEditUserModal} title={'編輯經理人基本資料'}>
             <form>
@@ -33,7 +29,7 @@ const EditUserModal = () => {
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            readOnly
+                            disabled
                             value={userData.userID}
                             id="userID"
                         />
@@ -227,7 +223,8 @@ const EditUserModal = () => {
                             onClick={() => {
                                 closeEditUserModal();
                                 getQryAgentList(userData.userID);
-                                updateData('editAgentModalVisible', true);
+                                updateData('createAgentModalVisible', true);
+                                updateData('agentAFlag', 'C');
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnUpdate]}
@@ -250,14 +247,15 @@ const EditUserModal = () => {
                                 sx={[btnStyle.btn, btnStyle.btnCreate]}
                                 onClick={e => {
                                     e.preventDefault();
-                                    console.log('u', userData);
-                                    console.log(removeSpace(userData.userName) && removeSpace(userData.adid));
-                                    if (aFlag === 'U') {
-                                        if (removeSpace(userData.userName) && removeSpace(userData.adid)) {
-                                            console.log('a');
+                                    if (userAFlag === 'U') {
+                                        if (
+                                            removeSpace(userData.userName) &&
+                                            removeSpace(userData.adid) &&
+                                            userData.pGroup &&
+                                            userData.allowType
+                                        ) {
                                             updateData('applyDisabled', false);
                                         } else {
-                                            console.log('b');
                                             updateData('applyDisabled', true);
                                         }
                                     }
