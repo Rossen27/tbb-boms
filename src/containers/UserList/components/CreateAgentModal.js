@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalEdit, Table } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { addCommas, removeNonNumeric } from '@helper';
+import { removeSpace } from '@helper';
 import { Button, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/userList';
@@ -13,10 +13,11 @@ const CreateAgentModal = () => {
             closeCreateAgentModal,
             updateData,
             agentData,
+            dAgentData,
             assignedAgentList,
             unassignedAgentList,
             resetAgentData,
-            keyOptions,
+            createAgentDisabled,
         },
     } = useStore();
 
@@ -56,9 +57,9 @@ const CreateAgentModal = () => {
                         closeCreateAgentModal();
                         updateData('agentInfoModalVisible', true);
                         updateData('agentAFlag', 'D');
-                        agentData.accID = params.row.accID;
-                        agentData.accName = params.row.accName;
-                        updateData('agentData', agentData);
+                        dAgentData.accID = params.row.accID;
+                        dAgentData.accName = params.row.accName;
+                        updateData('dAgentData', dAgentData);
                     }}
                     variant="outlined"
                     sx={[btnStyle.btn, btnStyle.btnDelete]}
@@ -68,6 +69,11 @@ const CreateAgentModal = () => {
             ),
         },
     ];
+    if (removeSpace(agentData.accID)) {
+        updateData('createAgentDisabled', false);
+    } else {
+        updateData('createAgentDisabled', true);
+    }
     return (
         <ModalEdit
             open={createAgentModalVisible}
@@ -121,7 +127,6 @@ const CreateAgentModal = () => {
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
-                            className=""
                         >
                             取消
                         </Button>
@@ -131,8 +136,11 @@ const CreateAgentModal = () => {
                             onClick={() => {
                                 closeCreateAgentModal();
                                 updateData('agentInfoModalVisible', true);
+                                updateData('agentAFlag', 'C');
                             }}
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
+                            variant="contained"
+                            disabled={createAgentDisabled}
                         >
                             新增
                         </Button>

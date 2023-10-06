@@ -14,6 +14,7 @@ const AgentInfoModal = () => {
             userData,
             agentAFlag,
             agentData,
+            dAgentData,
             updateAgentData,
             applyAgentDisabled,
         },
@@ -40,13 +41,13 @@ const AgentInfoModal = () => {
                             <th scope="row" className="text-end">
                                 代號
                             </th>
-                            <td>{agentData.accID}</td>
+                            <td>{agentAFlag === 'D' ? dAgentData.accID : agentData.accID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 名稱
                             </th>
-                            <td>{agentData.accName}</td>
+                            <td>{agentAFlag === 'D' ? dAgentData.accName : agentData.accName}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -68,14 +69,22 @@ const AgentInfoModal = () => {
                         onClick={async e => {
                             e.preventDefault();
                             updateData('applyAgentDisabled', true);
-                            const postData = {
-                                accID: agentData.accID,
-                                userID: userData.userID,
-                                actionFlag: agentAFlag,
-                            };
+                            let postData = {};
+                            if (agentAFlag === 'C') {
+                                postData = {
+                                    accID: agentData.accID,
+                                    userID: userData.userID,
+                                    actionFlag: agentAFlag,
+                                };
+                            } else if (agentAFlag === 'D') {
+                                postData = {
+                                    accID: dAgentData.accID,
+                                    userID: userData.userID,
+                                    actionFlag: agentAFlag,
+                                };
+                            }
                             await updateAgentData(postData);
                             closeAgentInfoModal();
-                            resetAgentData();
                         }}
                         disabled={applyAgentDisabled}
                     >

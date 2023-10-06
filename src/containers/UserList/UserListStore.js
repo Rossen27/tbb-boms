@@ -18,6 +18,10 @@ const initialState = {
         accID: '',
         accName: '',
     },
+    dAgentData: {
+        accID: '',
+        accName: '',
+    },
     assignedAgentList: [],
     unassignedAgentList: [],
     editUserModalVisible: false,
@@ -26,6 +30,7 @@ const initialState = {
     createUserModalVisible: false,
     createAgentModalVisible: false,
     applyDisabled: false,
+    createAgentDisabled: false,
     applyAgentDisabled: false,
     isLoading: false,
     updateComplete: false,
@@ -103,7 +108,6 @@ const UserListStore = () =>
                 );
                 passParams.allowType = passParams.allowType && allowTypeOptionKeys.join(',');
                 const res = await this.qryUserList(passParams);
-                console.log(res);
                 const userList = res.items;
                 const queryTime = res.queryTime;
                 this.assignData({ userList, queryTime });

@@ -224,7 +224,6 @@ const EditUserModal = () => {
                                 closeEditUserModal();
                                 getQryAgentList(userData.userID);
                                 updateData('createAgentModalVisible', true);
-                                updateData('agentAFlag', 'C');
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnUpdate]}
@@ -248,6 +247,7 @@ const EditUserModal = () => {
                                 onClick={e => {
                                     e.preventDefault();
                                     if (userAFlag === 'U') {
+                                        console.log('userData', typeof userData.allowType);
                                         if (
                                             removeSpace(userData.userName) &&
                                             removeSpace(userData.adid) &&

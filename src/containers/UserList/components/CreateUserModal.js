@@ -18,6 +18,7 @@ const CreateUserModal = () => {
             cADID,
             resetUserData,
             userAFlag,
+            applyDisabled,
         },
     } = useStore();
 
@@ -269,6 +270,10 @@ const CreateUserModal = () => {
                             onClick={e => {
                                 e.preventDefault();
                                 if (userAFlag === 'C') {
+                                    console.log('userData', userData);
+                                    console.log('cUserID', cUserID);
+                                    console.log('cUserName', cUserName);
+                                    console.log('cADID', cADID);
                                     if (
                                         removeSpace(cUserID) &&
                                         removeSpace(cUserName) &&
