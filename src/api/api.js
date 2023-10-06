@@ -28,7 +28,7 @@ export const callGetCustomerInfo = () => post('/SCLOAN090/customerInfo', {});
 /** ---------------------------使用者基本資料維護 -------------------------   */
 /*  optionQuery 下拉選單查詢 [GET]
  */
-export const getOptionsQuery = params => get('/manager/optionQuery', params);
+export const getManagerOptions = params => get('/manager/optionQuery', params);
 /*  getUserList 查詢經理人清單 [GET]
  */
 export const queryUserList = params => get('/manager/getUserList', params);
@@ -46,14 +46,18 @@ export const queryAgentList = params => get('/manager/getAgentList', params);
 export const updateAgent = postData => post('/manager/updateAgent', postData);
 /** ---------------------------可下單券商資料維護 -------------------------  */
 
+/*  optionQuery 下拉選單查詢 [GET]
+ */
+export const getBrokerOptions = params => get('/broker/optionQuery', params);
 /* getBrokerList 查詢券商清單 [GET]
  */
 export const queryBrokerList = params => get('/broker/getBrokerList', params);
-
 /* updateBroker 維護券商 [POST]
  */
 export const updateBroker = postData => post('/broker/updateBroker', postData);
-
+/* getAgentList 查詢代理人清單 [GET]
+ */
+export const queryBrokerManager = params => get('/broker/getManagerList', params);
 /* repaymentQuery 客戶還款查詢 [GET]
  */
 export const getRepaymentQuery = params => get('/ScLoanAdmin020/repaymentQuery', params);

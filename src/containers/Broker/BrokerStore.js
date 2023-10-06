@@ -2,25 +2,47 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { queryBrokerList, callRepaymentUpdate } from '@api';
+import { queryBrokerList, queryBrokerManager, updateBroker, updateAgent } from '@api';
 
 const initialState = {
     brokerList: [],
     queryTime: '',
     brokerData: {},
+    managerData: {
+        userID: '',
+        userName: '',
+    },
+    dManagerData: {
+        userID: '',
+        userName: '',
+    },
+    brokerAFlag: '',
+    managerAFlag: '',
     editBrokerModalVisible: false,
     brokerInfoModalVisible: false,
-    statusDisabled: false,
-    payoffModalData: {},
+    managerInfoModalVisible: false,
+    createManagerModalVisible: false,
+    applyDisabled: false,
+    createManagerDisabled: false,
+    applyManagerDisabled: false,
+    assignedAgentList: [],
+    unassignedAgentList: [],
     params: {
         userID: '',
-        brkID: '',
+        brkid: '',
     },
+    isLoading: false,
+    updateComplete: false,
+    loadingFail: false,
+    msg: '',
 };
 
 const api = {
     qryBrokerList: queryBrokerList,
-    repaymentUpdate: callRepaymentUpdate,
+    qryBrokerManager: queryBrokerManager,
+    updateBroker: updateBroker,
+    // getOptions:getBrokerOptions,
+    updateAgent: updateAgent,
 };
 const BrokerStore = () =>
     useLocalObservable(() => ({
@@ -31,42 +53,82 @@ const BrokerStore = () =>
         closeEditBrokerModal() {
             this.editBrokerModalVisible = false;
         },
-        closeEditInfoModal() {
-            this.editBrokerInfoModalVisible = false;
+        closeBrokerInfoModal() {
+            this.brokerInfoModalVisible = false;
         },
-
+        closeCreateManagerModal() {
+            this.createManagerModalVisible = false;
+        },
+        closeManagerInfoModal() {
+            this.managerInfoModalVisible = false;
+        },
+        resetManagerData() {
+            this.reset({
+                managerData: {
+                    userID: '',
+                    userName: '',
+                },
+            });
+        },
+        // async getOptionsQuery() {
+        //     runInAction(async () => {
+        //         const authParams = {
+        //             taskId: '',
+        //         };
+        //         const res = await this.getOptions(authParams);
+        //         const allowTypeOptions = res.item.allowTypeOptions;
+        //         this.assignData({ allowTypeOptions });
+        //     });
+        // },
         async getQryBrokerList() {
             runInAction(async () => {
                 const passParams = JSON.parse(JSON.stringify(this.params));
                 const res = await this.qryBrokerList(passParams);
-                console.log(res);
                 const brokerList = res.items;
                 this.updateData('queryTime', res.queryTime);
                 this.assignData({ brokerList });
             });
         },
-        async updateRepayment() {
+        async updateBrokerData(postData) {
             runInAction(async () => {
-                const postData = {
-                    account: this.payoffModalData.account,
-                    bhno: this.payoffModalData.bhno,
-                    applicationNumber: this.payoffModalData.applicationNumber,
-                    failReason:
-                        this.payoffModalData.status === '1'
-                            ? this.payoffModalData.repayMentAccountType === 'c'
-                                ? '未收款'
-                                : '未賣股'
-                            : '',
-                    repayMentAmount: this.payoffModalData.repayMentAmount,
-                    repayMentInterest: this.payoffModalData.repayMentInterest,
-                    modifier: localStorage.getItem('loginEmpName'),
-                    status: this.payoffModalData.status,
-                    taskId: '00201',
-                };
-                const res = await this.repaymentUpdate(postData);
+                this.updateData('isLoading', true);
+                const res = await this.updateBroker(postData);
                 const code = parseInt(res.data.code);
-
-                await this.getQryRepaymentDetail();
+                const message = res.data.message;
+                if (res) {
+                    this.updateData('applyDisabled', false);
+                    this.updateData('updateComplete', true);
+                    this.updateData('isLoading', false);
+                    if (code) {
+                        this.updateData('loadingFail', true);
+                        this.updateData('msg', message);
+                    }
+                }
+            });
+        },
+        async getQryManagerList(accID) {
+            runInAction(async () => {
+                const res = await this.qryBrokerManager({ accID: accID });
+                const unassignedAgentList = res.item.unassignedAgentList;
+                const assignedAgentList = res.item.assignedAgentList;
+                this.assignData({ unassignedAgentList, assignedAgentList });
+            });
+        },
+        async updateAgentData(postData) {
+            runInAction(async () => {
+                this.updateData('isLoading', true);
+                const res = await this.updateAgent(postData);
+                const code = parseInt(res.data.code);
+                const message = res.data.message;
+                if (res) {
+                    this.updateData('applyAgentDisabled', false);
+                    this.updateData('updateComplete', true);
+                    this.updateData('isLoading', false);
+                    if (code) {
+                        this.updateData('loadingFail', true);
+                        this.updateData('msg', message);
+                    }
+                }
             });
         },
     })); // 3

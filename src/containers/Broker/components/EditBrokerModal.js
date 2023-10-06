@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalEdit, SelectMultiple } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { addCommas, removeNonNumeric } from '@helper';
+import { removeSpace } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/broker';
@@ -13,12 +13,14 @@ const EditBrokerModal = () => {
             closeEditBrokerModal,
             brokerData,
             updateData,
+            getQryManagerList,
             payoffModalData,
             updateRepayment,
             statusDisabled,
             statusOptions,
             params,
             paramsUpdate,
+            managerAFlag,
         },
     } = useStore();
 
@@ -37,7 +39,7 @@ const EditBrokerModal = () => {
                             value={brokerData.brkid}
                             id="brkid"
                             onChange={e => {
-                                runInAction(e => {
+                                runInAction(() => {
                                     brokerData.brkid = e.target.value;
                                     updateData('brokerData', brokerData);
                                 });
@@ -56,7 +58,7 @@ const EditBrokerModal = () => {
                             value={brokerData.brkName}
                             id="brkName"
                             onChange={e => {
-                                runInAction(e => {
+                                runInAction(() => {
                                     brokerData.brkName = e.target.value;
                                     updateData('brokerData', brokerData);
                                 });
@@ -75,7 +77,7 @@ const EditBrokerModal = () => {
                             id="account"
                             value={brokerData.account}
                             onChange={e => {
-                                runInAction(e => {
+                                runInAction(() => {
                                     brokerData.account = e.target.value;
                                     updateData('brokerData', brokerData);
                                 });
@@ -83,54 +85,70 @@ const EditBrokerModal = () => {
                         />
                     </div>
                 </div>
-                <div className="mb-4 row align-items-center">
-                    <label htmlFor="accID" className="col-sm-2  fs-5">
-                        經理人
+                <div className="mb-4 row">
+                    <label htmlFor="userID" className="col-sm-2 col-form-label fs-5">
+                        經理人代號
                     </label>
                     <div className="col-sm-10">
-                        {/* <SelectMultiple
-                            title={'經理人名單'}
-                            options={statusOptions}
-                            onChange={value => paramsUpdate('repaymentAccountType', value)}
-                            selectArr={repaymentAccountType}
-                        /> */}
+                        <input
+                            type="text"
+                            className="form-control col-sm-4 w-40 fs-5"
+                            id="userID"
+                            value={brokerData.userID}
+                            disabled
+                        />
                     </div>
                 </div>
-
                 <ul className="d-flex justify-content-center align-items-center m-5">
-                    {/* <li>
+                    <li>
                         <Button
                             onClick={() => {
                                 closeEditBrokerModal();
-                                updateData('createUserModalVisible', true);
+                                getQryManagerList(brokerData.accID);
+                                updateData('createManagerModalVisible', true);
+                            }}
+                            variant="outlined"
+                            sx={[btnStyle.btn, btnStyle.btnUpdate]}
+                        >
+                            代理人設定
+                        </Button>
+                    </li>
+                    <li className="ms-auto">
+                        <Button
+                            onClick={e => {
+                                e.preventDefault();
+                                closeEditBrokerModal();
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
-                            className=""
                         >
                             取消
                         </Button>
-                    </li> */}
-                    <li className="me-5">
-                        <Button
-                            onClick={() => {
-                                updateData('editBrokerModalVisible', true);
-                            }}
-                            variant="outlined"
-                            sx={[btnStyle.btn, btnStyle.btnDelete]}
-                        >
-                            刪除
-                        </Button>
                     </li>
-                    <li>
+                    <li className="ms-3">
                         <Button
                             onClick={e => {
-                                console.log(e.target.value);
+                                runInAction(() => {
+                                    e.preventDefault();
+                                    updateData('brokerAFlag', 'U');
+
+                                    if (
+                                        removeSpace(brokerData.brkid) &&
+                                        removeSpace(brokerData.brkName) &&
+                                        removeSpace(brokerData.account)
+                                    ) {
+                                        updateData('applyDisabled', false);
+                                    } else {
+                                        updateData('applyDisabled', true);
+                                    }
+                                    updateData('brokerInfoModalVisible', true);
+                                    closeEditBrokerModal();
+                                });
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
                         >
-                            編輯
+                            更新資料
                         </Button>
                     </li>
                 </ul>

@@ -1,21 +1,36 @@
 import React, { useEffect } from 'react';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@containers/Layout';
-import { PersistentDrawer, ButtonQuery, ButtonReset, ButtonCreate, Table, ButtonExport } from '@components';
+import { PersistentDrawer, ButtonQuery, ButtonReset, Loading, CompleteInfo, Table, ButtonExport } from '@components';
 import { Button, TextField } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import EditBrokerModal from './components/EditBrokerModal';
 import BrokerInfoModal from './components/BrokerInfoModal';
+import CreateManagerModal from './components/CreateManagerModal';
+import ManagerInfoModal from './components/ManagerInfoModal';
 
 // import ExcelJS from 'exceljs';
 
 const Broker = () => {
     const {
-        BrokerStore: { getQryBrokerList, brokerList, queryTime, updateData, reset, params, paramsUpdate },
+        BrokerStore: {
+            getQryBrokerList,
+            brokerList,
+            queryTime,
+            updateData,
+            reset,
+            params,
+            paramsUpdate,
+            updateComplete,
+            isLoading,
+            loadingFail,
+            msg,
+        },
     } = useStore();
-    const { brkID, userID } = params;
+    const { brkid, userID } = params;
 
     const columns = [
         {
@@ -71,7 +86,15 @@ const Broker = () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        getQryBrokerList();
+        if (updateComplete) {
+            setTimeout(() => {
+                navigate(0);
+            }, 3000);
+        }
+    }, [updateComplete]);
     return (
         <PersistentDrawer>
             <div>
@@ -84,9 +107,9 @@ const Broker = () => {
                                     label="券商代號"
                                     variant="outlined"
                                     size="small"
-                                    value={brkID}
+                                    value={brkid}
                                     onChange={e => {
-                                        paramsUpdate('brkID', e.target.value);
+                                        paramsUpdate('brkid', e.target.value);
                                     }}
                                     sx={{ width: '120px' }}
                                 />
@@ -129,21 +152,29 @@ const Broker = () => {
                         </p>
                     </div>
                     <section>
-                        <Table
-                            header={columns}
-                            data={brokerList}
-                            getRowId={row => row.brkid + row.userID + row.account}
-                            onRowClick={params => {
-                                updateData('brokerData', {
-                                    ...params.row,
-                                });
-                                updateData('editBrokerModalVisible', true);
-                            }}
-                        />
+                        {isLoading ? (
+                            <Loading isLoading={isLoading} />
+                        ) : !updateComplete ? (
+                            <Table
+                                header={columns}
+                                data={brokerList}
+                                getRowId={row => row.brkid + row.userID + row.account}
+                                onRowClick={params => {
+                                    updateData('brokerData', {
+                                        ...params.row,
+                                    });
+                                    updateData('editBrokerModalVisible', true);
+                                }}
+                            />
+                        ) : (
+                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                        )}
                     </section>
                 </Layout>
                 <EditBrokerModal />
                 <BrokerInfoModal />
+                <CreateManagerModal />
+                <ManagerInfoModal />
             </div>
         </PersistentDrawer>
     );
