@@ -247,12 +247,11 @@ const EditUserModal = () => {
                                 onClick={e => {
                                     e.preventDefault();
                                     if (userAFlag === 'U') {
-                                        console.log('userData', typeof userData.allowType);
                                         if (
                                             removeSpace(userData.userName) &&
                                             removeSpace(userData.adid) &&
                                             userData.pGroup &&
-                                            userData.allowType
+                                            toString(userData.allowType)
                                         ) {
                                             updateData('applyDisabled', false);
                                         } else {

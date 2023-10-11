@@ -39,13 +39,13 @@ const AgentInfoModal = () => {
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                代號
+                                代理人代號
                             </th>
                             <td>{agentAFlag === 'D' ? dAgentData.accID : agentData.accID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                名稱
+                                代理人名稱
                             </th>
                             <td>{agentAFlag === 'D' ? dAgentData.accName : agentData.accName}</td>
                         </tr>
@@ -88,7 +88,7 @@ const AgentInfoModal = () => {
                         }}
                         disabled={applyAgentDisabled}
                     >
-                        確認變更
+                        資料確認
                     </Button>
                 </div>
             </form>

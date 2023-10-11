@@ -16,7 +16,6 @@ const CreateUserModal = () => {
             cUserID,
             cUserName,
             cADID,
-            resetUserData,
             userAFlag,
             applyDisabled,
         },
@@ -27,7 +26,6 @@ const CreateUserModal = () => {
             open={createUserModalVisible}
             onClose={() => {
                 closeCreateUserModal();
-                resetUserData();
             }}
             title={'新增經理人基本資料'}
         >
@@ -254,7 +252,6 @@ const CreateUserModal = () => {
                         <Button
                             onClick={() => {
                                 closeCreateUserModal();
-                                resetUserData();
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
@@ -269,25 +266,19 @@ const CreateUserModal = () => {
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
                             onClick={e => {
                                 e.preventDefault();
-                                if (userAFlag === 'C') {
-                                    console.log('userData', userData);
-                                    console.log('cUserID', cUserID);
-                                    console.log('cUserName', cUserName);
-                                    console.log('cADID', cADID);
-                                    if (
-                                        removeSpace(cUserID) &&
-                                        removeSpace(cUserName) &&
-                                        removeSpace(cADID) &&
-                                        userData.pGroup &&
-                                        userData.allowType
-                                    ) {
-                                        updateData('applyDisabled', false);
-                                    } else {
-                                        updateData('applyDisabled', true);
-                                    }
-                                    updateData('userInfoModalVisible', true);
-                                    closeCreateUserModal();
+                                if (
+                                    removeSpace(cUserID) &&
+                                    removeSpace(cUserName) &&
+                                    removeSpace(cADID) &&
+                                    userData.pGroup &&
+                                    toString(userData.allowType)
+                                ) {
+                                    updateData('applyDisabled', false);
+                                } else {
+                                    updateData('applyDisabled', true);
                                 }
+                                updateData('userInfoModalVisible', true);
+                                closeCreateUserModal();
                             }}
                         >
                             新增資料

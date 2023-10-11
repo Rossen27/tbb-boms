@@ -14,7 +14,6 @@ const UserInfoModal = () => {
             cUserID,
             cADID,
             userData,
-            resetUserData,
             updateUserData,
             applyDisabled,
             userAFlag,
@@ -33,7 +32,6 @@ const UserInfoModal = () => {
             open={userInfoModalVisible}
             onClose={() => {
                 closeUserInfoModal();
-                resetUserData();
             }}
             title={'確認經理人基本資料'}
         >
@@ -48,13 +46,13 @@ const UserInfoModal = () => {
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                代號
+                                經理人代號
                             </th>
                             <td>{userAFlag === 'C' ? cUserID : userData.userID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                名稱
+                                經理人名稱
                             </th>
                             <td>{userAFlag === 'C' ? cUserName : userData.userName}</td>
                         </tr>
@@ -125,11 +123,10 @@ const UserInfoModal = () => {
                                 }
                                 await updateUserData(postData);
                                 closeUserInfoModal();
-                                resetUserData();
                             }}
                             disabled={applyDisabled}
                         >
-                            確認變更
+                            資料確認
                         </Button>
                         <p className={`${applyDisabled ? 'fs-5 text-danger text-center' : 'd-none'}`}>請確實填寫欄位</p>
                     </li>
