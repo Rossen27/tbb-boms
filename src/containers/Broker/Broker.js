@@ -1,41 +1,40 @@
 import React, { useEffect } from 'react';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@containers/Layout';
-import { PersistentDrawer, ButtonQuery, ButtonReset, ButtonCreate, Table, ButtonExport } from '@components';
+import { PersistentDrawer, ButtonQuery, ButtonReset, Loading, CompleteInfo, Table, ButtonExport } from '@components';
 import { Button, TextField } from '@mui/material';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import EditBrokerModal from './components/EditBrokerModal';
 import BrokerInfoModal from './components/BrokerInfoModal';
+import CreateManagerModal from './components/CreateManagerModal';
+import ManagerInfoModal from './components/ManagerInfoModal';
 
 // import ExcelJS from 'exceljs';
 
 const Broker = () => {
-    const btnStyle = {
-        btn: {
-            borderRadius: '36px',
-            px: 4,
-            minWidth: '120px',
-        },
-        btnDelete: {
-            color: 'white',
-            borderColor: '#E24041',
-            backgroundColor: '#E24041',
-            '&:hover': {
-                borderColor: '#E24041',
-                backgroundColor: '#f86060',
-            },
-        },
-    };
     const {
-        BrokerStore: { repaymentDetailList, queryTime, updateData, getQryRepaymentDetail, reset, params, paramsUpdate },
+        BrokerStore: {
+            getQryBrokerList,
+            brokerList,
+            queryTime,
+            updateData,
+            reset,
+            params,
+            paramsUpdate,
+            updateComplete,
+            isLoading,
+            loadingFail,
+            msg,
+        },
     } = useStore();
-    const { keyword, startDate, repaymentAccountType, status, applyType, endDate, field } = params;
+    const { brkid, userID } = params;
 
     const columns = [
         {
-            field: 'bhno',
+            field: 'brkid',
             headerName: '券商代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -44,7 +43,7 @@ const Broker = () => {
             flex: 1,
         },
         {
-            field: 'name',
+            field: 'brkName',
             headerName: '券商名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -54,17 +53,17 @@ const Broker = () => {
             sortable: false,
         },
         {
-            field: 'repayMentInterest',
+            field: 'account',
             headerName: '券商帳號',
             headerClassName: 'table-header',
-            headerAlign: 'right',
-            align: 'right',
+            headerAlign: 'center',
+            align: 'center',
             sortable: false,
             minWidth: 100,
             flex: 1,
         },
         {
-            field: 'collateralNumber',
+            field: 'userID',
             headerName: '經理人代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -73,42 +72,29 @@ const Broker = () => {
             minWidth: 150,
             flex: 1,
         },
-        // {
-        //     field: 'cancelBtn',
-        //     headerName: '編輯',
-        //     headerClassName: 'table-header',
-        //     headerAlign: 'center',
-        //     align: 'center',
-        //     minWidth: 140,
-        //     flex: 1,
-        //     sortable: false,
-        //     renderCell: params => (
-        //         <Button
-        //             onClick={() => {
-        //                 updateData('editBrokerModalVisible', true);
-        //             }}
-        //             variant="outlined"
-        //             sx={[btnStyle.btn, btnStyle.btnDelete]}
-        //         >
-        //             刪除
-        //         </Button>
-        //     ),
-        // },
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            getQryRepaymentDetail();
+            getQryBrokerList();
         }
     };
     useEffect(() => {
-        getQryRepaymentDetail();
+        getQryBrokerList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        getQryBrokerList();
+        if (updateComplete) {
+            setTimeout(() => {
+                navigate(0);
+            }, 3000);
+        }
+    }, [updateComplete]);
     return (
         <PersistentDrawer>
             <div>
@@ -121,9 +107,9 @@ const Broker = () => {
                                     label="券商代號"
                                     variant="outlined"
                                     size="small"
-                                    value={keyword}
+                                    value={brkid}
                                     onChange={e => {
-                                        paramsUpdate('keyword', e.target.value);
+                                        paramsUpdate('brkid', e.target.value);
                                     }}
                                     sx={{ width: '120px' }}
                                 />
@@ -134,9 +120,9 @@ const Broker = () => {
                                     label="經理人代號"
                                     variant="outlined"
                                     size="small"
-                                    value={keyword}
+                                    value={userID}
                                     onChange={e => {
-                                        paramsUpdate('keyword', e.target.value);
+                                        paramsUpdate('userID', e.target.value);
                                     }}
                                     sx={{ width: '120px' }}
                                 />
@@ -144,7 +130,7 @@ const Broker = () => {
                             <li>
                                 <ButtonQuery
                                     onClick={() => {
-                                        getQryRepaymentDetail();
+                                        getQryBrokerList();
                                     }}
                                 />
                             </li>
@@ -152,7 +138,7 @@ const Broker = () => {
                                 <ButtonReset
                                     onClick={() => {
                                         reset();
-                                        getQryRepaymentDetail();
+                                        getQryBrokerList();
                                     }}
                                 />
                             </li>
@@ -166,25 +152,29 @@ const Broker = () => {
                         </p>
                     </div>
                     <section>
-                        <Table
-                            header={columns}
-                            data={repaymentDetailList}
-                            onRowClick={params => {
-                                updateData('payoffModalData', {
-                                    ...params.row,
-                                });
-                                updateData('editBrokerModalVisible', true);
-                                if (parseInt(params.row.status) !== 3) {
-                                    updateData('statusDisabled', true);
-                                } else {
-                                    updateData('statusDisabled', false);
-                                }
-                            }}
-                        />
+                        {isLoading ? (
+                            <Loading isLoading={isLoading} />
+                        ) : !updateComplete ? (
+                            <Table
+                                header={columns}
+                                data={brokerList}
+                                getRowId={row => row.brkid + row.userID + row.account}
+                                onRowClick={params => {
+                                    updateData('brokerData', {
+                                        ...params.row,
+                                    });
+                                    updateData('editBrokerModalVisible', true);
+                                }}
+                            />
+                        ) : (
+                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                        )}
                     </section>
                 </Layout>
                 <EditBrokerModal />
                 <BrokerInfoModal />
+                <CreateManagerModal />
+                <ManagerInfoModal />
             </div>
         </PersistentDrawer>
     );

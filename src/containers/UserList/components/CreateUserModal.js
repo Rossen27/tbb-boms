@@ -16,25 +16,20 @@ const CreateUserModal = () => {
             cUserID,
             cUserName,
             cADID,
-            resetUserData,
-            createDisabled,
+            userAFlag,
+            applyDisabled,
         },
     } = useStore();
-    if (removeSpace(cUserID) && removeSpace(cUserName) && removeSpace(cADID) && userData.pGroup && userData.allowType) {
-        updateData('createDisabled', false);
-    } else {
-        updateData('createDisabled', true);
-    }
+
     return (
         <ModalEdit
             open={createUserModalVisible}
             onClose={() => {
                 closeCreateUserModal();
-                resetUserData();
             }}
             title={'新增經理人基本資料'}
         >
-            <form action="">
+            <form>
                 <div className="mb-4 row">
                     <label htmlFor="userID" className="col-sm-2 col-form-label fs-5">
                         經理人代號
@@ -76,7 +71,7 @@ const CreateUserModal = () => {
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="payoffAmount" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="adid" className="col-sm-2 col-form-label fs-5">
                         AD帳號
                     </label>
                     <div className="col-sm-10">
@@ -187,7 +182,7 @@ const CreateUserModal = () => {
                             className="form-check-input fs-5"
                             type="radio"
                             name="allowType"
-                            id="View"
+                            id="view"
                             value={0}
                             checked={parseInt(userData.allowType) === 0}
                             onChange={e => {
@@ -197,7 +192,7 @@ const CreateUserModal = () => {
                                 });
                             }}
                         />
-                        <label className="form-check-label fs-5" htmlFor="View">
+                        <label className="form-check-label fs-5" htmlFor="view">
                             檢視權限
                         </label>
                     </div>
@@ -206,7 +201,7 @@ const CreateUserModal = () => {
                             className="form-check-input fs-5"
                             type="radio"
                             name="allowType"
-                            id="Trade"
+                            id="trade"
                             value={1}
                             checked={parseInt(userData.allowType) === 1}
                             onChange={e => {
@@ -216,7 +211,7 @@ const CreateUserModal = () => {
                                 });
                             }}
                         />
-                        <label className="form-check-label fs-5" htmlFor="Trade">
+                        <label className="form-check-label fs-5" htmlFor="trade">
                             交易權限
                         </label>
                     </div>
@@ -240,9 +235,8 @@ const CreateUserModal = () => {
                         </label>
                     </div>
                 </div>
-
-                <ul className="d-flex  m-5">
-                    <li>
+                <ul className="d-flex justify-content-center m-5">
+                    {/* <li>
                         <Button
                             onClick={() => {
                                 closeCreateUserModal();
@@ -253,12 +247,11 @@ const CreateUserModal = () => {
                         >
                             代理人設定
                         </Button>
-                    </li>
-                    <li className="offset-2">
+                    </li> */}
+                    <li>
                         <Button
                             onClick={() => {
                                 closeCreateUserModal();
-                                resetUserData();
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
@@ -271,17 +264,25 @@ const CreateUserModal = () => {
                             type="button"
                             variant="contained"
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
-                            onClick={() => {
-                                closeCreateUserModal();
+                            onClick={e => {
+                                e.preventDefault();
+                                if (
+                                    removeSpace(cUserID) &&
+                                    removeSpace(cUserName) &&
+                                    removeSpace(cADID) &&
+                                    userData.pGroup &&
+                                    toString(userData.allowType)
+                                ) {
+                                    updateData('applyDisabled', false);
+                                } else {
+                                    updateData('applyDisabled', true);
+                                }
                                 updateData('userInfoModalVisible', true);
+                                closeCreateUserModal();
                             }}
-                            disabled={createDisabled}
                         >
-                            更新資料庫
+                            新增資料
                         </Button>
-                        <p className={`${createDisabled ? 'fs-5 text-danger text-center' : 'd-none'}`}>
-                            請確實填寫欄位
-                        </p>
                     </li>
                 </ul>
             </form>

@@ -2,29 +2,30 @@ import React from 'react';
 import { ModalEdit, Table } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { removeSpace } from '@helper';
+import { removeSpace, removeNonNumeric } from '@helper';
 import { Button, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import { runInAction } from 'mobx';
-import { btnStyle } from '../constant/userList';
-const CreateAgentModal = () => {
+import { btnStyle } from '../constant/broker';
+const CreateManagerModal = () => {
     const {
-        UserListStore: {
-            createAgentModalVisible,
-            closeCreateAgentModal,
+        BrokerStore: {
+            createManagerModalVisible,
+            closeCreateManagerModal,
             updateData,
-            agentData,
-            dAgentData,
+            managerData,
+            dManagerData,
             assignedAgentList,
             unassignedAgentList,
-            resetAgentData,
-            createAgentDisabled,
+            resetManagerData,
+            createManagerDisabled,
+            managerAFlag,
         },
     } = useStore();
 
     const columns = [
         {
-            field: 'accID',
-            headerName: '代理人代號',
+            field: 'userID',
+            headerName: '經理人代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -32,8 +33,8 @@ const CreateAgentModal = () => {
             flex: 1,
         },
         {
-            field: 'accName',
-            headerName: '代理人名稱',
+            field: 'userName',
+            headerName: '經理人名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -53,13 +54,15 @@ const CreateAgentModal = () => {
             renderCell: params => (
                 <Button
                     onClick={e => {
-                        e.preventDefault();
-                        closeCreateAgentModal();
-                        updateData('agentInfoModalVisible', true);
-                        updateData('agentAFlag', 'D');
-                        dAgentData.accID = params.row.accID;
-                        dAgentData.accName = params.row.accName;
-                        updateData('dAgentData', dAgentData);
+                        runInAction(() => {
+                            e.preventDefault();
+                            closeCreateManagerModal();
+                            updateData('managerInfoModalVisible', true);
+                            updateData('managerAFlag', 'D');
+                            dManagerData.userID = params.row.userID;
+                            dManagerData.userName = params.row.userName;
+                            updateData('dManagerData', dManagerData);
+                        });
                     }}
                     variant="outlined"
                     sx={[btnStyle.btn, btnStyle.btnDelete]}
@@ -69,61 +72,61 @@ const CreateAgentModal = () => {
             ),
         },
     ];
-    if (removeSpace(agentData.accID)) {
-        updateData('createAgentDisabled', false);
+    if (removeSpace(managerData.userID)) {
+        updateData('createManagerDisabled', false);
     } else {
-        updateData('createAgentDisabled', true);
+        updateData('createManagerDisabled', true);
     }
     return (
         <ModalEdit
-            open={createAgentModalVisible}
+            open={createManagerModalVisible}
             onClose={e => {
                 e.preventDefault();
-                closeCreateAgentModal();
-                resetAgentData();
+                closeCreateManagerModal();
+                resetManagerData();
             }}
-            title={'代理人設定'}
+            title={'經理人設定'}
         >
-            <form action="">
+            <form>
                 <section>
-                    <Table header={columns} data={assignedAgentList} getRowId={row => row.accID} />
+                    <Table header={columns} data={assignedAgentList} getRowId={row => row.userID} />
                 </section>
                 <ul className="d-flex align-items-center m-5">
-                    <li className="col-6">
+                    <li>
                         <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
                             <InputLabel id="demo-controlled-open-select-label">代理人</InputLabel>
                             <Select
                                 labelId="demo-controlled-open-select-label"
                                 id="demo-controlled-open-select"
-                                value={agentData.accID}
+                                value={managerData.userID}
                                 label="代理人"
                                 displayEmpty
                                 onChange={e => {
                                     runInAction(() => {
-                                        agentData.accID = e.target.value;
-                                        agentData.accName = unassignedAgentList.find(
-                                            item => item.accID === e.target.value
-                                        ).accName;
-                                        updateData('agentData', agentData);
+                                        managerData.userID = e.target.value;
+                                        managerData.userName = unassignedAgentList.find(
+                                            item => item.userID === e.target.value
+                                        ).userName;
+                                        updateData('managerData', managerData);
                                     });
                                 }}
                             >
-                                {unassignedAgentList.map(({ accID, accName }, index) => {
+                                {unassignedAgentList.map(({ userID, userName }, index) => {
                                     return (
-                                        <MenuItem key={`agentOptions ${index}`} value={accID}>
-                                            {accName}
+                                        <MenuItem key={`brokerManagerOptions ${index}`} value={userID}>
+                                            {userName}
                                         </MenuItem>
                                     );
                                 })}
                             </Select>
                         </FormControl>
                     </li>
-                    <li className="col-3">
+                    <li className="ms-auto">
                         <Button
                             onClick={() => {
-                                closeCreateAgentModal();
-                                updateData('editUserModalVisible', true);
-                                resetAgentData();
+                                closeCreateManagerModal();
+                                updateData('editBrokerModalVisible', true);
+                                resetManagerData();
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
@@ -131,16 +134,16 @@ const CreateAgentModal = () => {
                             取消
                         </Button>
                     </li>
-                    <li className="col-3">
+                    <li className="ms-3">
                         <Button
                             onClick={() => {
-                                closeCreateAgentModal();
-                                updateData('agentInfoModalVisible', true);
-                                updateData('agentAFlag', 'C');
+                                closeCreateManagerModal();
+                                updateData('managerInfoModalVisible', true);
+                                updateData('managerAFlag', 'C');
                             }}
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
+                            disabled={createManagerDisabled}
                             variant="contained"
-                            disabled={createAgentDisabled}
                         >
                             新增
                         </Button>
@@ -151,4 +154,4 @@ const CreateAgentModal = () => {
     );
 };
 
-export default observer(CreateAgentModal);
+export default observer(CreateManagerModal);

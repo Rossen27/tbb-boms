@@ -2,37 +2,55 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { queryUserList, updateUser, getRepaymentOptionQuery } from '@api';
+import { queryUserList, updateUser, queryAgentList, getManagerOptions, updateAgent } from '@api';
 
 const initialState = {
-    keyOptions: {},
-    statusOptions: {},
+    allowTypeOptions: {},
     userList: [],
     queryTime: '',
     userData: {},
     cUserName: '',
     cUserID: '',
     cADID: '',
+    userAFlag: '',
+    agentAFlag: '',
+    agentData: {
+        accID: '',
+        accName: '',
+    },
+    dAgentData: {
+        accID: '',
+        accName: '',
+    },
+    assignedAgentList: [],
+    unassignedAgentList: [],
     editUserModalVisible: false,
     userInfoModalVisible: false,
     agentInfoModalVisible: false,
     createUserModalVisible: false,
     createAgentModalVisible: false,
-    editAgentModalVisible: false,
-    createDisabled: true,
-    actions: '',
-    payoffModalData: {},
+    applyDisabled: false,
+    createAgentDisabled: false,
+    applyAgentDisabled: false,
+    isLoading: false,
+    updateComplete: false,
+    loadingFail: false,
+    msg: '',
     params: {
-        keyword: '',
-        status: [],
-        taskId: '00201',
+        userID: '',
+        allowType: [],
+    },
+    agentParams: {
+        userId: '',
     },
 };
 
 const api = {
-    queryUserList: queryUserList,
+    qryUserList: queryUserList,
     updateUser: updateUser,
-    qryRepaymentOption: getRepaymentOptionQuery,
+    qryAgentList: queryAgentList,
+    getOptions: getManagerOptions,
+    updateAgent: updateAgent,
 };
 const UserListStore = () =>
     useLocalObservable(() => ({
@@ -48,6 +66,14 @@ const UserListStore = () =>
                 userData: {},
             });
         },
+        resetAgentData() {
+            this.reset({
+                agentData: {
+                    accID: '',
+                    accName: '',
+                },
+            });
+        },
         closeEditUserModal() {
             this.editUserModalVisible = false;
         },
@@ -60,48 +86,73 @@ const UserListStore = () =>
         closeCreateAgentModal() {
             this.createAgentModalVisible = false;
         },
-        closeEditAgentModal() {
-            this.editAgentModalVisible = false;
-        },
         closeAgentInfoModal() {
             this.agentInfoModalVisible = false;
         },
-        async getRepaymentOptionQuery() {
+        async getOptionsQuery() {
             runInAction(async () => {
                 const authParams = {
-                    taskId: this.params.taskId,
+                    taskId: '',
                 };
-                const res = await this.qryRepaymentOption(authParams);
-                const repaymentOptions = res.item;
-                this.assignData({ ...repaymentOptions });
+                const res = await this.getOptions(authParams);
+                const allowTypeOptions = res.item.allowTypeOptions;
+                this.assignData({ allowTypeOptions });
             });
         },
         async getQryUserList() {
             runInAction(async () => {
-                // await this.getRepaymentOptionQuery();
+                await this.getOptionsQuery();
                 const passParams = JSON.parse(JSON.stringify(this.params));
-                const statusOptionKeys = Object.keys(this.statusOptions).filter(key =>
-                    toJS(passParams).status.includes(this.statusOptions[key])
+                const allowTypeOptionKeys = Object.keys(this.allowTypeOptions).filter(key =>
+                    toJS(passParams).allowType.includes(this.allowTypeOptions[key])
                 );
-                passParams.status = passParams.status && statusOptionKeys.join(',');
-                const res = await this.queryUserList(passParams);
+                passParams.allowType = passParams.allowType && allowTypeOptionKeys.join(',');
+                const res = await this.qryUserList(passParams);
                 const userList = res.items;
-                console.log(userList);
-                this.assignData({ userList });
+                const queryTime = res.queryTime;
+                this.assignData({ userList, queryTime });
             });
         },
-        async updateUser() {
+        async updateUserData(postData) {
             runInAction(async () => {
-                const postData = {
-                    userID: this.userData.userID,
-                    userName: this.userData.userName,
-                    adid: this.userData.adid,
-                    allowType: this.userData.allowType,
-                    pGroup: this.userData.pGroup,
-                    actionFlag: this.userData.actionFlag,
-                };
+                this.updateData('isLoading', true);
                 const res = await this.updateUser(postData);
                 const code = parseInt(res.data.code);
+                const message = res.data.message;
+                if (res) {
+                    this.updateData('applyDisabled', false);
+                    this.updateData('updateComplete', true);
+                    this.updateData('isLoading', false);
+                    if (code) {
+                        this.updateData('loadingFail', true);
+                        this.updateData('msg', message);
+                    }
+                }
+            });
+        },
+        async getQryAgentList(userID) {
+            runInAction(async () => {
+                const res = await this.qryAgentList({ userID: userID });
+                const unassignedAgentList = res.item.unassignedAgentList;
+                const assignedAgentList = res.item.assignedAgentList;
+                this.assignData({ unassignedAgentList, assignedAgentList });
+            });
+        },
+        async updateAgentData(postData) {
+            runInAction(async () => {
+                this.updateData('isLoading', true);
+                const res = await this.updateAgent(postData);
+                const code = parseInt(res.data.code);
+                const message = res.data.message;
+                if (res) {
+                    this.updateData('applyAgentDisabled', false);
+                    this.updateData('updateComplete', true);
+                    this.updateData('isLoading', false);
+                    if (code) {
+                        this.updateData('loadingFail', true);
+                        this.updateData('msg', message);
+                    }
+                }
             });
         },
     })); // 3

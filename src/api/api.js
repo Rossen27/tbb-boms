@@ -25,24 +25,52 @@ export const callLoginTest = postData =>
  */
 export const callGetCustomerInfo = () => post('/SCLOAN090/customerInfo', {});
 
-/** ---------------------------經理人資料 -------------------------   */
-/*  查詢經理人清單 [GET]
+/** ---------------------------使用者基本資料維護 -------------------------   */
+/*  optionQuery 下拉選單查詢 [GET]
+ */
+export const getManagerOptions = params => get('/manager/optionQuery', params);
+/*  getUserList 查詢經理人清單 [GET]
  */
 export const queryUserList = params => get('/manager/getUserList', params);
 
-/* 維護經理人  [POST]
+/* updateUser 維護經理人  [POST]
  */
 export const updateUser = postData => post('/manager/updateUser', postData);
 
-/** ---------------------------還款申請 -------------------------  */
-/* repaymentOptionQuery 客戶還款選單查詢 [GET]
+/*  getAgentList 查詢代理人清單 [GET]
  */
-export const getRepaymentOptionQuery = params => get('/ScLoanAdmin020/repaymentOptionQuery', params);
+export const queryAgentList = params => get('/manager/getAgentList', params);
 
+/*  updateAgent 維護代理人  [POST]
+ */
+export const updateAgent = postData => post('/manager/updateAgent', postData);
+
+/*  getAdminList 查查詢管理人清單 [GET] */
+export const queryAdminList = params => get('/manager/getAdminList', params);
+
+/*  updateAdmin 維護代理人  [POST]
+ */
+export const updateAdmin = postData => post('/manager/updateAdmin', postData);
+/** ---------------------------可下單券商資料維護 -------------------------  */
+
+/*  optionQuery 下拉選單查詢 [GET]
+ */
+export const getBrokerOptions = params => get('/broker/optionQuery', params);
+/* getBrokerList 查詢券商清單 [GET]
+ */
+export const queryBrokerList = params => get('/broker/getBrokerList', params);
+/* updateBroker 維護券商 [POST]
+ */
+export const updateBroker = postData => post('/broker/updateBroker', postData);
+/* getAgentList 查詢代理人清單 [GET]
+ */
+export const queryBrokerManager = params => get('/broker/getManagerList', params);
 /* repaymentQuery 客戶還款查詢 [GET]
  */
 export const getRepaymentQuery = params => get('/ScLoanAdmin020/repaymentQuery', params);
-
+/* repaymentOptionQuery 客戶還款選單查詢 [GET]
+ */
+export const getRepaymentOptionQuery = params => get('/ScLoanAdmin020/repaymentOptionQuery', params);
 /* repaymentUpdate 客戶還款資訊維護 [POST]
  */
 export const callRepaymentUpdate = postData => post('/ScLoanAdmin020/repaymentUpdate', postData);

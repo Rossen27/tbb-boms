@@ -1,14 +1,12 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction } from 'mobx';
-import { callLoginUser, callLdapLogin } from '@api';
+import { callLoginUser, getOptionsQuery } from '@api';
 const initialState = {
     msg: '',
 };
 
-const api = {
-    // uploadPhoto: callUploadPhoto,
-};
+const api = {};
 const AuthStore = () =>
     useLocalObservable(() => ({
         /* observables */
@@ -22,30 +20,31 @@ const AuthStore = () =>
         //     };
         //     const res = await callLoginUser(postData);
         //     const { token, code, empNo, empName, items } = res.data;
-        //     localStorage.setItem('loginCode', code);
-        //     localStorage.setItem('loginEmpNo', empNo);
-        //     localStorage.setItem('loginEmpName', empName);
-        //     localStorage.setItem('loginAuth', JSON.stringify(items));
-        //     localStorage.setItem('token', token);
+        //     sessionStorage.setItem('loginCode', code);
+        //     sessionStorage.setItem('loginEmpNo', empNo);
+        //     sessionStorage.setItem('loginEmpName', empName);
+        //     sessionStorage.setItem('loginAuth', JSON.stringify(items));
+        //     sessionStorage.setItem('token', token);
         // },
         async ldapLogin(isAccount, isPwd) {
             const postData = {
-                userId: isAccount,
+                adid: isAccount,
                 password: isPwd,
             };
             const res = await callLoginUser(postData);
-            const { token, code, userId, userName } = res.data;
-            localStorage.setItem('loginCode', code);
-            localStorage.setItem('loginUserId', userId);
-            localStorage.setItem('loginUserName', userName);
-            // localStorage.setItem('loginAuth', JSON.stringify(items));
-            localStorage.setItem('token', token);
-            // localStorage.setItem('prevDate', prevDate);
+            const { token, code, userId, userName, unit } = res.data;
+            sessionStorage.setItem('loginCode', code);
+            sessionStorage.setItem('loginUserId', userId);
+            sessionStorage.setItem('loginUserName', userName);
+            sessionStorage.setItem('loginUnit', unit);
+            // sessionStorage.setItem('loginAuth', JSON.stringify(items));
+            sessionStorage.setItem('token', token);
+            // sessionStorage.setItem('prevDate', prevDate);
             const msg = res.data.message;
             this.assignData({ msg });
         },
         async logout() {
-            localStorage.clear();
+            sessionStorage.clear();
             this.reset();
         },
     })); // 3
