@@ -39,7 +39,7 @@ const Login = () => {
                     e.preventDefault();
                     await ldapLogin(isAccount, isPwd);
                     // await login(isAccount, isPwd);
-                    if (localStorage.getItem('loginCode') === '0') {
+                    if (sessionStorage.getItem('loginCode') === '0') {
                         navigate('/UserList', { replace: true });
                     } else {
                         setShow(true);

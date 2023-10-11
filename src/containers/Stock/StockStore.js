@@ -103,7 +103,7 @@ const StockStore = () =>
                             : '',
                     repayMentAmount: this.payoffModalData.repayMentAmount,
                     repayMentInterest: this.payoffModalData.repayMentInterest,
-                    modifier: localStorage.getItem('loginEmpName'),
+                    modifier: sessionStorage.getItem('loginEmpName'),
                     status: this.payoffModalData.status,
                     taskId: '00201',
                 };

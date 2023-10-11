@@ -4,7 +4,7 @@ import axios from 'axios';
 const API_URL = process.env.REACT_APP_API_URL;
 
 export const formPost = async (url, data, debug = false, timeout = 10000) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     return axios({
         method: 'POST',
         url: API_URL + url,
@@ -37,7 +37,7 @@ export const formPost = async (url, data, debug = false, timeout = 10000) => {
         });
 };
 export const post = async (url, data, debug = false, timeout = 600000) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
     return axios({
         method: 'POST',
         url: API_URL + url,
@@ -72,7 +72,7 @@ export const post = async (url, data, debug = false, timeout = 600000) => {
         });
 };
 export const get = async (endPoint, params, debug = false, timeout = 10000) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     return axios
         .get(API_URL + endPoint, {
@@ -103,15 +103,15 @@ const catchError = e => {
         alert(e.response.data.message);
     }
     if (e?.response?.status === 401) {
-        const localStorageKeys = Object.keys(localStorage);
-        if (localStorageKeys.length > 0) {
-            localStorage.clear();
+        const sessionStorageKeys = Object.keys(sessionStorage);
+        if (sessionStorageKeys.length > 0) {
+            sessionStorage.clear();
         }
         // Router.push('/');
     }
 };
 export const put = async (url, data, debug = false, timeout = 10000) => {
-    const token = localStorage.getItem('token');
+    const token = sessionStorage.getItem('token');
 
     return axios({
         method: 'PUT',

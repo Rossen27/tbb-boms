@@ -2,36 +2,30 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { getRepaymentQuery, callRepaymentUpdate, getRepaymentOptionQuery } from '@api';
+import { queryAdminList, updateAdmin } from '@api';
 
 const initialState = {
-    keyOptions: {},
-    statusOptions: {},
-    repaymentAccountTypeOptions: {},
-    repaymentDetailList: [],
+    allowTypeOptions: {},
+    adminList: [],
     queryTime: '',
+    adminData: {},
+    cUserName: '',
+    cUserID: '',
+    cADID: '',
     editAdminModalVisible: false,
     adminInfoModalVisible: false,
     createAdminModalVisible: false,
-    actions: '',
-    statusDisabled: false,
-    payoffModalData: {},
+    adminAFlag: '',
+    applyDisabled: false,
     params: {
-        startDate: new Date(),
-        endDate: new Date(),
-        field: 'bhno',
-        keyword: '',
-        applyType: [],
-        repaymentAccountType: [],
-        status: [],
-        taskId: '00201',
+        userID: '',
+        allowType: [],
     },
 };
 
 const api = {
-    qryRepayment: getRepaymentQuery,
-    repaymentUpdate: callRepaymentUpdate,
-    qryRepaymentOption: getRepaymentOptionQuery,
+    qryAdminList: queryAdminList,
+    updateAdmin: updateAdmin,
 };
 const AdminStore = () =>
     useLocalObservable(() => ({
@@ -48,62 +42,38 @@ const AdminStore = () =>
         closeCreateAdminModal() {
             this.createAdminModalVisible = false;
         },
-        async getRepaymentOptionQuery() {
-            runInAction(async () => {
-                const authParams = {
-                    taskId: this.params.taskId,
-                };
-                const res = await this.qryRepaymentOption(authParams);
-                const repaymentOptions = res.item;
-                this.assignData({ ...repaymentOptions });
+        resetAdminData() {
+            this.reset({
+                cUserID: '',
+                cUserName: '',
+                cADID: '',
+                adminData: {},
             });
         },
-        async getQryRepaymentDetail() {
+        async getQryAdminList() {
             runInAction(async () => {
-                await this.getRepaymentOptionQuery();
                 const passParams = JSON.parse(JSON.stringify(this.params));
-                // const applyTypeOptionKeys = Object.keys(this.applyTypeOptions).filter(key =>
-                //     toJS(passParams).applyType.includes(this.applyTypeOptions[key])
-                // );
-                // passParams.applyType = passParams.applyType && applyTypeOptionKeys.join(',');
-                const statusOptionKeys = Object.keys(this.statusOptions).filter(key =>
-                    toJS(passParams).status.includes(this.statusOptions[key])
-                );
-                passParams.status = passParams.status && statusOptionKeys.join(',');
-                const repaymentAccountTypeOptionKeys = Object.keys(this.repaymentAccountTypeOptions).filter(key =>
-                    toJS(passParams).repaymentAccountType.includes(this.repaymentAccountTypeOptions[key])
-                );
-                passParams.repaymentAccountType =
-                    passParams.repaymentAccountType && repaymentAccountTypeOptionKeys.join(',');
-                passParams.startDate = passParams.startDate && new Date(passParams.startDate).toLocaleDateString();
-                passParams.endDate = passParams.endDate && new Date(passParams.endDate).toLocaleDateString();
-                const res = await this.qryRepayment(passParams);
-                const payoffDetails = res.item;
-                this.assignData({ ...payoffDetails });
+                const res = await this.qryAdminList(passParams);
+                const adminList = res.items;
+                const queryTime = res.queryTime;
+                this.assignData({ adminList, queryTime });
             });
         },
-        async updateRepayment() {
+        async updateAdminData(postData) {
             runInAction(async () => {
-                const postData = {
-                    account: this.payoffModalData.account,
-                    bhno: this.payoffModalData.bhno,
-                    applicationNumber: this.payoffModalData.applicationNumber,
-                    failReason:
-                        this.payoffModalData.status === '1'
-                            ? this.payoffModalData.repayMentAccountType === 'c'
-                                ? '未收款'
-                                : '未賣股'
-                            : '',
-                    repayMentAmount: this.payoffModalData.repayMentAmount,
-                    repayMentInterest: this.payoffModalData.repayMentInterest,
-                    modifier: localStorage.getItem('loginEmpName'),
-                    status: this.payoffModalData.status,
-                    taskId: '00201',
-                };
-                const res = await this.repaymentUpdate(postData);
+                this.updateData('isLoading', true);
+                const res = await this.updateAdmin(postData);
                 const code = parseInt(res.data.code);
-
-                await this.getQryRepaymentDetail();
+                const message = res.data.message;
+                if (res) {
+                    this.updateData('applyDisabled', false);
+                    this.updateData('updateComplete', true);
+                    this.updateData('isLoading', false);
+                    if (code) {
+                        this.updateData('loadingFail', true);
+                        this.updateData('msg', message);
+                    }
+                }
             });
         },
     })); // 3

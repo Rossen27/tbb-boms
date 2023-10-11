@@ -1,51 +1,40 @@
 import React, { useEffect } from 'react';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@containers/Layout';
-import {
-    PersistentDrawer,
-    CustomDatePicker,
-    SelectInput,
-    SelectMultiple,
-    ButtonQuery,
-    ButtonReset,
-    ButtonCreate,
-    Table,
-    ButtonExport,
-} from '@components';
+import { PersistentDrawer, Loading, CompleteInfo, ButtonCreate, Table, ButtonExport } from '@components';
 import { addCommas, removeNonNumeric } from '@helper';
 import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { OverlayTrigger, Tooltip } from 'react-bootstrap';
 import { TextField } from '@mui/material';
-
 import EditAdminModal from './components/EditAdminModal';
 import CreateAdminModal from './components/CreateAdminModal';
 import AdminInfoModal from './components/AdminInfoModal';
-
+import { runInAction } from 'mobx';
 // import ExcelJS from 'exceljs';
 
 const Admin = () => {
     const {
         AdminStore: {
-            createAdminModalVisible,
-            repaymentDetailList,
-            totalNetPayAmount,
-            totalRepayMentAmount,
-            totalRepayMentInterest,
+            getQryAdminList,
+            adminList,
             queryTime,
             updateData,
-            getQryRepaymentDetail,
+            resetAdminData,
             reset,
-            params,
-            paramsUpdate,
+            updateComplete,
+            isLoading,
+            loadingFail,
+            msg,
         },
+        UserListStore: { getQryUserList, userList },
     } = useStore();
-    const { keyword, startDate, repaymentAccountType, status, applyType, endDate, field } = params;
-
+    // const { userID, allowType } = params;
     const columns = [
         {
-            field: 'bhno',
+            field: 'userID',
             headerName: '管理員代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -54,7 +43,7 @@ const Admin = () => {
             flex: 1,
         },
         {
-            field: 'name',
+            field: 'userName',
             headerName: '管理員名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -64,7 +53,7 @@ const Admin = () => {
             sortable: false,
         },
         {
-            field: 'repayMentInterest',
+            field: 'adid',
             headerName: 'AD帳號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -74,7 +63,7 @@ const Admin = () => {
             flex: 1,
         },
         {
-            field: 'netPayAmount',
+            field: 'unit',
             headerName: '使用單位',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -82,32 +71,50 @@ const Admin = () => {
             sortable: false,
             minWidth: 100,
             flex: 1,
+            renderCell: params => {
+                if (params.row.unit === 1) {
+                    return <p className="text-primary">資訊技術部</p>;
+                }
+            },
         },
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            getQryRepaymentDetail();
+            // getQryAdminList();
         }
     };
     useEffect(() => {
-        getQryRepaymentDetail();
+        // getQryAdminList();
+        getQryUserList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        getQryUserList();
+        // getQryAdminList();
+        if (updateComplete) {
+            setTimeout(() => {
+                navigate(0);
+            }, 3000);
+        }
+    }, [updateComplete]);
     return (
         <PersistentDrawer>
             <div>
                 <Layout title={'管理員資料維護'}>
                     <div className="d-flex justify-content-end">
                         <ButtonCreate
-                            onClick={() => {
-                                updateData('actions', 'Create');
-                                updateData('createAdminModalVisible', true);
-                                // getQryRepaymentDetail();
+                            onClick={e => {
+                                runInAction(() => {
+                                    e.preventDefault();
+                                    resetAdminData();
+                                    updateData('createAdminModalVisible', true);
+                                    updateData('adminAFlag', 'C');
+                                });
                             }}
                         />
                     </div>
@@ -118,22 +125,25 @@ const Admin = () => {
                         </p>
                     </div>
                     <section>
-                        <Table
-                            header={columns}
-                            data={repaymentDetailList}
-                            onRowClick={params => {
-                                updateData('payoffModalData', {
-                                    ...params.row,
-                                });
-                                updateData('actions', 'Update');
-                                updateData('editAdminModalVisible', true);
-                                if (parseInt(params.row.status) !== 3) {
-                                    updateData('statusDisabled', true);
-                                } else {
-                                    updateData('statusDisabled', false);
-                                }
-                            }}
-                        />
+                        {isLoading ? (
+                            <Loading isLoading={isLoading} />
+                        ) : !updateComplete ? (
+                            <Table
+                                header={columns}
+                                data={userList}
+                                // data={adminList}
+                                getRowId={row => row.userID}
+                                onRowClick={params => {
+                                    updateData('adminData', {
+                                        ...params.row,
+                                    });
+                                    updateData('adminAFlag', 'U');
+                                    updateData('editAdminModalVisible', true);
+                                }}
+                            />
+                        ) : (
+                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                        )}
                     </section>
                 </Layout>
                 <EditAdminModal />

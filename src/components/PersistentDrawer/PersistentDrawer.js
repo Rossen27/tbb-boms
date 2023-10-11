@@ -106,7 +106,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                     </IconButton>
                     <ul className="d-flex justify-content-between align-items-center">
                         <li className="mx-1">
-                            {`${localStorage.getItem('loginUserId')}${localStorage.getItem('loginUserName')}`}
+                            {`${sessionStorage.getItem('loginUserId')}${sessionStorage.getItem('loginUserName')}`}
                             ，你好
                         </li>
                         {/* <li className="mx-1">
@@ -171,7 +171,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                     </DrawerHeader>
                     <Divider />
                     <List className="text-white">
-                        {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
+                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00201' ? ( */}
                         <ListItem component={Link} to="/UserList" sx={{ color: 'white' }}>
                             <ListItemIcon>
@@ -183,7 +183,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 ''
                             );
                         })} */}
-                        {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
+                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00101' ? ( */}
                         <ListItem component={Link} to="/Admin" sx={{ color: 'white' }}>
                             <ListItemIcon>
@@ -195,7 +195,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 ''
                             );
                         })} */}
-                        {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
+                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00301' ? ( */}
                         <ListItem component={Link} to="/Broker" sx={{ color: 'white' }}>
                             <ListItemIcon>
@@ -207,7 +207,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 ''
                             );
                         })} */}
-                        {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
+                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00401' ? ( */}
                         <ListItem component={Link} to="/Stock" sx={{ color: 'white' }}>
                             <ListItemIcon>
@@ -219,7 +219,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 ''
                             );
                         })} */}
-                        {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => { */}
+                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => { */}
                         {/* return id === '00601' ? ( */}
                         {/* <ListItem key={`idList${index}`} button component={Link} to="/Version">
                             <ListItemIcon>
@@ -231,7 +231,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                         {/* '' */}
                         {/* ); */}
                         {/* })} */}
-                        {/* {JSON.parse(localStorage.getItem('loginAuth')).map(({ id }, index) => {
+                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00601' ? ( */}
                         <ListItem component={Link} to="/History" sx={{ color: 'white' }}>
                             <ListItemIcon>

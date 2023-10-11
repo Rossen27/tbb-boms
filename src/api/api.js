@@ -41,9 +41,16 @@ export const updateUser = postData => post('/manager/updateUser', postData);
  */
 export const queryAgentList = params => get('/manager/getAgentList', params);
 
-/* updateAgent 維護代理人  [POST]
+/*  updateAgent 維護代理人  [POST]
  */
 export const updateAgent = postData => post('/manager/updateAgent', postData);
+
+/*  getAdminList 查查詢管理人清單 [GET] */
+export const queryAdminList = params => get('/manager/getAdminList', params);
+
+/*  updateAdmin 維護代理人  [POST]
+ */
+export const updateAdmin = postData => post('/manager/updateAdmin', postData);
 /** ---------------------------可下單券商資料維護 -------------------------  */
 
 /*  optionQuery 下拉選單查詢 [GET]
