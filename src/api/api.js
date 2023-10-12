@@ -85,6 +85,12 @@ export const getStockAllowOptions = params => get('/stockAllow/optionQuery', par
  */
 export const updateStockAllow = postData => post('/stockAllow/updateStockAllow', postData);
 
+/** ---------------------------異動記錄清單 -------------------------  */
+
+/* getManageToolLogList 查詢異動記錄清單 [GET]
+ */
+export const queryLogList = params => get('/manager/getManageToolLogList', params);
+
 /* repaymentQuery 客戶還款查詢 [GET]
  */
 export const getRepaymentQuery = params => get('/ScLoanAdmin020/repaymentQuery', params);

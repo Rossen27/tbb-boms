@@ -2,41 +2,22 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { getRepaymentQuery, callRepaymentUpdate, getRepaymentOptionQuery } from '@api';
-
+import { queryLogList, getManagerOptions } from '@api';
+import { format } from 'date-fns';
 const initialState = {
-    // applyTypeOptions: {},
-    keyOptions: {},
-    statusOptions: {},
-    repaymentAccountTypeOptions: {},
-    repaymentDetailList: [],
-    totalNetPayAmount: 0,
-    totalRepayMentAmount: 0,
-    totalRepayMentInterest: 0,
+    functionOptions: {},
+    LogList: [],
     queryTime: '',
-    editUserModalVisible: false,
-    editInfoModalVisible: false,
-    createUserModalVisible: false,
-    createAgentModalVisible: false,
-    editAgentModalVisible: false,
-    statusDisabled: false,
-    payoffModalData: {},
     params: {
         startDate: new Date(),
         endDate: new Date(),
-        field: 'bhno',
-        keyword: '',
-        applyType: [],
-        repaymentAccountType: [],
-        status: [],
-        taskId: '00201',
+        functionId: [],
     },
 };
 
 const api = {
-    qryRepayment: getRepaymentQuery,
-    repaymentUpdate: callRepaymentUpdate,
-    qryRepaymentOption: getRepaymentOptionQuery,
+    getOptions: getManagerOptions,
+    qryLogList: queryLogList,
 };
 const HistoryStore = () =>
     useLocalObservable(() => ({
@@ -44,77 +25,31 @@ const HistoryStore = () =>
         ...initialState,
         ...StoreAction(initialState),
         ...api,
-        closeEditUserModal() {
-            this.editUserModalVisible = false;
-        },
-        closeEditInfoModal() {
-            this.editInfoModalVisible = false;
-        },
-        closeCreateUserModal() {
-            this.createUserModalVisible = false;
-        },
-        closeCreateAgentModal() {
-            this.createAgentModalVisible = false;
-        },
-        closeEditAgentModal() {
-            this.editAgentModalVisible = false;
-        },
-        async getRepaymentOptionQuery() {
+        async getOptionsQuery() {
             runInAction(async () => {
                 const authParams = {
-                    taskId: this.params.taskId,
+                    taskId: '',
                 };
-                const res = await this.qryRepaymentOption(authParams);
-                const repaymentOptions = res.item;
-                this.assignData({ ...repaymentOptions });
+                const res = await this.getOptions(authParams);
+                const functionOptions = res.item.functionOptions;
+                this.assignData({ functionOptions });
             });
         },
-        async getQryRepaymentDetail() {
+        async getQryLogList() {
             runInAction(async () => {
-                await this.getRepaymentOptionQuery();
+                await this.getOptionsQuery();
                 const passParams = JSON.parse(JSON.stringify(this.params));
-                // const applyTypeOptionKeys = Object.keys(this.applyTypeOptions).filter(key =>
-                //     toJS(passParams).applyType.includes(this.applyTypeOptions[key])
-                // );
-                // passParams.applyType = passParams.applyType && applyTypeOptionKeys.join(',');
-                const statusOptionKeys = Object.keys(this.statusOptions).filter(key =>
-                    toJS(passParams).status.includes(this.statusOptions[key])
+                passParams.startDate =
+                    passParams.startDate && format(new Date(passParams.startDate), 'yyyy/MM/dd HH:mm');
+                passParams.endDate = passParams.endDate && format(new Date(passParams.endDate), 'yyyy/MM/dd HH:mm');
+                const functionOptionKeys = Object.keys(this.functionOptions).filter(key =>
+                    toJS(passParams).functionId.includes(this.functionOptions[key])
                 );
-                passParams.status = passParams.status && statusOptionKeys.join(',');
-                const repaymentAccountTypeOptionKeys = Object.keys(this.repaymentAccountTypeOptions).filter(key =>
-                    toJS(passParams).repaymentAccountType.includes(this.repaymentAccountTypeOptions[key])
-                );
-                passParams.repaymentAccountType =
-                    passParams.repaymentAccountType && repaymentAccountTypeOptionKeys.join(',');
-                passParams.startDate = passParams.startDate && new Date(passParams.startDate).toLocaleDateString();
-                passParams.endDate = passParams.endDate && new Date(passParams.endDate).toLocaleDateString();
-                const res = await this.qryRepayment(passParams);
-                const payoffDetails = res.item;
-                this.assignData({ ...payoffDetails });
-            });
-        },
-        async updateRepayment() {
-            runInAction(async () => {
-                const postData = {
-                    account: this.payoffModalData.account,
-                    bhno: this.payoffModalData.bhno,
-                    applicationNumber: this.payoffModalData.applicationNumber,
-                    failReason:
-                        this.payoffModalData.status === '1'
-                            ? this.payoffModalData.repayMentAccountType === 'c'
-                                ? '未收款'
-                                : '未賣股'
-                            : '',
-                    repayMentAmount: this.payoffModalData.repayMentAmount,
-                    repayMentInterest: this.payoffModalData.repayMentInterest,
-                    modifier: sessionStorage.getItem('loginEmpName'),
-                    status: this.payoffModalData.status,
-                    taskId: '00201',
-                };
-                const res = await this.repaymentUpdate(postData);
-                const code = parseInt(res.data.code);
-
-                await this.getQryRepaymentDetail();
+                passParams.functionId = passParams.functionId && functionOptionKeys.join(',');
+                const res = await this.qryLogList(passParams);
+                const LogList = res.items;
+                const queryTime = res.queryTime;
+                this.assignData({ LogList, queryTime });
             });
         },
     })); // 3
