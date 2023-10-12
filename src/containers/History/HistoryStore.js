@@ -9,7 +9,7 @@ const initialState = {
     LogList: [],
     queryTime: '',
     params: {
-        startDate: new Date(),
+        startDate: new Date().setHours(0, 0, 0, 0),
         endDate: new Date(),
         functionId: [],
     },
