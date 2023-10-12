@@ -89,7 +89,7 @@ const BrokerInfoModal = () => {
                             }}
                             disabled={applyDisabled}
                         >
-                            確認變更
+                            資料確認
                         </Button>
                         <p className={`${applyDisabled ? 'fs-5 text-danger text-center' : 'd-none'}`}>請確實填寫欄位</p>
                     </li>

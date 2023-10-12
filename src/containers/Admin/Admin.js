@@ -29,7 +29,6 @@ const Admin = () => {
             loadingFail,
             msg,
         },
-        UserListStore: { getQryUserList, userList },
     } = useStore();
     // const { userID, allowType } = params;
     const columns = [
@@ -80,12 +79,11 @@ const Admin = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            // getQryAdminList();
+            getQryAdminList();
         }
     };
     useEffect(() => {
-        // getQryAdminList();
-        getQryUserList();
+        getQryAdminList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -94,8 +92,7 @@ const Admin = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
-        getQryUserList();
-        // getQryAdminList();
+        getQryAdminList();
         if (updateComplete) {
             setTimeout(() => {
                 navigate(0);
@@ -130,8 +127,7 @@ const Admin = () => {
                         ) : !updateComplete ? (
                             <Table
                                 header={columns}
-                                data={userList}
-                                // data={adminList}
+                                data={adminList}
                                 getRowId={row => row.userID}
                                 onRowClick={params => {
                                     updateData('adminData', {

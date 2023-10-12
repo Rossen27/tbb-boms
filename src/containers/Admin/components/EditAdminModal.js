@@ -136,9 +136,9 @@ const EditAdminModal = () => {
                             onClick={e => {
                                 e.preventDefault();
                                 if (removeSpace(adminData.userName) && removeSpace(adminData.adid) && adminData.unit) {
-                                    updateData('applyDisabled', true);
-                                } else {
                                     updateData('applyDisabled', false);
+                                } else {
+                                    updateData('applyDisabled', true);
                                 }
                                 updateData('adminInfoModalVisible', true);
                                 closeEditAdminModal();
