@@ -56,3 +56,37 @@ export const btnStyle = {
         },
     },
 };
+
+export const pGroupText = [
+    {
+        text: '短投',
+        value: 'T',
+    },
+    {
+        text: '長投',
+        value: 'B',
+    },
+    {
+        text: '管理',
+        value: 'S',
+    },
+    {
+        text: '策略',
+        value: 'A',
+    },
+];
+
+export const actionText = [
+    {
+        text: '新增',
+        value: 'C',
+    },
+    {
+        text: '更新',
+        value: 'U',
+    },
+    {
+        text: '刪除',
+        value: 'D',
+    },
+];

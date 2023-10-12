@@ -1,17 +1,20 @@
 import React, { useEffect } from 'react';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
+import { useNavigate } from 'react-router-dom';
 import Layout from '@containers/Layout';
 import {
     PersistentDrawer,
-    SelectInput,
+    SelectMultiple,
     ButtonQuery,
     ButtonReset,
     ButtonCreate,
     Table,
+    Loading,
+    CompleteInfo,
     ButtonExport,
 } from '@components';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { pGroupText } from './constant/stock';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Button, TextField } from '@mui/material';
 import CreateStockModal from './components/CreateStockModal';
@@ -23,42 +26,26 @@ import QueryStockModal from './components/QueryStockModal';
 const Stock = () => {
     const {
         StockStore: {
-            statusOptions,
-            keyOptions,
-            applyTypeOptions,
-            repaymentAccountTypeOptions,
-            repaymentDetailList,
-            totalNetPayAmount,
-            totalRepayMentAmount,
-            totalRepayMentInterest,
+            pGroupOptions,
+            stockAllowList,
+            resetStockAllowData,
             queryTime,
             updateData,
-            getQryRepaymentDetail,
+            getQryStockAllowList,
             reset,
             params,
             paramsUpdate,
+            updateComplete,
+            isLoading,
+            loadingFail,
+            msg,
         },
     } = useStore();
-    const { keyword, startDate, repaymentAccountType, status, applyType, endDate, field } = params;
-    const btnStyle = {
-        btn: {
-            borderRadius: '36px',
-            px: 4,
-            minWidth: '120px',
-        },
-        btnDelete: {
-            color: 'white',
-            borderColor: '#E24041',
-            backgroundColor: '#E24041',
-            '&:hover': {
-                borderColor: '#E24041',
-                backgroundColor: '#f86060',
-            },
-        },
-    };
+    const { stockNo, kind } = params;
+
     const columns = [
         {
-            field: 'bhno',
+            field: 'id',
             headerName: '序號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -67,7 +54,7 @@ const Stock = () => {
             flex: 1,
         },
         {
-            field: 'name',
+            field: 'kind',
             headerName: '類別',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -75,9 +62,12 @@ const Stock = () => {
             minWidth: 70,
             flex: 1,
             sortable: false,
+            renderCell: params => {
+                return <p>{pGroupText.filter(item => item.value === params.row.kind).map(item => item.text)}</p>;
+            },
         },
         {
-            field: 'repayMentInterest',
+            field: 'stock_NO',
             headerName: '股票代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -87,7 +77,7 @@ const Stock = () => {
             flex: 1,
         },
         {
-            field: 'netPayAmount',
+            field: 'stock_NAME',
             headerName: '股票名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -96,42 +86,29 @@ const Stock = () => {
             minWidth: 150,
             flex: 1,
         },
-        // {
-        //     field: 'collateralNumber',
-        //     headerName: '編輯',
-        //     headerClassName: 'table-header',
-        //     headerAlign: 'center',
-        //     align: 'center',
-        //     sortable: false,
-        //     minWidth: 100,
-        //     flex: 1,
-        //     renderCell: params => (
-        //         <Button
-        //             onClick={e => {
-        //                 console.log(e.target.value);
-        //             }}
-        //             variant="outlined"
-        //             sx={[btnStyle.btn, btnStyle.btnDelete]}
-        //         >
-        //             刪除
-        //         </Button>
-        //     ),
-        // },
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            getQryRepaymentDetail();
+            getQryStockAllowList();
         }
     };
     useEffect(() => {
-        getQryRepaymentDetail();
+        getQryStockAllowList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        getQryStockAllowList();
+        if (updateComplete) {
+            setTimeout(() => {
+                navigate(0);
+            }, 3000);
+        }
+    }, [updateComplete]);
     return (
         <PersistentDrawer>
             <div>
@@ -139,11 +116,12 @@ const Stock = () => {
                     <div className="d-flex justify-content-between">
                         <ul className="d-flex align-items-center">
                             <li className="me-5">
-                                <SelectInput
-                                    options={keyOptions}
-                                    selectVal={field}
-                                    onChange={e => {
-                                        paramsUpdate('field', e.target.value);
+                                <SelectMultiple
+                                    title={'類別'}
+                                    options={pGroupOptions}
+                                    selectArr={kind}
+                                    onChange={value => {
+                                        paramsUpdate('kind', value);
                                     }}
                                 />
                             </li>
@@ -153,9 +131,9 @@ const Stock = () => {
                                     label="股票代號"
                                     variant="outlined"
                                     size="small"
-                                    value={keyword}
+                                    value={stockNo}
                                     onChange={e => {
-                                        paramsUpdate('keyword', e.target.value);
+                                        paramsUpdate('stockNo', e.target.value);
                                     }}
                                     sx={{ width: '120px' }}
                                 />
@@ -163,7 +141,7 @@ const Stock = () => {
                             <li>
                                 <ButtonQuery
                                     onClick={() => {
-                                        getQryRepaymentDetail();
+                                        getQryStockAllowList();
                                     }}
                                 />
                             </li>
@@ -171,15 +149,16 @@ const Stock = () => {
                                 <ButtonReset
                                     onClick={() => {
                                         reset();
-                                        getQryRepaymentDetail();
+                                        getQryStockAllowList();
                                     }}
                                 />
                             </li>
                         </ul>
                         <ButtonCreate
                             onClick={() => {
+                                resetStockAllowData();
                                 updateData('createStockModalVisible', true);
-                                // getQryRepaymentDetail();
+                                updateData('stockAllowAFlag', 'C');
                             }}
                         />
                     </div>
@@ -191,21 +170,23 @@ const Stock = () => {
                         </p>
                     </div>
                     <section>
-                        <Table
-                            header={columns}
-                            data={repaymentDetailList}
-                            onRowClick={params => {
-                                updateData('payoffModalData', {
-                                    ...params.row,
-                                });
-                                updateData('editStockModalVisible', true);
-                                if (parseInt(params.row.status) !== 3) {
-                                    updateData('statusDisabled', true);
-                                } else {
-                                    updateData('statusDisabled', false);
-                                }
-                            }}
-                        />
+                        {isLoading ? (
+                            <Loading isLoading={isLoading} />
+                        ) : !updateComplete ? (
+                            <Table
+                                header={columns}
+                                data={stockAllowList}
+                                getRowId={row => row.id}
+                                onRowClick={params => {
+                                    updateData('stockAllowData', {
+                                        ...params.row,
+                                    });
+                                    updateData('editStockModalVisible', true);
+                                }}
+                            />
+                        ) : (
+                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                        )}
                     </section>
                 </Layout>
 

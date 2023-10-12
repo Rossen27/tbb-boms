@@ -29,6 +29,7 @@ export const callGetCustomerInfo = () => post('/SCLOAN090/customerInfo', {});
 /*  optionQuery 下拉選單查詢 [GET]
  */
 export const getManagerOptions = params => get('/manager/optionQuery', params);
+
 /*  getUserList 查詢經理人清單 [GET]
  */
 export const queryUserList = params => get('/manager/getUserList', params);
@@ -45,26 +46,45 @@ export const queryAgentList = params => get('/manager/getAgentList', params);
  */
 export const updateAgent = postData => post('/manager/updateAgent', postData);
 
-/*  getAdminList 查查詢管理人清單 [GET] */
+/*  getAdminList 查詢管理人清單 [GET] */
 export const queryAdminList = params => get('/manager/getAdminList', params);
 
 /*  updateAdmin 維護代理人  [POST]
  */
 export const updateAdmin = postData => post('/manager/updateAdmin', postData);
+
 /** ---------------------------可下單券商資料維護 -------------------------  */
 
 /*  optionQuery 下拉選單查詢 [GET]
  */
 export const getBrokerOptions = params => get('/broker/optionQuery', params);
+
 /* getBrokerList 查詢券商清單 [GET]
  */
 export const queryBrokerList = params => get('/broker/getBrokerList', params);
+
 /* updateBroker 維護券商 [POST]
  */
 export const updateBroker = postData => post('/broker/updateBroker', postData);
-/* getAgentList 查詢代理人清單 [GET]
+
+/* getStockList 查詢可交易股票清單 [GET]
  */
 export const queryBrokerManager = params => get('/broker/getManagerList', params);
+
+/** ---------------------------可交易股票資料維護 -------------------------  */
+
+/* getStockAllowList 查詢可交易股票清單 [GET]
+ */
+export const queryStockAllowList = params => get('/stockAllow/getStockAllowList', params);
+
+/*  optionQuery 下拉選單查詢 [GET]
+ */
+export const getStockAllowOptions = params => get('/stockAllow/optionQuery', params);
+
+/* updateStockAllow 維護可交易股票 [POST]
+ */
+export const updateStockAllow = postData => post('/stockAllow/updateStockAllow', postData);
+
 /* repaymentQuery 客戶還款查詢 [GET]
  */
 export const getRepaymentQuery = params => get('/ScLoanAdmin020/repaymentQuery', params);
