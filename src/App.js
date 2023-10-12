@@ -7,6 +7,7 @@ import Admin from '@containers/Admin';
 import Broker from '@containers/Broker';
 import Stock from '@containers/Stock';
 import History from '@containers/History';
+import Order from '@containers/Order';
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 function App() {
     return (
@@ -19,6 +20,7 @@ function App() {
                     <Route path="/Broker" element={<Broker />} />
                     <Route path="/Stock" element={<Stock />} />
                     <Route path="/History" element={<History />} />
+                    <Route path="/Order" element={<Order />} />
                 </Routes>
             </BrowserRouter>
         </div>
