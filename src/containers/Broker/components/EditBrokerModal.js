@@ -8,23 +8,9 @@ import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/broker';
 const EditBrokerModal = () => {
     const {
-        BrokerStore: {
-            editBrokerModalVisible,
-            closeEditBrokerModal,
-            brokerData,
-            updateData,
-            getQryManagerList,
-            payoffModalData,
-            updateRepayment,
-            statusDisabled,
-            statusOptions,
-            params,
-            paramsUpdate,
-            managerAFlag,
-        },
+        BrokerStore: { editBrokerModalVisible, closeEditBrokerModal, brokerData, updateData, getQryManagerList },
     } = useStore();
 
-    const { keyword, startDate, repaymentAccountType, status, applyType, endDate, field } = params;
     return (
         <ModalEdit open={editBrokerModalVisible} onClose={closeEditBrokerModal} title={'編輯可下單券商資料'}>
             <form action="">
@@ -110,7 +96,7 @@ const EditBrokerModal = () => {
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnUpdate]}
                         >
-                            代理人設定
+                            經理人設定
                         </Button>
                     </li>
                     <li className="ms-auto">

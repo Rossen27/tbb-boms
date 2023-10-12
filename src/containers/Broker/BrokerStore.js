@@ -41,7 +41,6 @@ const api = {
     qryBrokerList: queryBrokerList,
     qryBrokerManager: queryBrokerManager,
     updateBroker: updateBroker,
-    // getOptions:getBrokerOptions,
     updateAgent: updateAgent,
 };
 const BrokerStore = () =>
@@ -70,16 +69,6 @@ const BrokerStore = () =>
                 },
             });
         },
-        // async getOptionsQuery() {
-        //     runInAction(async () => {
-        //         const authParams = {
-        //             taskId: '',
-        //         };
-        //         const res = await this.getOptions(authParams);
-        //         const allowTypeOptions = res.item.allowTypeOptions;
-        //         this.assignData({ allowTypeOptions });
-        //     });
-        // },
         async getQryBrokerList() {
             runInAction(async () => {
                 const passParams = JSON.parse(JSON.stringify(this.params));
