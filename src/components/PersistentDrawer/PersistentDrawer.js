@@ -29,6 +29,7 @@ import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RequestPageIcon from '@mui/icons-material/RequestPage';
 import GradingIcon from '@mui/icons-material/Grading';
 import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
+import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 const drawerWidth = 260;
 
 const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })(({ theme, open }) => ({
@@ -262,6 +263,12 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 <MoveToInboxIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="契約庫存資料查詢" />
+                        </ListItem>
+                        <ListItem component={Link} to="/TradeReport" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <ReceiptLongIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="券商交易成交檔案紀錄查詢" />
                         </ListItem>
                     </List>
                 </Drawer>
