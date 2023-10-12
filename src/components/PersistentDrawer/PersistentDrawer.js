@@ -28,6 +28,7 @@ import HistoryIcon from '@mui/icons-material/History';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RequestPageIcon from '@mui/icons-material/RequestPage';
 import GradingIcon from '@mui/icons-material/Grading';
+import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
 const drawerWidth = 260;
 
 const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })(({ theme, open }) => ({
@@ -255,6 +256,12 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 <GradingIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="成交轉檔資料查詢" />
+                        </ListItem>
+                        <ListItem component={Link} to="/StkDeposit" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <MoveToInboxIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="契約庫存資料查詢" />
                         </ListItem>
                     </List>
                 </Drawer>

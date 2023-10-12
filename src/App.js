@@ -9,6 +9,7 @@ import Stock from '@containers/Stock';
 import History from '@containers/History';
 import Order from '@containers/Order';
 import DealOrder from '@containers/DealOrder';
+import StkDeposit from '@containers/StkDeposit';
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 function App() {
     return (
@@ -23,6 +24,7 @@ function App() {
                     <Route path="/History" element={<History />} />
                     <Route path="/Order" element={<Order />} />
                     <Route path="/DealOrder" element={<DealOrder />} />
+                    <Route path="/StkDeposit" element={<StkDeposit />} />
                 </Routes>
             </BrowserRouter>
         </div>
