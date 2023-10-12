@@ -26,7 +26,7 @@ import DonutSmallIcon from '@mui/icons-material/DonutSmall';
 import FindInPageIcon from '@mui/icons-material/FindInPage';
 import HistoryIcon from '@mui/icons-material/History';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
-
+import RequestPageIcon from '@mui/icons-material/RequestPage';
 const drawerWidth = 260;
 
 const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })(({ theme, open }) => ({
@@ -237,12 +237,18 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                             <ListItemIcon>
                                 <HistoryIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
-                            <ListItemText primary="異動修改紀錄" />
+                            <ListItemText primary="異動修改紀錄查詢" />
                         </ListItem>
                         {/* ) : (
                                 ''
                             );
                         })} */}
+                        <ListItem component={Link} to="/Order" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <RequestPageIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="委託交易轉檔資料查詢" />
+                        </ListItem>
                     </List>
                 </Drawer>
             </ClickAwayListener>
