@@ -86,7 +86,7 @@ const CreateAdminModal = () => {
                     <label htmlFor="unit" className="col-sm-2 col-form-label fs-5">
                         使用單位
                     </label>
-                    <div className="form-check form-check-inline col-sm-3 me-0 mb-0">
+                    {/* <div className="form-check form-check-inline col-sm-3 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
                             type="radio"
@@ -104,7 +104,7 @@ const CreateAdminModal = () => {
                         <label className="form-check-label fs-5" htmlFor="user">
                             證券部
                         </label>
-                    </div>
+                    </div> */}
                     <div className="form-check form-check-inline col-sm-3 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
@@ -112,13 +112,13 @@ const CreateAdminModal = () => {
                             name="unit"
                             id="admin"
                             value={1}
-                            checked={parseInt(adminData.unit) === 1}
-                            onChange={e => {
-                                runInAction(() => {
-                                    adminData.unit = e.target.value;
-                                    updateData('adminData', adminData);
-                                });
-                            }}
+                            defaultChecked={true}
+                            // onChange={e => {
+                            //     runInAction(() => {
+                            //         adminData.unit = e.target.value;
+                            //         updateData('adminData', adminData);
+                            //     });
+                            // }}
                         />
                         <label className="form-check-label fs-5" htmlFor="admin">
                             資訊技術部
@@ -145,12 +145,7 @@ const CreateAdminModal = () => {
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
                             onClick={e => {
                                 e.preventDefault();
-                                if (
-                                    removeSpace(cUserID) &&
-                                    removeSpace(cUserName) &&
-                                    removeSpace(cADID) &&
-                                    adminData.unit
-                                ) {
+                                if (removeSpace(cUserID) && removeSpace(cUserName) && removeSpace(cADID)) {
                                     updateData('applyDisabled', false);
                                 } else {
                                     updateData('applyDisabled', true);
@@ -159,7 +154,7 @@ const CreateAdminModal = () => {
                                 closeCreateAdminModal();
                             }}
                         >
-                            更新資料庫
+                            新增資料
                         </Button>
                     </li>
                 </ul>

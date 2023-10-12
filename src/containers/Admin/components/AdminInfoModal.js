@@ -22,7 +22,7 @@ const AdminInfoModal = () => {
     let unitText = '';
     if (parseInt(adminData.unit) === 0) {
         unitText = '證券部';
-    } else if (parseInt(adminData.unit) === 1) {
+    } else {
         unitText = '資訊技術部';
     }
     return (
@@ -61,55 +61,59 @@ const AdminInfoModal = () => {
                         </tr>
                     </tbody>
                 </table>
-                <div className="d-flex justify-content-center">
-                    <Button
-                        onClick={() => {
-                            closeAdminInfoModal();
-                            if (adminAFlag === 'C') {
-                                updateData('createAdminModalVisible', true);
-                            } else if (adminAFlag === 'U') {
-                                updateData('editAdminModalVisible', true);
-                            }
-                        }}
-                        variant="outlined"
-                        sx={[btnStyle.btn, btnStyle.btn_md, btnStyle.btnCancel]}
-                    >
-                        上一步
-                    </Button>
-                    <Button
-                        type="button"
-                        variant="contained"
-                        sx={[btnStyle.btn, btnStyle.btn_md, btnStyle.btnCreate]}
-                        onClick={async e => {
-                            e.preventDefault();
-                            updateData('applyDisabled', true);
-                            let postData = {};
-                            if (adminAFlag === 'C') {
-                                postData = {
-                                    userID: cUserID,
-                                    userName: cUserName,
-                                    adid: cADID,
-                                    unit: adminData.unit,
-                                    actionFlag: adminAFlag,
-                                };
-                            } else if (adminAFlag === 'U') {
-                                postData = {
-                                    userID: adminData.userID,
-                                    userName: adminData.userName,
-                                    adid: adminData.adid,
-                                    unit: adminData.unit,
-                                    actionFlag: adminAFlag,
-                                };
-                            }
-                            await updateAdminData(postData);
-                            closeAdminInfoModal();
-                        }}
-                        disabled={applyDisabled}
-                    >
-                        確認變更
-                    </Button>
-                    <p className={`${applyDisabled ? 'fs-5 text-danger text-center' : 'd-none'}`}>請確實填寫欄位</p>
-                </div>
+                <ul className="d-flex justify-content-center">
+                    <li>
+                        <Button
+                            onClick={() => {
+                                closeAdminInfoModal();
+                                if (adminAFlag === 'C') {
+                                    updateData('createAdminModalVisible', true);
+                                } else if (adminAFlag === 'U') {
+                                    updateData('editAdminModalVisible', true);
+                                }
+                            }}
+                            variant="outlined"
+                            sx={[btnStyle.btn, btnStyle.btn_md, btnStyle.btnCancel]}
+                        >
+                            上一步
+                        </Button>
+                    </li>
+                    <li>
+                        <Button
+                            type="button"
+                            variant="contained"
+                            sx={[btnStyle.btn, btnStyle.btn_md, btnStyle.btnCreate]}
+                            onClick={async e => {
+                                e.preventDefault();
+                                updateData('applyDisabled', true);
+                                let postData = {};
+                                if (adminAFlag === 'C') {
+                                    postData = {
+                                        userID: cUserID,
+                                        userName: cUserName,
+                                        adid: cADID,
+                                        unit: 1,
+                                        actionFlag: adminAFlag,
+                                    };
+                                } else if (adminAFlag === 'U') {
+                                    postData = {
+                                        userID: adminData.userID,
+                                        userName: adminData.userName,
+                                        adid: adminData.adid,
+                                        unit: adminData.unit,
+                                        actionFlag: adminAFlag,
+                                    };
+                                }
+                                await updateAdminData(postData);
+                                closeAdminInfoModal();
+                            }}
+                            disabled={applyDisabled}
+                        >
+                            資料確認
+                        </Button>
+                        <p className={`${applyDisabled ? 'fs-5 text-danger text-center' : 'd-none'}`}>請確實填寫欄位</p>
+                    </li>
+                </ul>
             </form>
         </ModalEdit>
     );
