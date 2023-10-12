@@ -2,37 +2,38 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { getRepaymentQuery, callRepaymentUpdate, getRepaymentOptionQuery } from '@api';
+import {
+    getStockAllowOptions,
+    queryStockAllowList,
+    updateStockAllow,
+    getRepaymentQuery,
+    callRepaymentUpdate,
+    getRepaymentOptionQuery,
+} from '@api';
 
 const initialState = {
-    // applyTypeOptions: {},
-    keyOptions: {},
-    statusOptions: {},
-    repaymentAccountTypeOptions: {},
-    repaymentDetailList: [],
-    totalNetPayAmount: 0,
-    totalRepayMentAmount: 0,
-    totalRepayMentInterest: 0,
+    pGroupOptions: {},
+    stockAllowList: [],
     queryTime: '',
+    stockAllowData: {},
+    dStockAllowData: {},
+    stockAllowAFlag: '',
     editStockModalVisible: false,
     stockInfoModalVisible: false,
     createStockModalVisible: false,
     queryStockModalVisible: false,
-    statusDisabled: false,
-    payoffModalData: {},
+    cStockNO: '',
+    cStockName: '',
     params: {
-        startDate: new Date(),
-        endDate: new Date(),
-        field: 'bhno',
-        keyword: '',
-        applyType: [],
-        repaymentAccountType: [],
-        status: [],
-        taskId: '00201',
+        stockNo: '',
+        kind: [],
     },
 };
 
 const api = {
+    qryStockAllowList: queryStockAllowList,
+    getOptions: getStockAllowOptions,
+    updateStockAllow: updateStockAllow,
     qryRepayment: getRepaymentQuery,
     repaymentUpdate: callRepaymentUpdate,
     qryRepaymentOption: getRepaymentOptionQuery,
@@ -55,62 +56,52 @@ const StockStore = () =>
         closeQueryStockModal() {
             this.queryStockModalVisible = false;
         },
-        async getRepaymentOptionQuery() {
+        resetStockAllowData() {
+            this.reset({
+                cStockNO: '',
+                cStockName: '',
+                stockAllowData: {},
+            });
+        },
+        async getOptionsQuery() {
             runInAction(async () => {
                 const authParams = {
-                    taskId: this.params.taskId,
+                    taskId: '',
                 };
-                const res = await this.qryRepaymentOption(authParams);
-                const repaymentOptions = res.item;
-                this.assignData({ ...repaymentOptions });
+                const res = await this.getOptions(authParams);
+                const pGroupOptions = res.item.pGroupOptions;
+                this.assignData({ pGroupOptions });
             });
         },
-        async getQryRepaymentDetail() {
+        async getQryStockAllowList() {
             runInAction(async () => {
-                await this.getRepaymentOptionQuery();
+                await this.getOptionsQuery();
                 const passParams = JSON.parse(JSON.stringify(this.params));
-                // const applyTypeOptionKeys = Object.keys(this.applyTypeOptions).filter(key =>
-                //     toJS(passParams).applyType.includes(this.applyTypeOptions[key])
-                // );
-                // passParams.applyType = passParams.applyType && applyTypeOptionKeys.join(',');
-                const statusOptionKeys = Object.keys(this.statusOptions).filter(key =>
-                    toJS(passParams).status.includes(this.statusOptions[key])
+                const pGroupOptionKeys = Object.keys(this.pGroupOptions).filter(key =>
+                    toJS(passParams).kind.includes(this.pGroupOptions[key])
                 );
-                passParams.status = passParams.status && statusOptionKeys.join(',');
-                const repaymentAccountTypeOptionKeys = Object.keys(this.repaymentAccountTypeOptions).filter(key =>
-                    toJS(passParams).repaymentAccountType.includes(this.repaymentAccountTypeOptions[key])
-                );
-                passParams.repaymentAccountType =
-                    passParams.repaymentAccountType && repaymentAccountTypeOptionKeys.join(',');
-                passParams.startDate = passParams.startDate && new Date(passParams.startDate).toLocaleDateString();
-                passParams.endDate = passParams.endDate && new Date(passParams.endDate).toLocaleDateString();
-                const res = await this.qryRepayment(passParams);
-                const payoffDetails = res.item;
-                this.assignData({ ...payoffDetails });
+                passParams.kind = passParams.kind && pGroupOptionKeys.join(',');
+                const res = await this.qryStockAllowList(passParams);
+                const stockAllowList = res.items;
+                const queryTime = res.queryTime;
+                this.assignData({ stockAllowList, queryTime });
             });
         },
-        async updateRepayment() {
+        async updateStockAllowData(postData) {
             runInAction(async () => {
-                const postData = {
-                    account: this.payoffModalData.account,
-                    bhno: this.payoffModalData.bhno,
-                    applicationNumber: this.payoffModalData.applicationNumber,
-                    failReason:
-                        this.payoffModalData.status === '1'
-                            ? this.payoffModalData.repayMentAccountType === 'c'
-                                ? '未收款'
-                                : '未賣股'
-                            : '',
-                    repayMentAmount: this.payoffModalData.repayMentAmount,
-                    repayMentInterest: this.payoffModalData.repayMentInterest,
-                    modifier: sessionStorage.getItem('loginEmpName'),
-                    status: this.payoffModalData.status,
-                    taskId: '00201',
-                };
-                const res = await this.repaymentUpdate(postData);
+                this.updateData('isLoading', true);
+                const res = await this.updateStockAllow(postData);
                 const code = parseInt(res.data.code);
-
-                await this.getQryRepaymentDetail();
+                const message = res.data.message;
+                if (res) {
+                    this.updateData('applyDisabled', false);
+                    this.updateData('updateComplete', true);
+                    this.updateData('isLoading', false);
+                    if (code) {
+                        this.updateData('loadingFail', true);
+                        this.updateData('msg', message);
+                    }
+                }
             });
         },
     })); // 3

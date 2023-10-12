@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { addCommas, removeNonNumeric } from '@helper';
+import { removeSpace } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/stock';
@@ -12,34 +12,34 @@ const CreateStockModal = () => {
             createStockModalVisible,
             closeCreateStockModal,
             updateData,
-            payoffModalData,
-            updateRepayment,
+            stockAllowData,
+            cStockNO,
+            cStockName,
             statusDisabled,
         },
     } = useStore();
 
     return (
         <ModalEdit open={createStockModalVisible} onClose={closeCreateStockModal} title={'新增可交易股票資料'}>
-            <form action="">
+            <form>
                 <div className="mb-4 row align-items-center">
-                    <label htmlFor="payoffFee" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="kind" className="col-sm-2 col-form-label fs-5">
                         群組
                     </label>
                     <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
                             type="radio"
-                            name="group"
+                            name="kind"
                             id="short-term"
-                            value={3}
-                            checked={parseInt(payoffModalData.status) === 3}
+                            value={'T'}
+                            checked={stockAllowData.kind === 'T'}
                             onChange={e => {
                                 runInAction(() => {
-                                    payoffModalData.status = e.target.value;
-                                    updateData('payoffModalData', payoffModalData);
+                                    stockAllowData.kind = e.target.value;
+                                    updateData('stockAllowData', stockAllowData);
                                 });
                             }}
-                            disabled={statusDisabled}
                         />
                         <label className="form-check-label fs-5" htmlFor="short-term">
                             短投
@@ -49,72 +49,98 @@ const CreateStockModal = () => {
                         <input
                             className="form-check-input fs-5"
                             type="radio"
-                            name="group"
+                            name="kind"
                             id="long-term"
-                            value={0}
-                            checked={parseInt(payoffModalData.status) === 0}
+                            value={'B'}
+                            checked={stockAllowData.kind === 'B'}
                             onChange={e => {
                                 runInAction(() => {
-                                    payoffModalData.status = e.target.value;
-                                    updateData('payoffModalData', payoffModalData);
+                                    stockAllowData.kind = e.target.value;
+                                    updateData('stockAllowData', stockAllowData);
                                 });
                             }}
-                            disabled={statusDisabled}
                         />
                         <label className="form-check-label fs-5" htmlFor="long-term">
                             長投
                         </label>
                     </div>
-                    <Button
-                        className="offset-sm-3 col-sm-3"
-                        sx={[btnStyle.btn, btnStyle.btn_sm, btnStyle.btnQuery]}
-                        onClick={() => {
-                            closeCreateStockModal();
-                            updateData('queryStockModalVisible', true);
-                        }}
-                    >
-                        查詢股票
-                    </Button>
+                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
+                        <input
+                            className="form-check-input fs-5"
+                            type="radio"
+                            name="kind"
+                            id="admin"
+                            value={'S'}
+                            checked={stockAllowData.kind === 'S'}
+                            onChange={e => {
+                                runInAction(() => {
+                                    stockAllowData.kind = e.target.value;
+                                    updateData('stockAllowData', stockAllowData);
+                                });
+                            }}
+                        />
+                        <label className="form-check-label fs-5" htmlFor="admin">
+                            管理
+                        </label>
+                    </div>
+                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
+                        <input
+                            className="form-check-input fs-5"
+                            type="radio"
+                            name="kind"
+                            id="strategic"
+                            value={'A'}
+                            checked={stockAllowData.kind === 'A'}
+                            onChange={e => {
+                                runInAction(() => {
+                                    stockAllowData.kind = e.target.value;
+                                    updateData('stockAllowData', stockAllowData);
+                                });
+                            }}
+                        />
+                        <label className="form-check-label fs-5" htmlFor="strategic">
+                            策略
+                        </label>
+                    </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="userAccount" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="stock_NO" className="col-sm-2 col-form-label fs-5">
                         股票代號
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value=""
-                            id="userAccount"
+                            value={cStockNO}
+                            id="stock_NO"
                             onChange={e => {
-                                runInAction(e => {
-                                    console.log(e.target.value);
-                                    updateData('payoffModalData', e.target.value);
+                                runInAction(() => {
+                                    const stockNO = e.target.value;
+                                    updateData('cStockNO', stockNO);
                                 });
                             }}
                         />
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="userName" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="stock_NAME" className="col-sm-2 col-form-label fs-5">
                         股票名稱
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value=""
-                            id="userName"
+                            value={cStockName}
+                            id="stock_NAME"
                             onChange={e => {
-                                runInAction(e => {
-                                    console.log(e.target.value);
-                                    updateData('payoffModalData', e.target.value);
+                                runInAction(() => {
+                                    const stockName = e.target.value;
+                                    updateData('cStockName', stockName);
                                 });
                             }}
                         />
                     </div>
                 </div>
-
                 <ul className="d-flex justify-content-center align-items-center m-5">
                     <li>
                         <Button
@@ -132,9 +158,15 @@ const CreateStockModal = () => {
                             type="button"
                             variant="contained"
                             sx={[btnStyle.btn, btnStyle.btn_md, btnStyle.btnCreate]}
-                            onClick={() => {
-                                updateData('createStockInfoModalVisible', true);
+                            onClick={e => {
+                                e.preventDefault();
                                 closeCreateStockModal();
+                                if (removeSpace(cStockNO) && removeSpace(cStockName) && stockAllowData.kind) {
+                                    updateData('applyDisabled', false);
+                                } else {
+                                    updateData('applyDisabled', true);
+                                }
+                                updateData('stockInfoModalVisible', true);
                             }}
                         >
                             新增
