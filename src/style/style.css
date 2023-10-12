@@ -199,13 +199,13 @@ ul, li {
 .logo {
   width: 181px;
   height: 46px;
-  /* background: url(../../public/images/logo.png) center center /100% no-repeat; */
+  background: url(../../public/images/logo512.png) center center /100% no-repeat;
   z-index: 10;
 }
 .logo2 {
   width: 70px;
   height: 35px;
-  /* background: url(../../public/images/head_title.png) center center /60px no-repeat; */
+  background:url(../../public/images/logo512.png) center center /60px no-repeat;
   z-index: 10;
   margin: 0 auto 0 12px;
 }

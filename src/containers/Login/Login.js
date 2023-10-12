@@ -10,7 +10,6 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const {
         AuthStore: { ldapLogin, msg },
-        UserListStore: { getQryRepaymentDetail },
     } = useStore();
 
     const navigate = useNavigate();
@@ -66,25 +65,32 @@ const Login = () => {
                     }}
                 >
                     <Typography
+                        variant="h1"
                         style={{
-                            background:
-                                'url(https://ebank.tbb.com.tw/nb3/img/tbb-logo-white.svg?a=2023072116) no-repeat linear-gradient(to bottom,  #ecbd97 0%,#ff8000 100%)',
-                            width: '336px',
-                            height: '62px',
+                            background: 'url(/images/logo512.png) no-repeat center',
+                            width: '600px',
+                            height: '120px',
                             borderRadius: 0,
                         }}
-                    />
+                        sx={{
+                            color: '#5A5A5A',
+                            padding: 3,
+                            textAlign: 'center',
+                            fontWeight: 'bold',
+                            fontSize: 32,
+                        }}
+                    ></Typography>
                     <Typography
                         // variant="h5"
                         sx={{
                             color: '#5A5A5A',
                             padding: 3,
-                            textAlign: 'center,',
+                            textAlign: 'center',
                             fontWeight: 'bold',
                             fontSize: 26,
                         }}
                     >
-                        後台管理系統
+                        OMS後台管理系統
                     </Typography>
                     <TextField
                         type={'text'}
