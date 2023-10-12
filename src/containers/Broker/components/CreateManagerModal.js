@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalEdit, Table } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { removeSpace, removeNonNumeric } from '@helper';
+import { removeSpace } from '@helper';
 import { Button, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/broker';
@@ -94,12 +94,12 @@ const CreateManagerModal = () => {
                 <ul className="d-flex align-items-center m-5">
                     <li>
                         <FormControl sx={{ m: 1, minWidth: 180 }} size="small">
-                            <InputLabel id="demo-controlled-open-select-label">代理人</InputLabel>
+                            <InputLabel id="demo-controlled-open-select-label">經理人</InputLabel>
                             <Select
                                 labelId="demo-controlled-open-select-label"
                                 id="demo-controlled-open-select"
                                 value={managerData.userID}
-                                label="代理人"
+                                label="經理人"
                                 displayEmpty
                                 onChange={e => {
                                     runInAction(() => {

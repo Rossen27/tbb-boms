@@ -82,10 +82,8 @@ const BrokerInfoModal = () => {
                                     account: brokerData.account,
                                     actionFlag: brokerAFlag,
                                 };
-                                console.log(postData);
                                 await updateBrokerData(postData);
                                 closeBrokerInfoModal();
-                                // resetData();
                             }}
                             disabled={applyDisabled}
                         >

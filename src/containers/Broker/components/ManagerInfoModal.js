@@ -28,7 +28,7 @@ const ManagerInfoModal = () => {
                 closeManagerInfoModal();
                 resetManagerData();
             }}
-            title={'確認代理人資料'}
+            title={'確認經理人資料'}
         >
             <form>
                 <table className="table table-borderless w-75">
@@ -92,7 +92,7 @@ const ManagerInfoModal = () => {
                             }}
                             disabled={applyManagerDisabled}
                         >
-                            確認變更
+                            資料確認
                         </Button>
                     </li>
                 </ul>
