@@ -2,50 +2,29 @@ import React, { useEffect } from 'react';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import Layout from '@containers/Layout';
+import { functionName } from './constant/history';
 import {
     PersistentDrawer,
-    CustomDatePicker,
-    SelectInput,
     SelectMultiple,
     ButtonQuery,
     ButtonReset,
-    ButtonCreate,
     Table,
     ButtonExport,
     BasicDateTimePicker,
 } from '@components';
-import { addCommas, removeNonNumeric } from '@helper';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { TextField } from '@mui/material';
 
 // import ExcelJS from 'exceljs';
 
 const History = () => {
     const {
-        HistoryStore: {
-            statusOptions,
-            keyOptions,
-            applyTypeOptions,
-            repaymentAccountTypeOptions,
-            repaymentDetailList,
-            totalNetPayAmount,
-            totalRepayMentAmount,
-            totalRepayMentInterest,
-            queryTime,
-            updateData,
-            getQryRepaymentDetail,
-            reset,
-            params,
-            paramsUpdate,
-        },
+        HistoryStore: { functionOptions, LogList, queryTime, getQryLogList, reset, params, paramsUpdate },
     } = useStore();
-    const { keyword, startDate, repaymentAccountType, status, applyType, endDate, field } = params;
+    const { startDate, endDate, functionId } = params;
 
     const columns = [
         {
-            field: 'repayMentDate',
+            field: 'updDate',
             headerName: '異動時間',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -53,26 +32,19 @@ const History = () => {
             minWidth: 220,
             flex: 1,
             sortingOrder: ['asc', 'desc'],
-            renderCell: params => (
-                <div>
-                    <p className="m-0">{params.row.repayMentDate}</p>
-                    <p className={`m-0 ${params.row.status === '2' ? 'num-cancel' : 'num-normal'}`}>
-                        申請書編號：{params.row.applicationNumber}
-                    </p>
-                </div>
-            ),
         },
         {
-            field: 'bhno',
+            field: 'functionId',
             headerName: '異動功能',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
             minWidth: 70,
             flex: 1,
+            renderCell: params => <p>{functionName[params.row.functionId].text}</p>,
         },
         {
-            field: 'name',
+            field: 'description',
             headerName: '異動說明',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -82,7 +54,7 @@ const History = () => {
             sortable: false,
         },
         {
-            field: 'repayMentInterest',
+            field: 'userID',
             headerName: '異動人員',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -94,11 +66,11 @@ const History = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            getQryRepaymentDetail();
+            getQryLogList();
         }
     };
     useEffect(() => {
-        getQryRepaymentDetail();
+        getQryLogList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -110,14 +82,13 @@ const History = () => {
         <PersistentDrawer>
             <div>
                 <Layout title={'異動修改紀錄'}>
-                    <ul className="d-flex align-items-end">
+                    <ul className="d-flex align-items-center">
                         <li>
-                            <SelectInput
-                                options={keyOptions}
-                                selectVal={field}
-                                onChange={e => {
-                                    paramsUpdate('field', e.target.value);
-                                }}
+                            <SelectMultiple
+                                title={'異動功能'}
+                                options={functionOptions}
+                                onChange={value => paramsUpdate('functionId', value)}
+                                selectArr={functionId}
                             />
                         </li>
                         <li>
@@ -132,8 +103,10 @@ const History = () => {
                         </li>
                         <li>
                             <BasicDateTimePicker
+                                className="mt-0"
                                 value={endDate}
                                 onChange={value => {
+                                    console.log('endDate', endDate);
                                     console.log(value);
                                     paramsUpdate('endDate', value);
                                 }}
@@ -141,20 +114,10 @@ const History = () => {
                                 label={'申請日期(迄)'}
                             />
                         </li>
-
-                        {/*                            
-                            <li>
-                                <SelectMultiple
-                                    title={'過濾權限'}
-                                    options={statusOptions}
-                                    onChange={value => paramsUpdate('repaymentAccountType', value)}
-                                    selectArr={repaymentAccountType}
-                                />
-                            </li> */}
                         <li>
                             <ButtonQuery
                                 onClick={() => {
-                                    getQryRepaymentDetail();
+                                    getQryLogList();
                                 }}
                             />
                         </li>
@@ -162,7 +125,7 @@ const History = () => {
                             <ButtonReset
                                 onClick={() => {
                                     reset();
-                                    getQryRepaymentDetail();
+                                    getQryLogList();
                                 }}
                             />
                         </li>
@@ -175,7 +138,7 @@ const History = () => {
                         </p>
                     </div>
                     <section>
-                        <Table header={columns} data={repaymentDetailList} />
+                        <Table header={columns} data={LogList} getRowId={row => row.id} />
                     </section>
                 </Layout>
                 {/* <EditUserModal />
