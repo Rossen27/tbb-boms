@@ -27,6 +27,7 @@ import FindInPageIcon from '@mui/icons-material/FindInPage';
 import HistoryIcon from '@mui/icons-material/History';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RequestPageIcon from '@mui/icons-material/RequestPage';
+import GradingIcon from '@mui/icons-material/Grading';
 const drawerWidth = 260;
 
 const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })(({ theme, open }) => ({
@@ -248,6 +249,12 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 <RequestPageIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="委託交易轉檔資料查詢" />
+                        </ListItem>
+                        <ListItem component={Link} to="/DealOrder" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <GradingIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="成交轉檔資料查詢" />
                         </ListItem>
                     </List>
                 </Drawer>
