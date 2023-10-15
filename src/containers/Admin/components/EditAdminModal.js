@@ -132,7 +132,7 @@ const EditAdminModal = () => {
                         <Button
                             type="button"
                             variant="contained"
-                            sx={[btnStyle.btn, btnStyle.btnCreate]}
+                            sx={[btnStyle.btn, btnStyle.btnUpdate]}
                             onClick={e => {
                                 e.preventDefault();
                                 if (removeSpace(adminData.userName) && removeSpace(adminData.adid) && adminData.unit) {

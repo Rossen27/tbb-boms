@@ -22,8 +22,7 @@ import ChevronRightIcon from '@mui/icons-material/ChevronRight';
 import AdminPanelSettingsIcon from '@mui/icons-material/AdminPanelSettings';
 import AssessmentIcon from '@mui/icons-material/Assessment';
 import BalanceIcon from '@mui/icons-material/Balance';
-import DonutSmallIcon from '@mui/icons-material/DonutSmall';
-import FindInPageIcon from '@mui/icons-material/FindInPage';
+import CurrencyExchangeIcon from '@mui/icons-material/CurrencyExchange';
 import HistoryIcon from '@mui/icons-material/History';
 import PeopleAltIcon from '@mui/icons-material/PeopleAlt';
 import RequestPageIcon from '@mui/icons-material/RequestPage';
@@ -222,6 +221,12 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 ''
                             );
                         })} */}
+                        <ListItem component={Link} to="/StkLimit" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <CurrencyExchangeIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="可下單額度維護" />
+                        </ListItem>
                         {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => { */}
                         {/* return id === '00601' ? ( */}
                         {/* <ListItem key={`idList${index}`} button component={Link} to="/Version">

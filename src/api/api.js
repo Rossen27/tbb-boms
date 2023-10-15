@@ -85,6 +85,16 @@ export const getStockAllowOptions = params => get('/stockAllow/optionQuery', par
  */
 export const updateStockAllow = postData => post('/stockAllow/updateStockAllow', postData);
 
+/** ---------------------------可下單額度維護 -------------------------  */
+
+/* getStkLimitList 查詢可下單額度清單 [GET]
+ */
+export const queryStockLimitList = params => get('/stkLimit/getStkLimitList', params);
+
+/* updateStkLimit 維護可下單額度 [POST]
+ */
+export const updateStockLimit = postData => post('/stkLimit/updateStkLimit', postData);
+
 /** ---------------------------異動記錄清單 -------------------------  */
 
 /* getManageToolLogList 查詢異動記錄清單 [GET]
@@ -102,6 +112,10 @@ export const queryTradeTransactionList = params => get('/tradeTransaction/getTra
 /* getStockDepositList 查詢契約庫存資料 [GET]
  */
 export const queryStockDepositList = params => get('/stockDeposit/getStockDepositList', params);
+
+/* updateStockDeposit 維護交易庫存數量 [POST]
+ */
+export const updateStockDeposit = postData => post('/stockDeposit/updateStockDeposit', postData);
 
 /** ---------------------------券商交易成交檔案記錄 -------------------------  */
 

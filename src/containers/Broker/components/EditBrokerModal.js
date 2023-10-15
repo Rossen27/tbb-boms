@@ -94,7 +94,7 @@ const EditBrokerModal = () => {
                                 updateData('createManagerModalVisible', true);
                             }}
                             variant="outlined"
-                            sx={[btnStyle.btn, btnStyle.btnUpdate]}
+                            sx={[btnStyle.btn, btnStyle.btnCreate]}
                         >
                             經理人設定
                         </Button>
@@ -132,7 +132,7 @@ const EditBrokerModal = () => {
                                 });
                             }}
                             variant="outlined"
-                            sx={[btnStyle.btn, btnStyle.btnCreate]}
+                            sx={[btnStyle.btn, btnStyle.btnUpdate]}
                         >
                             更新資料
                         </Button>
