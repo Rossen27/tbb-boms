@@ -101,7 +101,9 @@ const StkDeposit = () => {
             sortable: false,
             minWidth: 100,
             flex: 1,
-            renderCell: params => <p>{inActionText[params.row.inAction].text}</p>,
+            renderCell: params => {
+                return <p>{inActionText.filter(item => item.value === params.row.inAction).map(item => item.text)}</p>;
+            },
         },
         {
             field: 'longQty',
@@ -122,7 +124,9 @@ const StkDeposit = () => {
             sortable: false,
             minWidth: 100,
             flex: 1,
-            renderCell: params => <p>{pGroupText[params.row.pGroup].text}</p>,
+            renderCell: params => {
+                return <p>{pGroupText.filter(item => item.value === params.row.pGroup).map(item => item.text)}</p>;
+            },
         },
         {
             field: 'buyDealQty',

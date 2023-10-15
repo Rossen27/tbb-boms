@@ -37,8 +37,8 @@ const DealOrderStore = () =>
             runInAction(async () => {
                 // await this.getOptionsQuery();
                 const passParams = JSON.parse(JSON.stringify(this.params));
-                passParams.startDate = passParams.startDate && new Date(passParams.startDate).toLocaleDateString();
-                passParams.endDate = passParams.endDate && new Date(passParams.endDate).toLocaleDateString();
+                passParams.startDate = passParams.startDate && format(new Date(passParams.startDate), 'yyyyMMdd');
+                passParams.endDate = passParams.endDate && format(new Date(passParams.endDate), 'yyyyMMdd');
 
                 const res = await this.qryTradeTransactionList(passParams);
                 const dealOrderList = res.items;
