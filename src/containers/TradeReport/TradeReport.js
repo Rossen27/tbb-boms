@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import Layout from '@containers/Layout';
-// import { functionName } from './constant/history';
+import { flagName, bsTypeText } from './constant/tradeReport';
 import {
     PersistentDrawer,
     SelectMultiple,
@@ -10,7 +10,7 @@ import {
     ButtonReset,
     Table,
     ButtonExport,
-    BasicDateTimePicker,
+    CustomDatePicker,
 } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
@@ -18,44 +18,206 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const TradeReport = () => {
     const {
-        TradeReportStore: { functionOptions, LogList, queryTime, getQryLogList, reset, params, paramsUpdate },
+        TradeReportStore: { tradeReportList, queryTime, getQryTradeReportList, reset, params, paramsUpdate },
     } = useStore();
-    const { startDate, endDate, functionId } = params;
+    const { startDate, endDate } = params;
 
     const columns = [
         {
-            field: 'updDate',
-            headerName: '異動時間',
+            field: 'tx_LOG_NO',
+            headerName: '交易編號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
-            minWidth: 220,
+            minWidth: 100,
             flex: 1,
-            sortingOrder: ['asc', 'desc'],
         },
         {
-            field: 'functionId',
-            headerName: '異動功能',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            minWidth: 70,
-            flex: 1,
-            // renderCell: params => <p>{functionName[params.row.functionId].text}</p>,
-        },
-        {
-            field: 'description',
-            headerName: '異動說明',
+            field: 'tx_TIME',
+            headerName: '轉檔時間',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
             minWidth: 140,
             flex: 1,
-            sortable: false,
         },
         {
-            field: 'userID',
-            headerName: '異動人員',
+            field: 'manaual_FLAG',
+            headerName: '人工登錄',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            minWidth: 120,
+            flex: 1,
+            sortable: false,
+            renderCell: params => <p>{flagName[params.row.manaual_FLAG].text}</p>,
+        },
+        {
+            field: 'manager_ID',
+            headerName: '交易員代號',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'tradedate',
+            headerName: '交易日期',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'broker_ID',
+            headerName: '券商代號',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'tradeno',
+            headerName: '交易編號',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'account',
+            headerName: '交易帳號',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'stock_NO',
+            headerName: '股票代號',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'type',
+            headerName: '交易別',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+            renderCell: params => {
+                return <p>{bsTypeText.filter(item => item.value === params.row.type).map(item => item.text)}</p>;
+            },
+        },
+        {
+            field: 'stocks',
+            headerName: '股數',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'price',
+            headerName: '單價',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'amount',
+            headerName: '成交金額',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'fee',
+            headerName: '手續費',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'tx_RATE',
+            headerName: '證交稅',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'cost',
+            headerName: '淨收付金額',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'pay_DATE',
+            headerName: '交割日期',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'updDate',
+            headerName: '更新日期',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'updTime',
+            headerName: '更新時間',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'updUser',
+            headerName: '更新使用者',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -66,11 +228,11 @@ const TradeReport = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            getQryLogList();
+            getQryTradeReportList();
         }
     };
     useEffect(() => {
-        getQryLogList();
+        getQryTradeReportList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -81,19 +243,11 @@ const TradeReport = () => {
     return (
         <PersistentDrawer>
             <div>
-                <Layout title={'異動修改紀錄'}>
+                <Layout title={'券商交易成交檔案記錄查詢'}>
                     <ul className="d-flex align-items-center">
                         <li>
-                            <SelectMultiple
-                                title={'異動功能'}
-                                options={functionOptions}
-                                onChange={value => paramsUpdate('functionId', value)}
-                                selectArr={functionId}
-                            />
-                        </li>
-                        <li>
-                            <BasicDateTimePicker
-                                value={startDate}
+                            <CustomDatePicker
+                                date={startDate}
                                 onChange={value => {
                                     paramsUpdate('startDate', value);
                                 }}
@@ -102,12 +256,9 @@ const TradeReport = () => {
                             />
                         </li>
                         <li>
-                            <BasicDateTimePicker
-                                className="mt-0"
-                                value={endDate}
+                            <CustomDatePicker
+                                date={endDate}
                                 onChange={value => {
-                                    console.log('endDate', endDate);
-                                    console.log(value);
                                     paramsUpdate('endDate', value);
                                 }}
                                 start={startDate}
@@ -117,7 +268,7 @@ const TradeReport = () => {
                         <li>
                             <ButtonQuery
                                 onClick={() => {
-                                    getQryLogList();
+                                    getQryTradeReportList();
                                 }}
                             />
                         </li>
@@ -125,7 +276,7 @@ const TradeReport = () => {
                             <ButtonReset
                                 onClick={() => {
                                     reset();
-                                    getQryLogList();
+                                    getQryTradeReportList();
                                 }}
                             />
                         </li>
@@ -138,14 +289,13 @@ const TradeReport = () => {
                         </p>
                     </div>
                     <section>
-                        <Table header={columns} data={LogList} getRowId={row => row.id} />
+                        <Table
+                            header={columns}
+                            data={tradeReportList}
+                            getRowId={row => row.tradedate + row.broker_ID + row.tradeno}
+                        />
                     </section>
                 </Layout>
-                {/* <EditUserModal />
-                <EditInfoModal />
-                <CreateUserModal />
-                <CreateAgentModal />
-                <EditAgentModal /> */}
             </div>
         </PersistentDrawer>
     );
