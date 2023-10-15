@@ -29,7 +29,7 @@ import RequestPageIcon from '@mui/icons-material/RequestPage';
 import GradingIcon from '@mui/icons-material/Grading';
 import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
-const drawerWidth = 260;
+const drawerWidth = 280;
 
 const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })(({ theme, open }) => ({
     flexGrow: 1,
@@ -227,6 +227,12 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                             </ListItemIcon>
                             <ListItemText primary="可下單額度維護" />
                         </ListItem>
+                        <ListItem component={Link} to="/StkDeposit" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <MoveToInboxIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="契約庫存資料維護查詢" />
+                        </ListItem>
                         {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => { */}
                         {/* return id === '00601' ? ( */}
                         {/* <ListItem key={`idList${index}`} button component={Link} to="/Version">
@@ -263,12 +269,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                             </ListItemIcon>
                             <ListItemText primary="成交轉檔資料查詢" />
                         </ListItem>
-                        <ListItem component={Link} to="/StkDeposit" sx={{ color: 'white' }}>
-                            <ListItemIcon>
-                                <MoveToInboxIcon sx={{ color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="契約庫存資料查詢" />
-                        </ListItem>
+
                         <ListItem component={Link} to="/TradeReport" sx={{ color: 'white' }}>
                             <ListItemIcon>
                                 <ReceiptLongIcon sx={{ color: 'white' }} />
