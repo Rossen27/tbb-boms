@@ -2,22 +2,20 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { queryLogList, getManagerOptions } from '@api';
+import { queryTradeTransactionList, getManagerOptions } from '@api';
 import { format } from 'date-fns';
 const initialState = {
-    functionOptions: {},
-    LogList: [],
+    DealOrderList: [],
     queryTime: '',
     params: {
         startDate: new Date().setHours(0, 0, 0, 0),
         endDate: new Date(),
-        functionId: [],
     },
 };
 
 const api = {
     getOptions: getManagerOptions,
-    qryLogList: queryLogList,
+    qryTradeTransactionList: queryTradeTransactionList,
 };
 const DealOrderStore = () =>
     useLocalObservable(() => ({
@@ -35,21 +33,17 @@ const DealOrderStore = () =>
                 this.assignData({ functionOptions });
             });
         },
-        async getQryLogList() {
+        async getQryDealOrderList() {
             runInAction(async () => {
-                await this.getOptionsQuery();
+                // await this.getOptionsQuery();
                 const passParams = JSON.parse(JSON.stringify(this.params));
-                passParams.startDate =
-                    passParams.startDate && format(new Date(passParams.startDate), 'yyyy/MM/dd HH:mm');
-                passParams.endDate = passParams.endDate && format(new Date(passParams.endDate), 'yyyy/MM/dd HH:mm');
-                const functionOptionKeys = Object.keys(this.functionOptions).filter(key =>
-                    toJS(passParams).functionId.includes(this.functionOptions[key])
-                );
-                passParams.functionId = passParams.functionId && functionOptionKeys.join(',');
-                const res = await this.qryLogList(passParams);
-                const LogList = res.items;
+                passParams.startDate = passParams.startDate && new Date(passParams.startDate).toLocaleDateString();
+                passParams.endDate = passParams.endDate && new Date(passParams.endDate).toLocaleDateString();
+
+                const res = await this.qryTradeTransactionList(passParams);
+                const DealOrderList = res.items;
                 const queryTime = res.queryTime;
-                this.assignData({ LogList, queryTime });
+                this.assignData({ DealOrderList, queryTime });
             });
         },
     })); // 3

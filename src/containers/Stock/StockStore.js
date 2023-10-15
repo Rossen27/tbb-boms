@@ -2,14 +2,7 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import {
-    getStockAllowOptions,
-    queryStockAllowList,
-    updateStockAllow,
-    getRepaymentQuery,
-    callRepaymentUpdate,
-    getRepaymentOptionQuery,
-} from '@api';
+import { getStockAllowOptions, queryStockAllowList, updateStockAllow } from '@api';
 
 const initialState = {
     pGroupOptions: {},
@@ -34,9 +27,6 @@ const api = {
     qryStockAllowList: queryStockAllowList,
     getOptions: getStockAllowOptions,
     updateStockAllow: updateStockAllow,
-    qryRepayment: getRepaymentQuery,
-    repaymentUpdate: callRepaymentUpdate,
-    qryRepaymentOption: getRepaymentOptionQuery,
 };
 const StockStore = () =>
     useLocalObservable(() => ({

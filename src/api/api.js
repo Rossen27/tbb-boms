@@ -91,48 +91,8 @@ export const updateStockAllow = postData => post('/stockAllow/updateStockAllow',
  */
 export const queryLogList = params => get('/manager/getManageToolLogList', params);
 
-/* repaymentQuery 客戶還款查詢 [GET]
- */
-export const getRepaymentQuery = params => get('/ScLoanAdmin020/repaymentQuery', params);
-/* repaymentOptionQuery 客戶還款選單查詢 [GET]
- */
-export const getRepaymentOptionQuery = params => get('/ScLoanAdmin020/repaymentOptionQuery', params);
-/* repaymentUpdate 客戶還款資訊維護 [POST]
- */
-export const callRepaymentUpdate = postData => post('/ScLoanAdmin020/repaymentUpdate', postData);
+/** ---------------------------成交轉檔資料 -------------------------  */
 
-/** -------------------------增加擔保品--------------------------   */
-/* lendCollateralOptionQuery 增加擔保品選單查詢 [GET]
+/* getTradeTransactionList 查詢成交轉檔資料 [GET]
  */
-export const getLendCollateralOptionQuery = params => get('/ScLoanAdmin030/lendCollateralOptionQuery', params);
-
-/** lendCollateralQuery 客戶增加擔保品查詢[GET]
- */
-export const getLendCollateralQuery = params => get('/ScLoanAdmin030/lendCollateralQuery', params);
-
-/** -------------------------退還擔保品--------------------------   */
-/* returnCollateralOptionQuery 退還擔保品選單查詢 [GET]
- */
-export const getReturnCollateralOptionQuery = params => get('/ScLoanAdmin040/returnCollateralOptionQuery', params);
-
-/** returnCollateralQuery 客戶退還擔保品庫存查詢[GET]
- */
-export const getReturnCollateralQuery = params => get('/ScLoanAdmin040/returnCollateralQuery', params);
-
-/** --------------------------- 人員權限 -------------------------   */
-/* roleTaskQuery 人員權限查詢 [GET]
- */
-export const getRoleTaskQuery = params => get('/ScLoanAdmin050/roleTaskQuery', params);
-
-/* roleTaskUpdate 人員權限維護 [POST]
- */
-export const callRoleTaskUpdate = postData => post('/ScLoanAdmin050/roleTaskUpdate', postData);
-
-/** --------------------------- 功能管理 -------------------------   */
-/* roleTaskQuery 功能開關查詢 [GET]
- */
-export const getSwitchOptionQuery = params => get('/ScLoanAdmin060/switchOptionQuery', params);
-
-/* roleTaskUpdate 功能開關維護 [POST]
- */
-export const callSwitchOptionUpdate = postData => post('/ScLoanAdmin060/switchOptionUpdate', postData);
+export const queryTradeTransactionList = params => get('/tradeTransaction/getTradeTransactionList', params);
