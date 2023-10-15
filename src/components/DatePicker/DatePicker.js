@@ -29,6 +29,7 @@ const CustomDatePicker = ({ date, onChange, start, label }) => {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <ThemeProvider theme={theme}>
                 <DatePicker
+                    sx={{ m: 1 }}
                     label={label}
                     inputFormat="yyyy/MM/dd"
                     value={date}
