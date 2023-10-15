@@ -99,6 +99,12 @@ export const queryTradeTransactionList = params => get('/tradeTransaction/getTra
 
 /** ---------------------------契約庫存資料 -------------------------  */
 
-/* getStockDepositList 查詢契約庫存資料查詢 [GET]
+/* getStockDepositList 查詢契約庫存資料 [GET]
  */
 export const queryStockDepositList = params => get('/stockDeposit/getStockDepositList', params);
+
+/** ---------------------------券商交易成交檔案記錄 -------------------------  */
+
+/* getTradeReportList 查詢券商交易成交檔案記錄 [GET]
+ */
+export const queryTradeReportList = params => get('/tradeReport/getTradeReportList', params);
