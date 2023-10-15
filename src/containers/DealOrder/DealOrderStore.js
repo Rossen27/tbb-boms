@@ -5,7 +5,7 @@ import { runInAction, toJS } from 'mobx';
 import { queryTradeTransactionList, getManagerOptions } from '@api';
 import { format } from 'date-fns';
 const initialState = {
-    DealOrderList: [],
+    dealOrderList: [],
     queryTime: '',
     params: {
         startDate: new Date().setHours(0, 0, 0, 0),
@@ -41,9 +41,9 @@ const DealOrderStore = () =>
                 passParams.endDate = passParams.endDate && new Date(passParams.endDate).toLocaleDateString();
 
                 const res = await this.qryTradeTransactionList(passParams);
-                const DealOrderList = res.items;
+                const dealOrderList = res.items;
                 const queryTime = res.queryTime;
-                this.assignData({ DealOrderList, queryTime });
+                this.assignData({ dealOrderList, queryTime });
             });
         },
     })); // 3

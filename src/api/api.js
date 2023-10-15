@@ -96,3 +96,9 @@ export const queryLogList = params => get('/manager/getManageToolLogList', param
 /* getTradeTransactionList 查詢成交轉檔資料 [GET]
  */
 export const queryTradeTransactionList = params => get('/tradeTransaction/getTradeTransactionList', params);
+
+/** ---------------------------契約庫存資料 -------------------------  */
+
+/* getStockDepositList 查詢契約庫存資料查詢 [GET]
+ */
+export const queryStockDepositList = params => get('/stockDeposit/getStockDepositList', params);
