@@ -9,6 +9,7 @@ import HistoryContext from '@containers/History/HistoryStore';
 import OrderContext from '@containers/Order/OrderStore';
 import DealOrderContext from '@containers/DealOrder/DealOrderStore';
 import StkDepositContext from '@containers/StkDeposit/StkDepositStore';
+import StkLimitContext from '@containers/StkLimit/StkLimitStore';
 import TradeReportContext from '@containers/TradeReport/TradeReportStore';
 import React, { createContext, useContext } from 'react';
 export const RootStoreContext = createContext(null);
@@ -25,6 +26,7 @@ const RootStore = ({ children }) => {
     const OrderStore = OrderContext();
     const DealOrderStore = DealOrderContext();
     const StkDepositStore = StkDepositContext();
+    const StkLimitStore = StkLimitContext();
     const TradeReportStore = TradeReportContext();
     return (
         <RootStoreContext.Provider
@@ -40,6 +42,7 @@ const RootStore = ({ children }) => {
                 OrderStore,
                 DealOrderStore,
                 StkDepositStore,
+                StkLimitStore,
                 TradeReportStore,
             }}
         >

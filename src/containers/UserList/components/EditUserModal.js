@@ -226,7 +226,7 @@ const EditUserModal = () => {
                                 updateData('createAgentModalVisible', true);
                             }}
                             variant="outlined"
-                            sx={[btnStyle.btn, btnStyle.btnUpdate]}
+                            sx={[btnStyle.btn, btnStyle.btnCreate]}
                         >
                             代理人設定
                         </Button>
@@ -243,7 +243,7 @@ const EditUserModal = () => {
                             <Button
                                 type="button"
                                 variant="contained"
-                                sx={[btnStyle.btn, btnStyle.btnCreate]}
+                                sx={[btnStyle.btn, btnStyle.btnUpdate]}
                                 onClick={e => {
                                     e.preventDefault();
                                     if (userAFlag === 'U') {

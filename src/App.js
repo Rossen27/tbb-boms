@@ -10,6 +10,7 @@ import History from '@containers/History';
 import Order from '@containers/Order';
 import DealOrder from '@containers/DealOrder';
 import StkDeposit from '@containers/StkDeposit';
+import StkLimit from '@containers/StkLimit';
 import TradeReport from '@containers/TradeReport';
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 function App() {
@@ -22,6 +23,7 @@ function App() {
                     <Route path="/Admin" element={<Admin />} />
                     <Route path="/Broker" element={<Broker />} />
                     <Route path="/Stock" element={<Stock />} />
+                    <Route path="/StkLimit" element={<StkLimit />} />
                     <Route path="/History" element={<History />} />
                     <Route path="/Order" element={<Order />} />
                     <Route path="/DealOrder" element={<DealOrder />} />
