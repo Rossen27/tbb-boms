@@ -18,7 +18,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const DealOrder = () => {
     const {
-        DealOrderStore: { DealOrderList, queryTime, getQryDealOrderList, reset, params, paramsUpdate },
+        DealOrderStore: { dealOrderList, queryTime, getQryDealOrderList, reset, params, paramsUpdate },
     } = useStore();
     const { startDate, endDate } = params;
 
@@ -417,7 +417,7 @@ const DealOrder = () => {
                     <section>
                         <Table
                             header={columns}
-                            data={DealOrderList}
+                            data={dealOrderList}
                             getRowId={row => row.orderDate + row.TxOrderID + row.accID}
                         />
                     </section>

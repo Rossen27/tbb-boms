@@ -2,7 +2,7 @@ import React, { useEffect } from 'react';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import Layout from '@containers/Layout';
-// import { functionName } from './constant/history';
+import { inActionText, pGroupText } from './constant/stkDeposit';
 import {
     PersistentDrawer,
     SelectMultiple,
@@ -10,7 +10,7 @@ import {
     ButtonReset,
     Table,
     ButtonExport,
-    BasicDateTimePicker,
+    CustomDatePicker,
 } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
@@ -18,34 +18,33 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const StkDeposit = () => {
     const {
-        OrderStore: { functionOptions, LogList, queryTime, getQryLogList, reset, params, paramsUpdate },
+        StkDepositStore: { stkDepositList, queryTime, getQryStkDepositList, reset, params, paramsUpdate },
     } = useStore();
-    const { startDate, endDate, functionId } = params;
+    const { startDate, endDate } = params;
 
     const columns = [
         {
-            field: 'updDate',
-            headerName: '異動時間',
+            field: 'depositDate',
+            headerName: '庫存日期',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
-            minWidth: 220,
+            minWidth: 100,
             flex: 1,
             sortingOrder: ['asc', 'desc'],
         },
         {
-            field: 'functionId',
-            headerName: '異動功能',
+            field: 'accID',
+            headerName: '客戶代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
-            minWidth: 70,
+            minWidth: 100,
             flex: 1,
-            // renderCell: params => <p>{functionName[params.row.functionId].text}</p>,
         },
         {
-            field: 'description',
-            headerName: '異動說明',
+            field: 'brkid',
+            headerName: '券商代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -54,8 +53,124 @@ const StkDeposit = () => {
             sortable: false,
         },
         {
-            field: 'userID',
-            headerName: '異動人員',
+            field: 'stockID',
+            headerName: '股票代號',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'originalQty',
+            headerName: '昨庫存股數',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'effectQty',
+            headerName: '剩餘有效股數',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'dealQty',
+            headerName: '今日成交股數',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'inAction',
+            headerName: '處理訊號',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+            renderCell: params => {
+                return <p>{inActionText.filter(item => item.value === params.row.inAction).map(item => item.text)}</p>;
+            },
+        },
+        {
+            field: 'longQty',
+            headerName: '長投庫存股數',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'pGroup',
+            headerName: '權限群組',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+            renderCell: params => {
+                return <p>{pGroupText.filter(item => item.value === params.row.pGroup).map(item => item.text)}</p>;
+            },
+        },
+        {
+            field: 'buyDealQty',
+            headerName: '買單成交數量',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'account',
+            headerName: '券商客戶帳號',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'updDate',
+            headerName: '更新日期',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'updTime',
+            headerName: '更新時間',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+        },
+        {
+            field: 'updUser',
+            headerName: '更新使用者',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -66,11 +181,11 @@ const StkDeposit = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            getQryLogList();
+            getQryStkDepositList();
         }
     };
     useEffect(() => {
-        getQryLogList();
+        getQryStkDepositList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -81,19 +196,11 @@ const StkDeposit = () => {
     return (
         <PersistentDrawer>
             <div>
-                <Layout title={'異動修改紀錄'}>
+                <Layout title={'契約庫存資料查詢'}>
                     <ul className="d-flex align-items-center">
                         <li>
-                            <SelectMultiple
-                                title={'異動功能'}
-                                options={functionOptions}
-                                onChange={value => paramsUpdate('functionId', value)}
-                                selectArr={functionId}
-                            />
-                        </li>
-                        <li>
-                            <BasicDateTimePicker
-                                value={startDate}
+                            <CustomDatePicker
+                                date={startDate}
                                 onChange={value => {
                                     paramsUpdate('startDate', value);
                                 }}
@@ -102,12 +209,9 @@ const StkDeposit = () => {
                             />
                         </li>
                         <li>
-                            <BasicDateTimePicker
-                                className="mt-0"
-                                value={endDate}
+                            <CustomDatePicker
+                                date={endDate}
                                 onChange={value => {
-                                    console.log('endDate', endDate);
-                                    console.log(value);
                                     paramsUpdate('endDate', value);
                                 }}
                                 start={startDate}
@@ -117,7 +221,7 @@ const StkDeposit = () => {
                         <li>
                             <ButtonQuery
                                 onClick={() => {
-                                    getQryLogList();
+                                    getQryStkDepositList();
                                 }}
                             />
                         </li>
@@ -125,7 +229,7 @@ const StkDeposit = () => {
                             <ButtonReset
                                 onClick={() => {
                                     reset();
-                                    getQryLogList();
+                                    getQryStkDepositList();
                                 }}
                             />
                         </li>
@@ -138,7 +242,11 @@ const StkDeposit = () => {
                         </p>
                     </div>
                     <section>
-                        <Table header={columns} data={LogList} getRowId={row => row.id} />
+                        <Table
+                            header={columns}
+                            data={stkDepositList}
+                            getRowId={row => row.depositDate + row.accID + row.brkid + row.stockID}
+                        />
                     </section>
                 </Layout>
                 {/* <EditUserModal />

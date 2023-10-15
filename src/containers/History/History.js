@@ -18,7 +18,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 const History = () => {
     const {
-        HistoryStore: { functionOptions, LogList, queryTime, getQryLogList, reset, params, paramsUpdate },
+        HistoryStore: { functionOptions, logList, queryTime, getQryLogList, reset, params, paramsUpdate },
     } = useStore();
     const { startDate, endDate, functionId } = params;
 
@@ -138,7 +138,7 @@ const History = () => {
                         </p>
                     </div>
                     <section>
-                        <Table header={columns} data={LogList} getRowId={row => row.id} />
+                        <Table header={columns} data={logList} getRowId={row => row.id} />
                     </section>
                 </Layout>
                 {/* <EditUserModal />

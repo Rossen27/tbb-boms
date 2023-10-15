@@ -6,7 +6,7 @@ import { queryLogList, getManagerOptions } from '@api';
 import { format } from 'date-fns';
 const initialState = {
     functionOptions: {},
-    LogList: [],
+    logList: [],
     queryTime: '',
     params: {
         startDate: new Date().setHours(0, 0, 0, 0),
@@ -47,9 +47,9 @@ const HistoryStore = () =>
                 );
                 passParams.functionId = passParams.functionId && functionOptionKeys.join(',');
                 const res = await this.qryLogList(passParams);
-                const LogList = res.items;
+                const logList = res.items;
                 const queryTime = res.queryTime;
-                this.assignData({ LogList, queryTime });
+                this.assignData({ logList, queryTime });
             });
         },
     })); // 3
