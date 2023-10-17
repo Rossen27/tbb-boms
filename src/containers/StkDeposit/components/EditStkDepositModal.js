@@ -5,92 +5,96 @@ import { observer } from 'mobx-react-lite';
 import { removeSpace, removeNonNumeric } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
-import { btnStyle } from '../constant/stkLimit';
-const EditStkLimModal = () => {
+import { btnStyle } from '../constant/stkDeposit';
+
+const EditStkDepositModal = () => {
     const {
-        StkLimitStore: { editStkLimModalVisible, closeEditStkLimModal, updateData, stkLimitData },
+        StkDepositStore: { editStkDepositModalVisible, closeEditStkDepositModal, updateData, stkDepositData },
     } = useStore();
 
     return (
-        <ModalEdit open={editStkLimModalVisible} onClose={closeEditStkLimModal} title={'編輯可交割額度'}>
+        <ModalEdit open={editStkDepositModalVisible} onClose={closeEditStkDepositModal} title={'編輯交易庫存數量'}>
             <form>
                 <div className="mb-4 row">
-                    <label htmlFor="lim_date" className="col-sm-2 col-form-label fs-5">
-                        額度日期
+                    <label htmlFor="depositDate" className="col-sm-2 col-form-label fs-5">
+                        庫存日期
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
                             disabled
-                            value={stkLimitData.lim_date}
-                            id="lim_date"
+                            value={stkDepositData.depositDate}
+                            id="depositDate"
                         />
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="accId" className="col-sm-2 col-form-label fs-5">
-                        交易員代號
+                    <label htmlFor="accID" className="col-sm-2 col-form-label fs-5">
+                        客戶代號
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={stkLimitData.accId}
+                            value={stkDepositData.accID}
                             disabled
-                            id="accId"
-                            // onChange={e => {
-                            //     runInAction(() => {
-                            //         stkLimitData.userName = e.target.value;
-                            //         updateData('stkLimitData', stkLimitData);
-                            //     });
-                            // }}
+                            id="accID"
                         />
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="lim_type" className="col-sm-2 col-form-label fs-5">
-                        上市櫃
+                    <label htmlFor="brkid" className="col-sm-2 col-form-label fs-5">
+                        券商代號
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control col-sm-4 w-40 fs-5"
-                            id="lim_type"
-                            value={stkLimitData.lim_type === '1' ? '上市' : '上櫃'}
+                            id="brkid"
+                            value={stkDepositData.brkid}
                             disabled
-                            // onChange={e => {
-                            //     runInAction(() => {
-                            //         stkLimitData.lim_type = e.target.value;
-                            //         updateData('stkLimitData', stkLimitData);
-                            //     });
-                            // }}
                         />
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="lim_val" className="col-sm-2 col-form-label fs-5">
-                        操作限額
+                    <label htmlFor="stockID" className="col-sm-2 col-form-label fs-5">
+                        股票代號
+                    </label>
+                    <div className="col-sm-10">
+                        <input
+                            type="text"
+                            className="form-control w-40 fs-5"
+                            value={stkDepositData.stockID}
+                            id="stockID"
+                            disabled
+                        />
+                    </div>
+                </div>
+                <div className="mb-4 row">
+                    <label htmlFor="longQty" className="col-sm-2 col-form-label fs-5">
+                        長投庫存股數
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="tel"
                             className="form-control w-40 fs-5"
-                            value={stkLimitData.lim_val}
-                            id="lim_val"
+                            value={stkDepositData.longQty}
+                            id="longQty"
                             onChange={e => {
                                 runInAction(() => {
-                                    stkLimitData.lim_val = removeNonNumeric(e.target.value);
-                                    updateData('stkLimitData', stkLimitData);
+                                    stkDepositData.longQty = removeNonNumeric(e.target.value);
+                                    updateData('stkDepositData', stkDepositData);
                                 });
                             }}
                         />
                     </div>
                 </div>
+
                 <ul className="d-flex justify-content-center align-items-center m-5">
                     <li>
                         <Button
-                            onClick={closeEditStkLimModal}
+                            onClick={closeEditStkDepositModal}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
                         >
@@ -104,13 +108,17 @@ const EditStkLimModal = () => {
                             sx={[btnStyle.btn, btnStyle.btnUpdate]}
                             onClick={e => {
                                 e.preventDefault();
-                                if (removeSpace(stkLimitData.lim_val) && parseInt(stkLimitData.lim_val) > 0) {
+
+                                if (
+                                    removeSpace(toString(stkDepositData.longQty)) &&
+                                    parseInt(stkDepositData.longQty) > 0
+                                ) {
                                     updateData('applyDisabled', false);
                                 } else {
                                     updateData('applyDisabled', true);
                                 }
-                                updateData('stkLimInfoModalVisible', true);
-                                closeEditStkLimModal();
+                                updateData('stkDepositInfoModalVisible', true);
+                                closeEditStkDepositModal();
                             }}
                         >
                             更新資料
@@ -122,4 +130,4 @@ const EditStkLimModal = () => {
     );
 };
 
-export default observer(EditStkLimModal);
+export default observer(EditStkDepositModal);

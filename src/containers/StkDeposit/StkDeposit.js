@@ -1,11 +1,13 @@
 import React, { useEffect } from 'react';
 import { useStore } from '@store';
+import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import Layout from '@containers/Layout';
 import { inActionText, pGroupText } from './constant/stkDeposit';
 import {
     PersistentDrawer,
-    SelectMultiple,
+    Loading,
+    CompleteInfo,
     ButtonQuery,
     ButtonReset,
     Table,
@@ -13,12 +15,26 @@ import {
     CustomDatePicker,
 } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
+import EditStkDepositModal from './components/EditStkDepositModal';
+import StkDepositInfoModal from './components/StkDepositInfoModal';
 
 // import ExcelJS from 'exceljs';
 
 const StkDeposit = () => {
     const {
-        StkDepositStore: { stkDepositList, queryTime, getQryStkDepositList, reset, params, paramsUpdate },
+        StkDepositStore: {
+            stkDepositList,
+            updateData,
+            queryTime,
+            getQryStkDepositList,
+            reset,
+            params,
+            paramsUpdate,
+            updateComplete,
+            isLoading,
+            loadingFail,
+            msg,
+        },
     } = useStore();
     const { startDate, endDate } = params;
 
@@ -192,11 +208,19 @@ const StkDeposit = () => {
             document.removeEventListener('keydown', handleKeyDown);
         };
     }, []);
-
+    const navigate = useNavigate();
+    useEffect(() => {
+        getQryStkDepositList();
+        if (updateComplete) {
+            setTimeout(() => {
+                navigate(0);
+            }, 3000);
+        }
+    }, [updateComplete]);
     return (
         <PersistentDrawer>
             <div>
-                <Layout title={'契約庫存資料查詢'}>
+                <Layout title={'契約庫存資料維護查詢'}>
                     <ul className="d-flex align-items-center">
                         <li>
                             <CustomDatePicker
@@ -242,18 +266,28 @@ const StkDeposit = () => {
                         </p>
                     </div>
                     <section>
-                        <Table
-                            header={columns}
-                            data={stkDepositList}
-                            getRowId={row => row.depositDate + row.accID + row.brkid + row.stockID}
-                        />
+                        {isLoading ? (
+                            <Loading isLoading={isLoading} />
+                        ) : !updateComplete ? (
+                            <Table
+                                header={columns}
+                                data={stkDepositList}
+                                getRowId={row => row.depositDate + row.accID + row.brkid + row.stockID}
+                                onRowClick={params => {
+                                    updateData('stkDepositData', {
+                                        ...params.row,
+                                    });
+                                    updateData('stkDepositAFlag', 'U');
+                                    updateData('editStkDepositModalVisible', true);
+                                }}
+                            />
+                        ) : (
+                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                        )}
                     </section>
                 </Layout>
-                {/* <EditUserModal />
-                <EditInfoModal />
-                <CreateUserModal />
-                <CreateAgentModal />
-                <EditAgentModal /> */}
+                <EditStkDepositModal />
+                <StkDepositInfoModal />
             </div>
         </PersistentDrawer>
     );

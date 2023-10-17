@@ -16,6 +16,10 @@ const initialState = {
     editStkLimModalVisible: false,
     stkLimInfoModalVisible: false,
     applyDisabled: false,
+    isLoading: false,
+    updateComplete: false,
+    loadingFail: false,
+    msg: '',
 };
 
 const api = {

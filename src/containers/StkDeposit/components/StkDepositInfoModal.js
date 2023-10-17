@@ -3,22 +3,22 @@ import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@mui/material';
-import { btnStyle } from '../constant/stkLimit';
+import { btnStyle } from '../constant/stkDeposit';
 
-const StkLimInfoModal = () => {
+const StkDepositInfoModal = () => {
     const {
-        StkLimitStore: {
-            stkLimInfoModalVisible,
-            closeStkLimInfoModal,
+        StkDepositStore: {
+            stkDepositInfoModalVisible,
+            closeStkDepositInfoModal,
             updateData,
-            stkLimAFlag,
-            stkLimitData,
-            updateStkLimData,
+            stkDepositAFlag,
+            stkDepositData,
+            updateStkDepositData,
             applyDisabled,
         },
     } = useStore();
     return (
-        <ModalEdit open={stkLimInfoModalVisible} onClose={closeStkLimInfoModal} title={'確認券商資料'}>
+        <ModalEdit open={stkDepositInfoModalVisible} onClose={closeStkDepositInfoModal} title={'確認交易庫存數量'}>
             <form>
                 <table className="table table-borderless w-75">
                     <tbody>
@@ -27,27 +27,33 @@ const StkLimInfoModal = () => {
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                額度日期
+                                庫存日期
                             </th>
-                            <td>{stkLimitData.lim_date}</td>
+                            <td>{stkDepositData.depositDate}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                交易員代號
+                                客戶代號
                             </th>
-                            <td>{stkLimitData.accId}</td>
+                            <td>{stkDepositData.accID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                上市櫃
+                                券商代號
                             </th>
-                            <td>{stkLimitData.lim_type === '1' ? '上市' : '上櫃'}</td>
+                            <td>{stkDepositData.brkid}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                操作限額
+                                股票代號
                             </th>
-                            <td>{stkLimitData.lim_val}</td>
+                            <td>{stkDepositData.stockID}</td>
+                        </tr>
+                        <tr>
+                            <th scope="row" className="text-end">
+                                長投庫存股數
+                            </th>
+                            <td>{stkDepositData.longQty}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -57,8 +63,8 @@ const StkLimInfoModal = () => {
                         <Button
                             onClick={e => {
                                 e.preventDefault();
-                                updateData('editStkLimModalVisible', true);
-                                closeStkLimInfoModal();
+                                updateData('editStkDepositModalVisible', true);
+                                closeStkDepositInfoModal();
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btn_md, btnStyle.btnCancel]}
@@ -75,15 +81,16 @@ const StkLimInfoModal = () => {
                                 e.preventDefault();
                                 updateData('applyDisabled', true);
                                 const postData = {
-                                    accId: stkLimitData.accId,
-                                    lim_date: stkLimitData.lim_date,
-                                    lim_type: stkLimitData.lim_type,
-                                    lim_val: stkLimitData.lim_val,
-                                    actionFlag: stkLimAFlag,
+                                    depositDate: stkDepositData.depositDate,
+                                    accID: stkDepositData.accID,
+                                    brkid: stkDepositData.brkid,
+                                    longQty: stkDepositData.longQty,
+                                    stockID: stkDepositData.stockID,
+                                    actionFlag: stkDepositAFlag,
                                 };
 
-                                await updateStkLimData(postData);
-                                closeStkLimInfoModal();
+                                await updateStkDepositData(postData);
+                                closeStkDepositInfoModal();
                             }}
                             disabled={applyDisabled}
                         >
@@ -97,4 +104,4 @@ const StkLimInfoModal = () => {
     );
 };
 
-export default observer(StkLimInfoModal);
+export default observer(StkDepositInfoModal);
