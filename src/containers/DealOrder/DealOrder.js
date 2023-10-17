@@ -34,7 +34,7 @@ const DealOrder = () => {
             sortingOrder: ['asc', 'desc'],
         },
         {
-            field: 'TxOrderID',
+            field: 'txOrderID',
             headerName: '交易序號',
             headerClassName: 'table-header',
             headerAlign: 'center',

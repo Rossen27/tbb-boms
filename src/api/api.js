@@ -101,6 +101,12 @@ export const updateStockLimit = postData => post('/stkLimit/updateStkLimit', pos
  */
 export const queryLogList = params => get('/manager/getManageToolLogList', params);
 
+/** ---------------------------委託交易轉檔 -------------------------  */
+
+/* getOrderTransactionList 查詢委託交易轉檔資料 [GET]
+ */
+export const queryOrderTransactionList = params => get('/orderTransaction/getOrderTransactionList', params);
+
 /** ---------------------------成交轉檔資料 -------------------------  */
 
 /* getTradeTransactionList 查詢成交轉檔資料 [GET]
