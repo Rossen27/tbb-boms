@@ -2,10 +2,11 @@ import React from 'react';
 import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { removeSpace } from '@helper';
+import { removeSpace, removeNonNumeric } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/stkDeposit';
+
 const EditStkDepositModal = () => {
     const {
         StkDepositStore: { editStkDepositModalVisible, closeEditStkDepositModal, updateData, stkDepositData },
@@ -76,13 +77,13 @@ const EditStkDepositModal = () => {
                     </label>
                     <div className="col-sm-10">
                         <input
-                            type="text"
+                            type="tel"
                             className="form-control w-40 fs-5"
                             value={stkDepositData.longQty}
                             id="longQty"
                             onChange={e => {
                                 runInAction(() => {
-                                    stkDepositData.longQty = e.target.value;
+                                    stkDepositData.longQty = removeNonNumeric(e.target.value);
                                     updateData('stkDepositData', stkDepositData);
                                 });
                             }}
@@ -110,7 +111,6 @@ const EditStkDepositModal = () => {
 
                                 if (
                                     removeSpace(toString(stkDepositData.longQty)) &&
-                                    stkDepositData.longQty !== '' &&
                                     parseInt(stkDepositData.longQty) > 0
                                 ) {
                                     updateData('applyDisabled', false);

@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { removeSpace } from '@helper';
+import { removeSpace, removeNonNumeric } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/stkLimit';
@@ -74,13 +74,13 @@ const EditStkLimModal = () => {
                     </label>
                     <div className="col-sm-10">
                         <input
-                            type="text"
+                            type="tel"
                             className="form-control w-40 fs-5"
                             value={stkLimitData.lim_val}
                             id="lim_val"
                             onChange={e => {
                                 runInAction(() => {
-                                    stkLimitData.lim_val = e.target.value;
+                                    stkLimitData.lim_val = removeNonNumeric(e.target.value);
                                     updateData('stkLimitData', stkLimitData);
                                 });
                             }}
@@ -104,7 +104,7 @@ const EditStkLimModal = () => {
                             sx={[btnStyle.btn, btnStyle.btnUpdate]}
                             onClick={e => {
                                 e.preventDefault();
-                                if (removeSpace(stkLimitData.lim_val)) {
+                                if (removeSpace(stkLimitData.lim_val) && parseInt(stkLimitData.lim_val) > 0) {
                                     updateData('applyDisabled', false);
                                 } else {
                                     updateData('applyDisabled', true);
