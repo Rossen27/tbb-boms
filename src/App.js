@@ -16,7 +16,7 @@ import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 function App() {
     return (
         <div className="App">
-            <BrowserRouter>
+            <BrowserRouter basename="/BSOMS">
                 <Routes>
                     <Route path="/" element={<Login />} />
                     <Route path="/UserList" element={<UserList />} />

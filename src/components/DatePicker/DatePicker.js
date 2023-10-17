@@ -35,7 +35,12 @@ const CustomDatePicker = ({ date, onChange, start, label }) => {
                     value={date}
                     onChange={onChange}
                     minDate={start}
-                    renderInput={params => <TextField size="small" {...params} sx={{ width: '150px' }} />}
+
+                    // slots={{
+                    //     textField: textFieldProps => (
+                    //         <TextField size="small" {...textFieldProps} sx={{ width: '150px' }} />
+                    //     ),
+                    // }}
                 />
             </ThemeProvider>
         </LocalizationProvider>
