@@ -24,7 +24,7 @@ const CreateManagerModal = () => {
 
     const columns = [
         {
-            field: 'userID',
+            field: 'traderID',
             headerName: '經理人代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -33,7 +33,7 @@ const CreateManagerModal = () => {
             flex: 1,
         },
         {
-            field: 'userName',
+            field: 'traderName',
             headerName: '經理人名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -59,8 +59,8 @@ const CreateManagerModal = () => {
                             closeCreateManagerModal();
                             updateData('managerInfoModalVisible', true);
                             updateData('managerAFlag', 'D');
-                            dManagerData.userID = params.row.userID;
-                            dManagerData.userName = params.row.userName;
+                            dManagerData.traderID = params.row.traderID;
+                            dManagerData.traderName = params.row.traderName;
                             updateData('dManagerData', dManagerData);
                         });
                     }}
@@ -72,7 +72,7 @@ const CreateManagerModal = () => {
             ),
         },
     ];
-    if (removeSpace(managerData.userID)) {
+    if (removeSpace(managerData.traderID)) {
         updateData('createManagerDisabled', false);
     } else {
         updateData('createManagerDisabled', true);
@@ -89,7 +89,7 @@ const CreateManagerModal = () => {
         >
             <form>
                 <section>
-                    <Table header={columns} data={assignedAgentList} getRowId={row => row.userID} />
+                    <Table header={columns} data={assignedAgentList} getRowId={row => row.traderID} />
                 </section>
                 <ul className="d-flex align-items-center m-5">
                     <li>
@@ -98,23 +98,23 @@ const CreateManagerModal = () => {
                             <Select
                                 labelId="demo-controlled-open-select-label"
                                 id="demo-controlled-open-select"
-                                value={managerData.userID}
+                                value={managerData.traderID}
                                 label="經理人"
                                 displayEmpty
                                 onChange={e => {
                                     runInAction(() => {
-                                        managerData.userID = e.target.value;
-                                        managerData.userName = unassignedAgentList.find(
-                                            item => item.userID === e.target.value
-                                        ).userName;
+                                        managerData.traderID = e.target.value;
+                                        managerData.traderName = unassignedAgentList.find(
+                                            item => item.traderID === e.target.value
+                                        ).traderName;
                                         updateData('managerData', managerData);
                                     });
                                 }}
                             >
-                                {unassignedAgentList.map(({ userID, userName }, index) => {
+                                {unassignedAgentList.map(({ traderID, traderName }, index) => {
                                     return (
-                                        <MenuItem key={`brokerManagerOptions ${index}`} value={userID}>
-                                            {userName}
+                                        <MenuItem key={`brokerManagerOptions ${index}`} value={traderID}>
+                                            {traderName}
                                         </MenuItem>
                                     );
                                 })}

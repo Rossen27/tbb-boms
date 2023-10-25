@@ -3,35 +3,35 @@ import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@mui/material';
-import { pGroupText, btnStyle } from '../constant/userList';
-const UserInfoModal = () => {
+import { pGroupText, btnStyle } from '../constant/traderList';
+const TraderInfoModal = () => {
     const {
-        UserListStore: {
-            userInfoModalVisible,
-            closeUserInfoModal,
+        TraderListStore: {
+            traderInfoModalVisible,
+            closeTraderInfoModal,
             updateData,
-            cUserName,
-            cUserID,
+            cTraderName,
+            cTraderID,
             cADID,
-            userData,
-            updateUserData,
+            traderData,
+            updateTraderData,
             applyDisabled,
             userAFlag,
         },
     } = useStore();
     let allowTypeText = '';
-    if (parseInt(userData.allowType) === 0) {
+    if (parseInt(traderData.allowType) === 0) {
         allowTypeText = '檢視權限';
-    } else if (parseInt(userData.allowType) === 1) {
+    } else if (parseInt(traderData.allowType) === 1) {
         allowTypeText = '交易權限';
-    } else if (parseInt(userData.allowType) === 3) {
+    } else if (parseInt(traderData.allowType) === 3) {
         allowTypeText = '停用帳號';
     }
     return (
         <ModalEdit
-            open={userInfoModalVisible}
+            open={traderInfoModalVisible}
             onClose={() => {
-                closeUserInfoModal();
+                closeTraderInfoModal();
             }}
             title={'確認經理人基本資料'}
         >
@@ -48,26 +48,26 @@ const UserInfoModal = () => {
                             <th scope="row" className="text-end">
                                 經理人代號
                             </th>
-                            <td>{userAFlag === 'C' ? cUserID : userData.userID}</td>
+                            <td>{userAFlag === 'C' ? cTraderID : traderData.traderID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 經理人名稱
                             </th>
-                            <td>{userAFlag === 'C' ? cUserName : userData.userName}</td>
+                            <td>{userAFlag === 'C' ? cTraderName : traderData.traderName}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 AD帳號
                             </th>
-                            <td>{userAFlag === 'C' ? cADID : userData.adid}</td>
+                            <td>{userAFlag === 'C' ? cADID : traderData.adid}</td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                             <th scope="row" className="text-end">
                                 群組
                             </th>
-                            <td>{pGroupText.filter(item => item.value === userData.pGroup).map(item => item.text)}</td>
-                        </tr>
+                            <td>{pGroupText.filter(item => item.value === traderData.pGroup).map(item => item.text)}</td>
+                        </tr> */}
                         <tr>
                             <th scope="row" className="text-end">
                                 權限
@@ -81,11 +81,11 @@ const UserInfoModal = () => {
                         <Button
                             onClick={() => {
                                 if (userAFlag === 'C') {
-                                    updateData('createUserModalVisible', true);
+                                    updateData('createTraderModalVisible', true);
                                 } else if (userAFlag === 'U') {
-                                    updateData('editUserModalVisible', true);
+                                    updateData('editTraderModalVisible', true);
                                 }
-                                closeUserInfoModal();
+                                closeTraderInfoModal();
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
@@ -104,25 +104,25 @@ const UserInfoModal = () => {
                                 let postData = {};
                                 if (userAFlag === 'C') {
                                     postData = {
-                                        userID: cUserID,
-                                        userName: cUserName,
+                                        traderID: cTraderID,
+                                        traderName: cTraderName,
                                         adid: cADID,
-                                        allowType: userData.allowType,
-                                        pGroup: userData.pGroup,
+                                        allowType: traderData.allowType,
+                                        // pGroup: traderData.pGroup,
                                         actionFlag: userAFlag,
                                     };
                                 } else if (userAFlag === 'U') {
                                     postData = {
-                                        userID: userData.userID,
-                                        userName: userData.userName,
-                                        adid: userData.adid,
-                                        allowType: userData.allowType,
-                                        pGroup: userData.pGroup,
+                                        traderID: traderData.traderID,
+                                        traderName: traderData.traderName,
+                                        adid: traderData.adid,
+                                        allowType: traderData.allowType,
+                                        // pGroup: traderData.pGroup,
                                         actionFlag: userAFlag,
                                     };
                                 }
-                                await updateUserData(postData);
-                                closeUserInfoModal();
+                                await updateTraderData(postData);
+                                closeTraderInfoModal();
                             }}
                             disabled={applyDisabled}
                         >
@@ -136,4 +136,4 @@ const UserInfoModal = () => {
     );
 };
 
-export default observer(UserInfoModal);
+export default observer(TraderInfoModal);

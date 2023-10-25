@@ -1,6 +1,6 @@
 import LayoutContext from './LayoutStore';
 import LoginContext from '@containers/Login/LoginStore';
-import UserListContext from '@containers/UserList/UserListStore';
+import TraderListContext from '@containers/TraderList/TraderListStore';
 import AuthContext from './AuthStore';
 import AdminContext from '@containers/Admin/AdminStore';
 import BrokerContext from '@containers/Broker/BrokerStore';
@@ -11,13 +11,14 @@ import DealOrderContext from '@containers/DealOrder/DealOrderStore';
 import StkDepositContext from '@containers/StkDeposit/StkDepositStore';
 import StkLimitContext from '@containers/StkLimit/StkLimitStore';
 import TradeReportContext from '@containers/TradeReport/TradeReportStore';
+import UserContext from '@containers/User/UserStore';
 import React, { createContext, useContext } from 'react';
 export const RootStoreContext = createContext(null);
 export const useStore = () => useContext(RootStoreContext);
 const RootStore = ({ children }) => {
     const LayoutStore = LayoutContext();
     const LoginStore = LoginContext();
-    const UserListStore = UserListContext();
+    const TraderListStore = TraderListContext();
     const AuthStore = AuthContext();
     const AdminStore = AdminContext();
     const BrokerStore = BrokerContext();
@@ -28,12 +29,13 @@ const RootStore = ({ children }) => {
     const StkDepositStore = StkDepositContext();
     const StkLimitStore = StkLimitContext();
     const TradeReportStore = TradeReportContext();
+    const UserStore = UserContext();
     return (
         <RootStoreContext.Provider
             value={{
                 LayoutStore,
                 LoginStore,
-                UserListStore,
+                TraderListStore,
                 AuthStore,
                 AdminStore,
                 BrokerStore,
@@ -44,6 +46,7 @@ const RootStore = ({ children }) => {
                 StkDepositStore,
                 StkLimitStore,
                 TradeReportStore,
+                UserStore,
             }}
         >
             {children}

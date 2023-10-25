@@ -73,7 +73,7 @@ const EditBrokerModal = () => {
                 </div>
                 <div className="mb-4 row">
                     <label htmlFor="userID" className="col-sm-2 col-form-label fs-5">
-                        經理人代號
+                        契約編號
                     </label>
                     <div className="col-sm-10">
                         <input
@@ -90,7 +90,7 @@ const EditBrokerModal = () => {
                         <Button
                             onClick={() => {
                                 closeEditBrokerModal();
-                                getQryManagerList(brokerData.accID);
+                                getQryManagerList(brokerData.userID);
                                 updateData('createManagerModalVisible', true);
                             }}
                             variant="outlined"

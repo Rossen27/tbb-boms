@@ -19,7 +19,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 const TradeReport = () => {
     const {
         TradeReportStore: { tradeReportList, queryTime, getQryTradeReportList, reset, params, paramsUpdate },
-        LoginStore: { userInfo },
+        LoginStore: { traderInfo },
     } = useStore();
     const { startDate, endDate } = params;
 
@@ -229,12 +229,12 @@ const TradeReport = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            userInfo();
+            traderInfo();
             getQryTradeReportList();
         }
     };
     useEffect(() => {
-        userInfo();
+        traderInfo();
         getQryTradeReportList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {

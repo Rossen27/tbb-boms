@@ -35,7 +35,7 @@ const StkLimInfoModal = () => {
                             <th scope="row" className="text-end">
                                 交易員代號
                             </th>
-                            <td>{stkLimitData.accId}</td>
+                            <td>{stkLimitData.manager_id}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
@@ -75,7 +75,7 @@ const StkLimInfoModal = () => {
                                 e.preventDefault();
                                 updateData('applyDisabled', true);
                                 const postData = {
-                                    accId: stkLimitData.accId,
+                                    manager_id: stkLimitData.manager_id,
                                     lim_date: stkLimitData.lim_date,
                                     lim_type: stkLimitData.lim_type,
                                     lim_val: stkLimitData.lim_val,

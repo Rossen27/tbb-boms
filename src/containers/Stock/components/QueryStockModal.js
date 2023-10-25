@@ -52,7 +52,7 @@ const QueryStockModal = () => {
                             updateData('payoffModalData', {
                                 ...params.row,
                             });
-                            updateData('editUserModalVisible', true);
+                            updateData('editTraderModalVisible', true);
                             if (parseInt(params.row.status) !== 3) {
                                 updateData('statusDisabled', true);
                             } else {
@@ -106,7 +106,7 @@ const QueryStockModal = () => {
                         <Button
                             onClick={() => {
                                 closeQueryStockModal();
-                                updateData('editUserModalVisible', true);
+                                updateData('editTraderModalVisible', true);
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btn_sm, btnStyle.btnCancel]}

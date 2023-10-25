@@ -36,7 +36,7 @@ const StkLimit = () => {
             params,
             paramsUpdate,
         },
-        LoginStore: { userInfo },
+        LoginStore: { traderInfo },
     } = useStore();
     const { startDate, endDate } = params;
     const columns = [
@@ -50,7 +50,7 @@ const StkLimit = () => {
             flex: 1,
         },
         {
-            field: 'accId',
+            field: 'manager_id',
             headerName: '交易員代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -85,40 +85,40 @@ const StkLimit = () => {
                 }
             },
         },
-        {
-            field: 'updDate',
-            headerName: '更新日期',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
-        {
-            field: 'updTime',
-            headerName: '更新時間',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
-        {
-            field: 'updUser',
-            headerName: '更新使用者',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
+        // {
+        //     field: 'updDate',
+        //     headerName: '更新日期',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
+        // {
+        //     field: 'updTime',
+        //     headerName: '更新時間',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
+        // {
+        //     field: 'updUser',
+        //     headerName: '更新使用者',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            userInfo();
+            traderInfo();
             getQryStkLimList();
         }
     };
@@ -131,7 +131,7 @@ const StkLimit = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
-        userInfo();
+        traderInfo();
         getQryStkLimList();
         if (updateComplete) {
             setTimeout(() => {

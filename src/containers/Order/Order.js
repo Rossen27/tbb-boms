@@ -19,7 +19,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 const Order = () => {
     const {
         OrderStore: { orderTransList, queryTime, getQryOrderTransList, reset, params, paramsUpdate },
-        LoginStore: { userInfo },
+        LoginStore: { traderInfo },
     } = useStore();
     const { startDate, endDate } = params;
 
@@ -44,7 +44,7 @@ const Order = () => {
             flex: 1,
         },
         {
-            field: 'accID',
+            field: 'userID',
             headerName: '契約編號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -263,16 +263,16 @@ const Order = () => {
             minWidth: 100,
             flex: 1,
         },
-        {
-            field: 'userID',
-            headerName: '經理人代號',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
+        // {
+        //     field: 'traderID',
+        //     headerName: '經理人代號',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
         {
             field: 'actionUser',
             headerName: '實際下單者',
@@ -316,12 +316,12 @@ const Order = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            userInfo();
+            traderInfo();
             getQryOrderTransList();
         }
     };
     useEffect(() => {
-        userInfo();
+        traderInfo();
         getQryOrderTransList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {

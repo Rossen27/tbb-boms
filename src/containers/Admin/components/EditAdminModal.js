@@ -22,7 +22,7 @@ const EditAdminModal = () => {
         <ModalEdit open={editAdminModalVisible} onClose={closeEditAdminModal} title={'編輯管理員資料'}>
             <form>
                 <div className="mb-4 row">
-                    <label htmlFor="userID" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="traderID" className="col-sm-2 col-form-label fs-5">
                         管理員代號
                     </label>
                     <div className="col-sm-10">
@@ -30,24 +30,24 @@ const EditAdminModal = () => {
                             type="text"
                             className="form-control w-40 fs-5"
                             disabled
-                            value={adminData.userID}
-                            id="userID"
+                            value={adminData.traderID}
+                            id="traderID"
                         />
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="userName" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="traderName" className="col-sm-2 col-form-label fs-5">
                         管理員名稱
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={adminData.userName}
-                            id="userName"
+                            value={adminData.traderName}
+                            id="traderName"
                             onChange={e => {
                                 runInAction(() => {
-                                    adminData.userName = e.target.value;
+                                    adminData.traderName = e.target.value;
                                     updateData('adminData', adminData);
                                 });
                             }}
@@ -135,7 +135,11 @@ const EditAdminModal = () => {
                             sx={[btnStyle.btn, btnStyle.btnUpdate]}
                             onClick={e => {
                                 e.preventDefault();
-                                if (removeSpace(adminData.userName) && removeSpace(adminData.adid) && adminData.unit) {
+                                if (
+                                    removeSpace(adminData.traderName) &&
+                                    removeSpace(adminData.adid) &&
+                                    adminData.unit
+                                ) {
                                     updateData('applyDisabled', false);
                                 } else {
                                     updateData('applyDisabled', true);

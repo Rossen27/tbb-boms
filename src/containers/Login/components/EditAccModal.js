@@ -14,7 +14,7 @@ const EditAccModal = () => {
         LoginStore: {
             updateData,
             adid,
-            userName,
+            traderName,
             closeEditAccModal,
             editAccModalVisible,
             newPsd,
@@ -50,11 +50,17 @@ const EditAccModal = () => {
         >
             <form>
                 <div className="mb-4 row">
-                    <label htmlFor="userName" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="traderName" className="col-sm-2 col-form-label fs-5">
                         經理人名稱
                     </label>
                     <div className="col-sm-10">
-                        <input type="text" className="form-control w-40 fs-5" value={userName} id="userName" disabled />
+                        <input
+                            type="text"
+                            className="form-control w-40 fs-5"
+                            value={traderName}
+                            id="traderName"
+                            disabled
+                        />
                     </div>
                 </div>
                 <div className="mb-4 row">

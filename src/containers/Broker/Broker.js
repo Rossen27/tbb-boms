@@ -28,7 +28,7 @@ const Broker = () => {
             loadingFail,
             msg,
         },
-        LoginStore: { userInfo },
+        LoginStore: { traderInfo },
     } = useStore();
     const { brkid, userID } = params;
 
@@ -64,7 +64,7 @@ const Broker = () => {
         },
         {
             field: 'userID',
-            headerName: '經理人代號',
+            headerName: '契約編號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -75,7 +75,7 @@ const Broker = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            userInfo();
+            traderInfo();
             getQryBrokerList();
         }
     };
@@ -88,7 +88,7 @@ const Broker = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
-        userInfo();
+        traderInfo();
         getQryBrokerList();
         if (updateComplete) {
             setTimeout(() => {
@@ -118,7 +118,7 @@ const Broker = () => {
                             <li>
                                 <TextField
                                     id="outlined-basic"
-                                    label="經理人代號"
+                                    label="契約編號"
                                     variant="outlined"
                                     size="small"
                                     value={userID}
@@ -159,7 +159,7 @@ const Broker = () => {
                             <Table
                                 header={columns}
                                 data={brokerList}
-                                getRowId={row => row.brkid + row.userID + row.account}
+                                getRowId={row => row.brkid + row.userID}
                                 onRowClick={params => {
                                     updateData('brokerData', {
                                         ...params.row,

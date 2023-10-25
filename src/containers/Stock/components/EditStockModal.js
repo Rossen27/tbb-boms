@@ -33,7 +33,7 @@ const EditStockModal = () => {
                             id="short-term"
                             value={'T'}
                             checked={stockAllowData.kind === 'T'}
-                            readOnly
+                            disabled
                             // onChange={e => {
                             //     runInAction(() => {
                             //         stockAllowData.kind = e.target.value;
@@ -53,7 +53,7 @@ const EditStockModal = () => {
                             id="long-term"
                             value={'B'}
                             checked={stockAllowData.kind === 'B'}
-                            readOnly
+                            disabled
                             // onChange={e => {
                             //     runInAction(() => {
                             //         stockAllowData.kind = e.target.value;
@@ -73,7 +73,7 @@ const EditStockModal = () => {
                             id="admin"
                             value={'S'}
                             checked={stockAllowData.kind === 'S'}
-                            readOnly
+                            disabled
                             // onChange={e => {
                             //     runInAction(() => {
                             //         stockAllowData.kind = e.target.value;
@@ -93,7 +93,7 @@ const EditStockModal = () => {
                             id="strategic"
                             value={'A'}
                             checked={stockAllowData.kind === 'A'}
-                            readOnly
+                            disabled
                             // onChange={e => {
                             //     runInAction(() => {
                             //         stockAllowData.kind = e.target.value;

@@ -29,12 +29,12 @@ const Admin = () => {
             loadingFail,
             msg,
         },
-        LoginStore: { userInfo },
+        LoginStore: { traderInfo },
     } = useStore();
     // const { userID, allowType } = params;
     const columns = [
         {
-            field: 'userID',
+            field: 'traderID',
             headerName: '管理員代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -43,7 +43,7 @@ const Admin = () => {
             flex: 1,
         },
         {
-            field: 'userName',
+            field: 'traderName',
             headerName: '管理員名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -80,7 +80,7 @@ const Admin = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            userInfo();
+            traderInfo();
             getQryAdminList();
         }
     };
@@ -93,7 +93,7 @@ const Admin = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
-        userInfo();
+        traderInfo();
         getQryAdminList();
         if (updateComplete) {
             setTimeout(() => {
@@ -130,7 +130,7 @@ const Admin = () => {
                             <Table
                                 header={columns}
                                 data={adminList}
-                                getRowId={row => row.userID}
+                                getRowId={row => row.traderID}
                                 onRowClick={params => {
                                     updateData('adminData', {
                                         ...params.row,

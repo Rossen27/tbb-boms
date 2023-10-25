@@ -19,7 +19,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 const DealOrder = () => {
     const {
         DealOrderStore: { dealOrderList, queryTime, getQryDealOrderList, reset, params, paramsUpdate },
-        LoginStore: { userInfo },
+        LoginStore: { traderInfo },
     } = useStore();
     const { startDate, endDate } = params;
 
@@ -44,7 +44,7 @@ const DealOrder = () => {
             flex: 1,
         },
         {
-            field: 'accID',
+            field: 'userID',
             headerName: '契約編號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -303,7 +303,7 @@ const DealOrder = () => {
             flex: 1,
         },
         {
-            field: 'userID',
+            field: 'traderID',
             headerName: '經理人代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
@@ -355,12 +355,12 @@ const DealOrder = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            userInfo();
+            traderInfo();
             getQryDealOrderList();
         }
     };
     useEffect(() => {
-        userInfo();
+        traderInfo();
         getQryDealOrderList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
@@ -421,7 +421,7 @@ const DealOrder = () => {
                         <Table
                             header={columns}
                             data={dealOrderList}
-                            getRowId={row => row.orderDate + row.TxOrderID + row.accID}
+                            getRowId={row => row.orderDate + row.TxOrderID + row.userID}
                         />
                     </section>
                 </Layout>

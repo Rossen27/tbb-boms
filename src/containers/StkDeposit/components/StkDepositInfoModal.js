@@ -33,9 +33,9 @@ const StkDepositInfoModal = () => {
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                客戶代號
+                                契約編號
                             </th>
-                            <td>{stkDepositData.accID}</td>
+                            <td>{stkDepositData.userID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
@@ -82,7 +82,7 @@ const StkDepositInfoModal = () => {
                                 updateData('applyDisabled', true);
                                 const postData = {
                                     depositDate: stkDepositData.depositDate,
-                                    accID: stkDepositData.accID,
+                                    userID: stkDepositData.userID,
                                     brkid: stkDepositData.brkid,
                                     longQty: stkDepositData.longQty,
                                     stockID: stkDepositData.stockID,

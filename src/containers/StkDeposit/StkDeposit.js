@@ -35,7 +35,7 @@ const StkDeposit = () => {
             loadingFail,
             msg,
         },
-        LoginStore: { userInfo },
+        LoginStore: { traderInfo },
     } = useStore();
     const { startDate, endDate } = params;
 
@@ -51,8 +51,8 @@ const StkDeposit = () => {
             sortingOrder: ['asc', 'desc'],
         },
         {
-            field: 'accID',
-            headerName: '客戶代號',
+            field: 'userID',
+            headerName: '契約編號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -155,50 +155,50 @@ const StkDeposit = () => {
             minWidth: 100,
             flex: 1,
         },
-        {
-            field: 'account',
-            headerName: '券商客戶帳號',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
-        {
-            field: 'updDate',
-            headerName: '更新日期',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
-        {
-            field: 'updTime',
-            headerName: '更新時間',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
-        {
-            field: 'updUser',
-            headerName: '更新使用者',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
+        // {
+        //     field: 'account',
+        //     headerName: '券商客戶帳號',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
+        // {
+        //     field: 'updDate',
+        //     headerName: '更新日期',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
+        // {
+        //     field: 'updTime',
+        //     headerName: '更新時間',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
+        // {
+        //     field: 'updUser',
+        //     headerName: '更新使用者',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            userInfo();
+            traderInfo();
             getQryStkDepositList();
         }
     };
@@ -211,7 +211,7 @@ const StkDeposit = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
-        userInfo();
+        traderInfo();
         getQryStkDepositList();
         if (updateComplete) {
             setTimeout(() => {
@@ -274,7 +274,7 @@ const StkDeposit = () => {
                             <Table
                                 header={columns}
                                 data={stkDepositList}
-                                getRowId={row => row.depositDate + row.accID + row.brkid + row.stockID}
+                                getRowId={row => row.depositDate + row.userID + row.brkid + row.stockID}
                                 onRowClick={params => {
                                     updateData('stkDepositData', {
                                         ...params.row,

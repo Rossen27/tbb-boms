@@ -42,13 +42,13 @@ const ManagerInfoModal = () => {
                             <th scope="row" className="text-end">
                                 經理人代號
                             </th>
-                            <td>{managerAFlag === 'D' ? dManagerData.userID : managerData.userID}</td>
+                            <td>{managerAFlag === 'D' ? dManagerData.traderID : managerData.traderID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 經理人名稱
                             </th>
-                            <td>{managerAFlag === 'D' ? dManagerData.userName : managerData.userName}</td>
+                            <td>{managerAFlag === 'D' ? dManagerData.traderName : managerData.traderName}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -76,14 +76,14 @@ const ManagerInfoModal = () => {
                                 let postData = {};
                                 if (managerAFlag === 'C') {
                                     postData = {
-                                        accID: brokerData.accID,
-                                        userID: managerData.userID,
+                                        agentID: brokerData.userID,
+                                        userID: managerData.traderID,
                                         actionFlag: managerAFlag,
                                     };
                                 } else if (managerAFlag === 'D') {
                                     postData = {
-                                        accID: brokerData.accID,
-                                        userID: dManagerData.userID,
+                                        agentID: brokerData.userID,
+                                        userID: managerData.traderID,
                                         actionFlag: managerAFlag,
                                     };
                                 }

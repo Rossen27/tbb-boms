@@ -11,9 +11,9 @@ const request = axios.create({
 
 export const callLoginUser = postData => request.post('/login', postData);
 
-/** getUserInfo 客戶資訊 [GET]
+/** getTraderInfo 客戶資訊 [GET]
  */
-export const getUserInfo = params => get('/manager/getUserInfo', params);
+export const getTraderInfo = params => get('/manager/getTraderInfo', params);
 
 /** updatePassword 客戶密碼維護 [POST]
  */
@@ -21,6 +21,10 @@ export const getUserInfo = params => get('/manager/getUserInfo', params);
 export const updateUserPassword = postData => post('/manager/updatePassword', postData);
 
 /** ---------------------------使用者基本資料維護 -------------------------   */
+export const queryTraderList = params => get('/manager/getTraderList', params);
+
+export const updateTrader = postData => post('/manager/updateTrader', postData);
+
 /*  optionQuery 下拉選單查詢 [GET]
  */
 export const getManagerOptions = params => get('/manager/optionQuery', params);

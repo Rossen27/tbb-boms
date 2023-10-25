@@ -2,17 +2,17 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { queryUserList, updateUser, queryAgentList, getManagerOptions, updateAgent } from '@api';
+import { queryTraderList, updateTrader, queryAgentList, getManagerOptions, updateAgent } from '@api';
 
 const initialState = {
     allowTypeOptions: {},
-    userList: [],
+    traderList: [],
     queryTime: '',
-    userData: {
+    traderData: {
         password: '',
     },
-    cUserName: '',
-    cUserID: '',
+    cTraderName: '',
+    cTraderID: '',
     cADID: '',
     userAFlag: '',
     agentAFlag: '',
@@ -26,10 +26,10 @@ const initialState = {
     },
     assignedAgentList: [],
     unassignedAgentList: [],
-    editUserModalVisible: false,
-    userInfoModalVisible: false,
+    editTraderModalVisible: false,
+    traderInfoModalVisible: false,
     agentInfoModalVisible: false,
-    createUserModalVisible: false,
+    createTraderModalVisible: false,
     createAgentModalVisible: false,
     applyDisabled: false,
     createAgentDisabled: false,
@@ -39,33 +39,33 @@ const initialState = {
     loadingFail: false,
     msg: '',
     params: {
-        userID: '',
+        traderID: '',
         allowType: [],
     },
     agentParams: {
-        userId: '',
+        traderID: '',
     },
 };
 
 const api = {
-    qryUserList: queryUserList,
-    updateUser: updateUser,
+    qryTraderList: queryTraderList,
+    updateTrader: updateTrader,
     qryAgentList: queryAgentList,
     getOptions: getManagerOptions,
     updateAgent: updateAgent,
 };
-const UserListStore = () =>
+const TraderListStore = () =>
     useLocalObservable(() => ({
         /* observables */
         ...initialState,
         ...StoreAction(initialState),
         ...api,
-        resetUserData() {
+        resetTraderData() {
             this.reset({
-                cUserID: '',
-                cUserName: '',
+                cTraderID: '',
+                cTraderName: '',
                 cADID: '',
-                userData: {},
+                traderData: {},
             });
         },
         resetAgentData() {
@@ -76,14 +76,14 @@ const UserListStore = () =>
                 },
             });
         },
-        closeEditUserModal() {
-            this.editUserModalVisible = false;
+        closeEditTraderModal() {
+            this.editTraderModalVisible = false;
         },
-        closeUserInfoModal() {
-            this.userInfoModalVisible = false;
+        closeTraderInfoModal() {
+            this.traderInfoModalVisible = false;
         },
-        closeCreateUserModal() {
-            this.createUserModalVisible = false;
+        closeCreateTraderModal() {
+            this.createTraderModalVisible = false;
         },
         closeCreateAgentModal() {
             this.createAgentModalVisible = false;
@@ -101,7 +101,7 @@ const UserListStore = () =>
                 this.assignData({ allowTypeOptions });
             });
         },
-        async getQryUserList() {
+        async getQryTraderList() {
             runInAction(async () => {
                 await this.getOptionsQuery();
                 const passParams = JSON.parse(JSON.stringify(this.params));
@@ -109,16 +109,16 @@ const UserListStore = () =>
                     toJS(passParams).allowType.includes(this.allowTypeOptions[key])
                 );
                 passParams.allowType = passParams.allowType && allowTypeOptionKeys.join(',');
-                const res = await this.qryUserList(passParams);
-                const userList = res.items;
+                const res = await this.qryTraderList(passParams);
+                const traderList = res.items;
                 const queryTime = res.queryTime;
-                this.assignData({ userList, queryTime });
+                this.assignData({ traderList, queryTime });
             });
         },
-        async updateUserData(postData) {
+        async updateTraderData(postData) {
             runInAction(async () => {
                 this.updateData('isLoading', true);
-                const res = await this.updateUser(postData);
+                const res = await this.updateTrader(postData);
                 const code = parseInt(res.data.code);
                 const message = res.data.message;
                 if (res) {
@@ -132,9 +132,9 @@ const UserListStore = () =>
                 }
             });
         },
-        async getQryAgentList(userID) {
+        async getQryAgentList(traderID) {
             runInAction(async () => {
-                const res = await this.qryAgentList({ userID: userID });
+                const res = await this.qryAgentList({ traderID: traderID });
                 const unassignedAgentList = res.item.unassignedAgentList;
                 const assignedAgentList = res.item.assignedAgentList;
                 this.assignData({ unassignedAgentList, assignedAgentList });
@@ -159,4 +159,4 @@ const UserListStore = () =>
         },
     })); // 3
 
-export default UserListStore; // 2
+export default TraderListStore; // 2

@@ -12,8 +12,8 @@ const CreateAdminModal = () => {
             createAdminModalVisible,
             closeCreateAdminModal,
             updateData,
-            cUserID,
-            cUserName,
+            cTraderID,
+            cTraderName,
             cADID,
             adminData,
         },
@@ -21,42 +21,42 @@ const CreateAdminModal = () => {
 
     return (
         <ModalEdit open={createAdminModalVisible} onClose={closeCreateAdminModal} title={'新增管理員資料'}>
-            <form action="">
+            <form>
                 <div className="mb-4 row">
-                    <label htmlFor="userID" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="traderID" className="col-sm-2 col-form-label fs-5">
                         管理員代號
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={cUserID}
+                            value={cTraderID}
                             required
-                            id="userID"
+                            id="traderID"
                             onChange={e => {
                                 runInAction(() => {
-                                    const userID = e.target.value;
-                                    updateData('cUserID', userID);
+                                    const traderID = e.target.value;
+                                    updateData('cTraderID', traderID);
                                 });
                             }}
                         />
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="userName" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="traderName" className="col-sm-2 col-form-label fs-5">
                         管理員名稱
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={cUserName}
+                            value={cTraderName}
                             required
-                            id="userName"
+                            id="traderName"
                             onChange={e => {
                                 runInAction(() => {
-                                    const userName = e.target.value;
-                                    updateData('cUserName', userName);
+                                    const traderName = e.target.value;
+                                    updateData('cTraderName', traderName);
                                 });
                             }}
                         />
@@ -145,7 +145,7 @@ const CreateAdminModal = () => {
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
                             onClick={e => {
                                 e.preventDefault();
-                                if (removeSpace(cUserID) && removeSpace(cUserName) && removeSpace(cADID)) {
+                                if (removeSpace(cTraderID) && removeSpace(cTraderName) && removeSpace(cADID)) {
                                     updateData('applyDisabled', false);
                                 } else {
                                     updateData('applyDisabled', true);

@@ -36,6 +36,7 @@ import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
 import Settings from '@mui/icons-material/Settings';
 import Logout from '@mui/icons-material/Logout';
 import EditAccModal from '../../containers/Login/components/EditAccModal';
+import ListAltIcon from '@mui/icons-material/ListAlt';
 import { runInAction } from 'mobx';
 
 const drawerWidth = 280;
@@ -126,7 +127,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                     </IconButton>
                     <ul className="d-flex justify-content-between align-items-center">
                         <li className="mx-1">
-                            {`${sessionStorage.getItem('loginUserId')}${sessionStorage.getItem('loginUserName')}`}
+                            {`${sessionStorage.getItem('loginTraderID')}${sessionStorage.getItem('loginTraderName')}`}
                             ，你好
                         </li>
                         {/* <li className="mx-1">
@@ -152,7 +153,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                     aria-expanded={open ? 'true' : undefined}
                                 >
                                     <Avatar sx={{ width: 32, height: 32 }}>
-                                        {sessionStorage.getItem('loginUserId').split('')[0]}
+                                        {sessionStorage.getItem('loginTraderID').split('')[0]}
                                     </Avatar>
                                 </IconButton>
                             </Tooltip>
@@ -258,7 +259,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                     <List className="text-white">
                         {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00201' ? ( */}
-                        <ListItem component={Link} to="/UserList" sx={{ color: 'white' }}>
+                        <ListItem component={Link} to="/TraderList" sx={{ color: 'white' }}>
                             <ListItemIcon>
                                 <PeopleAltIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
@@ -358,6 +359,12 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 <ReceiptLongIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="券商交易成交檔案紀錄查詢" />
+                        </ListItem>
+                        <ListItem component={Link} to="/User" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <ListAltIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="契約編號查詢" />
                         </ListItem>
                     </List>
                 </Drawer>

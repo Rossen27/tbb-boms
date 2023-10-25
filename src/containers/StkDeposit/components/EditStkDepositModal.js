@@ -30,16 +30,16 @@ const EditStkDepositModal = () => {
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="accID" className="col-sm-2 col-form-label fs-5">
-                        客戶代號
+                    <label htmlFor="userID" className="col-sm-2 col-form-label fs-5">
+                        契約編號
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={stkDepositData.accID}
+                            value={stkDepositData.userID}
                             disabled
-                            id="accID"
+                            id="userID"
                         />
                     </div>
                 </div>

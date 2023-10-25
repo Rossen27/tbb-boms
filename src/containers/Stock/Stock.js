@@ -40,7 +40,7 @@ const Stock = () => {
             loadingFail,
             msg,
         },
-        LoginStore: { userInfo },
+        LoginStore: { traderInfo },
     } = useStore();
     const { stockNo, kind } = params;
 
@@ -90,7 +90,7 @@ const Stock = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            userInfo();
+            traderInfo();
             getQryStockAllowList();
         }
     };
@@ -103,7 +103,7 @@ const Stock = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
-        userInfo();
+        traderInfo();
         getQryStockAllowList();
         if (updateComplete) {
             setTimeout(() => {

@@ -9,8 +9,8 @@ const initialState = {
     adminList: [],
     queryTime: '',
     adminData: {},
-    cUserName: '',
-    cUserID: '',
+    cTraderName: '',
+    cTraderID: '',
     cADID: '',
     editAdminModalVisible: false,
     adminInfoModalVisible: false,
@@ -18,7 +18,7 @@ const initialState = {
     adminAFlag: '',
     applyDisabled: false,
     params: {
-        userID: '',
+        traderID: '',
         allowType: [],
     },
 };
@@ -44,8 +44,8 @@ const AdminStore = () =>
         },
         resetAdminData() {
             this.reset({
-                cUserID: '',
-                cUserName: '',
+                cTraderID: '',
+                cTraderName: '',
                 cADID: '',
                 adminData: {},
             });

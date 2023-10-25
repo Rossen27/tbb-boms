@@ -14,8 +14,8 @@ const AdminInfoModal = () => {
             adminAFlag,
             updateAdminData,
             applyDisabled,
-            cUserName,
-            cUserID,
+            cTraderName,
+            cTraderID,
             cADID,
         },
     } = useStore();
@@ -39,13 +39,13 @@ const AdminInfoModal = () => {
                             <th scope="row" className="text-end">
                                 管理員代號
                             </th>
-                            <td>{adminAFlag === 'C' ? cUserID : adminData.userID}</td>
+                            <td>{adminAFlag === 'C' ? cTraderID : adminData.traderID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 管理員名稱
                             </th>
-                            <td>{adminAFlag === 'C' ? cUserName : adminData.userName}</td>
+                            <td>{adminAFlag === 'C' ? cTraderName : adminData.traderName}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
@@ -89,16 +89,16 @@ const AdminInfoModal = () => {
                                 let postData = {};
                                 if (adminAFlag === 'C') {
                                     postData = {
-                                        userID: cUserID,
-                                        userName: cUserName,
+                                        traderID: cTraderID,
+                                        traderName: cTraderName,
                                         adid: cADID,
                                         unit: 1,
                                         actionFlag: adminAFlag,
                                     };
                                 } else if (adminAFlag === 'U') {
                                     postData = {
-                                        userID: adminData.userID,
-                                        userName: adminData.userName,
+                                        traderID: adminData.traderID,
+                                        traderName: adminData.traderName,
                                         adid: adminData.adid,
                                         unit: adminData.unit,
                                         actionFlag: adminAFlag,

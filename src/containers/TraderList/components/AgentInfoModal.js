@@ -3,15 +3,15 @@ import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@mui/material';
-import { btnStyle } from '../constant/userList';
+import { btnStyle } from '../constant/traderList';
 const AgentInfoModal = () => {
     const {
-        UserListStore: {
+        TraderListStore: {
             agentInfoModalVisible,
             closeAgentInfoModal,
             updateData,
             resetAgentData,
-            userData,
+            traderData,
             agentAFlag,
             agentData,
             dAgentData,
@@ -41,7 +41,7 @@ const AgentInfoModal = () => {
                             <th scope="row" className="text-end">
                                 代理人代號
                             </th>
-                            <td>{agentAFlag === 'D' ? dAgentData.accID : agentData.accID}</td>
+                            <td>{agentAFlag === 'D' ? dAgentData.userID : agentData.userID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
@@ -72,14 +72,14 @@ const AgentInfoModal = () => {
                             let postData = {};
                             if (agentAFlag === 'C') {
                                 postData = {
-                                    accID: agentData.accID,
-                                    userID: userData.userID,
+                                    userID: agentData.userID,
+                                    traderID: traderData.traderID,
                                     actionFlag: agentAFlag,
                                 };
                             } else if (agentAFlag === 'D') {
                                 postData = {
-                                    accID: dAgentData.accID,
-                                    userID: userData.userID,
+                                    userID: dAgentData.userID,
+                                    traderID: traderData.traderID,
                                     actionFlag: agentAFlag,
                                 };
                             }

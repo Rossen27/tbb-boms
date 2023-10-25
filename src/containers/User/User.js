@@ -15,20 +15,14 @@ import {
     ButtonExport,
 } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { pGroupText, btnStyle } from './constant/userList';
-import EditUserModal from './components/EditUserModal';
 import { TextField, Button } from '@mui/material';
-import UserInfoModal from './components/UserInfoModal';
-import CreateUserModal from './components/CreateUserModal';
-import CreateAgentModal from './components/CreateAgentModal';
-import AgentInfoModal from './components/AgentInfoModal';
 import { runInAction } from 'mobx';
-
+import { pGroupText } from './constant/userList.js';
 // import ExcelJS from 'exceljs';
 
-const UserList = () => {
+const User = () => {
     const {
-        UserListStore: {
+        UserStore: {
             getQryUserList,
             userList,
             queryTime,
@@ -45,13 +39,13 @@ const UserList = () => {
             msg,
             allowTypeOptions,
         },
-        LoginStore: { userInfo },
+        LoginStore: { traderInfo },
     } = useStore();
     const { userID, allowType } = params;
     const columns = [
         {
             field: 'userID',
-            headerName: '經理人代號',
+            headerName: '契約編號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -133,7 +127,7 @@ const UserList = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
-            userInfo();
+            traderInfo();
             getQryUserList();
         }
     };
@@ -147,7 +141,7 @@ const UserList = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
-        userInfo();
+        traderInfo();
         getQryUserList();
         if (updateComplete) {
             setTimeout(() => {
@@ -158,13 +152,13 @@ const UserList = () => {
     return (
         <PersistentDrawer>
             <div>
-                <Layout title={'經理人登入系統基本資料維護'}>
+                <Layout title={'契約編號查詢'}>
                     <div className="d-flex justify-content-between">
                         <ul className="d-flex align-items-center">
                             <li className="me-3">
                                 <TextField
                                     id="outlined-basic"
-                                    label="經理人代號"
+                                    label="契約編號"
                                     variant="outlined"
                                     size="small"
                                     value={userID}
@@ -292,7 +286,7 @@ const UserList = () => {
                             />
                         </li> */}
                         </ul>
-                        {sessionStorage.getItem('loginUnit') === '1' && (
+                        {/* {sessionStorage.getItem('loginUnit') === '1' && (
                             <ButtonCreate
                                 onClick={e => {
                                     runInAction(() => {
@@ -303,7 +297,7 @@ const UserList = () => {
                                     });
                                 }}
                             />
-                        )}
+                        )} */}
                     </div>
 
                     <div className="d-flex justify-content-end mt-2 align-items-center">
@@ -335,14 +329,14 @@ const UserList = () => {
                         )}
                     </section>
                 </Layout>
-                <EditUserModal />
+                {/* <EditUserModal />
                 <UserInfoModal />
                 <AgentInfoModal />
                 <CreateUserModal />
-                <CreateAgentModal />
+                <CreateAgentModal /> */}
             </div>
         </PersistentDrawer>
     );
 };
 
-export default observer(UserList);
+export default observer(User);

@@ -45,7 +45,7 @@ const BrokerInfoModal = () => {
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                經理人代號
+                                契約編號
                             </th>
                             <td>{brokerData.userID}</td>
                         </tr>
@@ -75,7 +75,7 @@ const BrokerInfoModal = () => {
                                 e.preventDefault();
                                 updateData('applyDisabled', true);
                                 const postData = {
-                                    accID: brokerData.accID,
+                                    // accID: brokerData.accID,
                                     brkid: brokerData.brkid,
                                     brkName: brokerData.brkName,
                                     userID: brokerData.userID,

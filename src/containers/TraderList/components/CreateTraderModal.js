@@ -5,50 +5,66 @@ import { observer } from 'mobx-react-lite';
 import { removeSpace } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
-import { btnStyle } from '../constant/userList';
-const EditUserModal = () => {
+import { btnStyle } from '../constant/traderList';
+const CreateTraderModal = () => {
     const {
-        UserListStore: {
-            editUserModalVisible,
-            closeEditUserModal,
+        TraderListStore: {
+            createTraderModalVisible,
+            closeCreateTraderModal,
             updateData,
+            traderData,
+            cTraderID,
+            cTraderName,
+            cADID,
             userAFlag,
-            userData,
-            getQryAgentList,
-            agentParams,
+            applyDisabled,
         },
     } = useStore();
+
     return (
-        <ModalEdit open={editUserModalVisible} onClose={closeEditUserModal} title={'編輯經理人基本資料'}>
+        <ModalEdit
+            open={createTraderModalVisible}
+            onClose={() => {
+                closeCreateTraderModal();
+            }}
+            title={'新增經理人基本資料'}
+        >
             <form>
                 <div className="mb-4 row">
-                    <label htmlFor="userID" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="traderID" className="col-sm-2 col-form-label fs-5">
                         經理人代號
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            disabled
-                            value={userData.userID}
-                            id="userID"
+                            required
+                            value={cTraderID}
+                            id="traderID"
+                            onChange={e => {
+                                runInAction(() => {
+                                    const traderID = e.target.value;
+                                    updateData('cTraderID', traderID);
+                                });
+                            }}
                         />
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="userName" className="col-sm-2 col-form-label fs-5">
+                    <label htmlFor="traderName" className="col-sm-2 col-form-label fs-5">
                         經理人名稱
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={userData.userName}
-                            id="userName"
+                            id="traderName"
+                            required
+                            value={cTraderName}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.userName = e.target.value;
-                                    updateData('userData', userData);
+                                    const traderName = e.target.value;
+                                    updateData('cTraderName', traderName);
                                 });
                             }}
                         />
@@ -63,17 +79,18 @@ const EditUserModal = () => {
                             type="text"
                             className="form-control col-sm-4 w-40 fs-5"
                             id="adid"
-                            value={userData.adid}
+                            value={cADID}
+                            required
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.adid = e.target.value;
-                                    updateData('userData', userData);
+                                    const adid = e.target.value;
+                                    updateData('cADID', adid);
                                 });
                             }}
                         />
                     </div>
                 </div>
-                <div className="mb-4 row align-items-center">
+                {/* <div className="mb-4 row align-items-center">
                     <label htmlFor="pGroup" className="col-sm-2 col-form-label fs-5">
                         群組
                     </label>
@@ -83,12 +100,13 @@ const EditUserModal = () => {
                             type="radio"
                             name="pGroup"
                             id="short-term"
+                            required
                             value={'T'}
-                            checked={userData.pGroup === 'T'}
+                            checked={traderData.pGroup === 'T'}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.pGroup = e.target.value;
-                                    updateData('userData', userData);
+                                    traderData.pGroup = e.target.value;
+                                    updateData('traderData', traderData);
                                 });
                             }}
                         />
@@ -102,12 +120,13 @@ const EditUserModal = () => {
                             type="radio"
                             name="pGroup"
                             id="long-term"
+                            required
                             value={'B'}
-                            checked={userData.pGroup === 'B'}
+                            checked={traderData.pGroup === 'B'}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.pGroup = e.target.value;
-                                    updateData('userData', userData);
+                                    traderData.pGroup = e.target.value;
+                                    updateData('traderData', traderData);
                                 });
                             }}
                         />
@@ -122,11 +141,11 @@ const EditUserModal = () => {
                             name="pGroup"
                             id="admin"
                             value={'S'}
-                            checked={userData.pGroup === 'S'}
+                            checked={traderData.pGroup === 'S'}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.pGroup = e.target.value;
-                                    updateData('userData', userData);
+                                    traderData.pGroup = e.target.value;
+                                    updateData('traderData', traderData);
                                 });
                             }}
                         />
@@ -141,11 +160,11 @@ const EditUserModal = () => {
                             name="pGroup"
                             id="strategic"
                             value={'A'}
-                            checked={userData.pGroup === 'A'}
+                            checked={traderData.pGroup === 'A'}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.pGroup = e.target.value;
-                                    updateData('userData', userData);
+                                    traderData.pGroup = e.target.value;
+                                    updateData('traderData', traderData);
                                 });
                             }}
                         />
@@ -153,7 +172,7 @@ const EditUserModal = () => {
                             策略
                         </label>
                     </div>
-                </div>
+                </div> */}
                 <div className="mb-4 row align-items-center border-bottom pb-5">
                     <label htmlFor="allowType" className="col-sm-2 col-form-label fs-5">
                         權限
@@ -165,11 +184,11 @@ const EditUserModal = () => {
                             name="allowType"
                             id="view"
                             value={0}
-                            checked={parseInt(userData.allowType) === 0}
+                            checked={parseInt(traderData.allowType) === 0}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.allowType = e.target.value;
-                                    updateData('userData', userData);
+                                    traderData.allowType = e.target.value;
+                                    updateData('traderData', traderData);
                                 });
                             }}
                         />
@@ -184,11 +203,11 @@ const EditUserModal = () => {
                             name="allowType"
                             id="trade"
                             value={1}
-                            checked={parseInt(userData.allowType) === 1}
+                            checked={parseInt(traderData.allowType) === 1}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.allowType = e.target.value;
-                                    updateData('userData', userData);
+                                    traderData.allowType = e.target.value;
+                                    updateData('traderData', traderData);
                                 });
                             }}
                         />
@@ -203,11 +222,11 @@ const EditUserModal = () => {
                             name="allowType"
                             id="disable"
                             value={3}
-                            checked={parseInt(userData.allowType) === 3}
+                            checked={parseInt(traderData.allowType) === 3}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.allowType = e.target.value;
-                                    updateData('userData', userData);
+                                    traderData.allowType = e.target.value;
+                                    updateData('traderData', traderData);
                                 });
                             }}
                         />
@@ -216,55 +235,54 @@ const EditUserModal = () => {
                         </label>
                     </div>
                 </div>
-
-                <ul className="d-flex justify-content-between align-items-center m-5">
-                    <li>
+                <ul className="d-flex justify-content-center m-5">
+                    {/* <li>
                         <Button
                             onClick={() => {
-                                closeEditUserModal();
-                                getQryAgentList(userData.userID);
+                                closeCreateTraderModal();
                                 updateData('createAgentModalVisible', true);
                             }}
                             variant="outlined"
-                            sx={[btnStyle.btn, btnStyle.btnCreate]}
+                            sx={[btnStyle.btn, btnStyle.btnUpdate]}
                         >
                             代理人設定
                         </Button>
+                    </li> */}
+                    <li>
+                        <Button
+                            onClick={() => {
+                                closeCreateTraderModal();
+                            }}
+                            variant="outlined"
+                            sx={[btnStyle.btn, btnStyle.btnCancel]}
+                        >
+                            取消
+                        </Button>
                     </li>
                     <li>
-                        <div className="d-flex">
-                            <Button
-                                onClick={closeEditUserModal}
-                                variant="outlined"
-                                sx={[btnStyle.btn, btnStyle.btnCancel]}
-                            >
-                                取消
-                            </Button>
-                            <Button
-                                type="button"
-                                variant="contained"
-                                sx={[btnStyle.btn, btnStyle.btnUpdate]}
-                                onClick={e => {
-                                    e.preventDefault();
-                                    if (userAFlag === 'U') {
-                                        if (
-                                            removeSpace(userData.userName) &&
-                                            removeSpace(userData.adid) &&
-                                            userData.pGroup &&
-                                            toString(userData.allowType)
-                                        ) {
-                                            updateData('applyDisabled', false);
-                                        } else {
-                                            updateData('applyDisabled', true);
-                                        }
-                                    }
-                                    updateData('userInfoModalVisible', true);
-                                    closeEditUserModal();
-                                }}
-                            >
-                                更新資料
-                            </Button>
-                        </div>
+                        <Button
+                            type="button"
+                            variant="contained"
+                            sx={[btnStyle.btn, btnStyle.btnCreate]}
+                            onClick={e => {
+                                e.preventDefault();
+                                if (
+                                    removeSpace(cTraderID) &&
+                                    removeSpace(cTraderName) &&
+                                    removeSpace(cADID) &&
+                                    // traderData.pGroup &&
+                                    toString(traderData.allowType)
+                                ) {
+                                    updateData('applyDisabled', false);
+                                } else {
+                                    updateData('applyDisabled', true);
+                                }
+                                updateData('traderInfoModalVisible', true);
+                                closeCreateTraderModal();
+                            }}
+                        >
+                            新增資料
+                        </Button>
                     </li>
                 </ul>
             </form>
@@ -272,4 +290,4 @@ const EditUserModal = () => {
     );
 };
 
-export default observer(EditUserModal);
+export default observer(CreateTraderModal);

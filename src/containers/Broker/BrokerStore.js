@@ -9,12 +9,12 @@ const initialState = {
     queryTime: '',
     brokerData: {},
     managerData: {
-        userID: '',
-        userName: '',
+        traderID: '',
+        traderName: '',
     },
     dManagerData: {
-        userID: '',
-        userName: '',
+        traderID: '',
+        traderName: '',
     },
     brokerAFlag: '',
     managerAFlag: '',
@@ -95,9 +95,9 @@ const BrokerStore = () =>
                 }
             });
         },
-        async getQryManagerList(accID) {
+        async getQryManagerList(userID) {
             runInAction(async () => {
-                const res = await this.qryBrokerManager({ accID: accID });
+                const res = await this.qryBrokerManager({ userID: userID });
                 const unassignedAgentList = res.item.unassignedAgentList;
                 const assignedAgentList = res.item.assignedAgentList;
                 this.assignData({ unassignedAgentList, assignedAgentList });

@@ -32,10 +32,10 @@ const AuthStore = () =>
                 password: isPwd,
             };
             const res = await callLoginUser(postData);
-            const { token, code, userId, userName, unit } = res.data;
+            const { token, code, traderID, traderName, unit } = res.data;
             sessionStorage.setItem('loginCode', code);
-            sessionStorage.setItem('loginUserId', userId);
-            sessionStorage.setItem('loginUserName', userName);
+            sessionStorage.setItem('loginTraderID', traderID);
+            sessionStorage.setItem('loginTraderName', traderName);
             sessionStorage.setItem('loginUnit', unit);
             // sessionStorage.setItem('loginAuth', JSON.stringify(items));
             sessionStorage.setItem('token', token);

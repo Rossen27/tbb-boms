@@ -5,10 +5,10 @@ import { observer } from 'mobx-react-lite';
 import { removeSpace } from '@helper';
 import { Button, MenuItem, FormControl, Select, InputLabel } from '@mui/material';
 import { runInAction } from 'mobx';
-import { btnStyle } from '../constant/userList';
+import { btnStyle } from '../constant/traderList';
 const CreateAgentModal = () => {
     const {
-        UserListStore: {
+        TraderListStore: {
             createAgentModalVisible,
             closeCreateAgentModal,
             updateData,
@@ -23,8 +23,8 @@ const CreateAgentModal = () => {
 
     const columns = [
         {
-            field: 'accID',
-            headerName: '代理人代號',
+            field: 'userID',
+            headerName: '契約編號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -57,7 +57,7 @@ const CreateAgentModal = () => {
                         closeCreateAgentModal();
                         updateData('agentInfoModalVisible', true);
                         updateData('agentAFlag', 'D');
-                        dAgentData.accID = params.row.accID;
+                        dAgentData.userID = params.row.userID;
                         dAgentData.accName = params.row.accName;
                         updateData('dAgentData', dAgentData);
                     }}
@@ -86,7 +86,7 @@ const CreateAgentModal = () => {
         >
             <form action="">
                 <section>
-                    <Table header={columns} data={assignedAgentList} getRowId={row => row.accID} />
+                    <Table header={columns} data={assignedAgentList} getRowId={row => row.userID} />
                 </section>
                 <ul className="d-flex align-items-center m-5">
                     <li className="col-6">
@@ -95,22 +95,22 @@ const CreateAgentModal = () => {
                             <Select
                                 labelId="demo-controlled-open-select-label"
                                 id="demo-controlled-open-select"
-                                value={agentData.accID}
+                                value={agentData.userID}
                                 label="代理人"
                                 displayEmpty
                                 onChange={e => {
                                     runInAction(() => {
-                                        agentData.accID = e.target.value;
+                                        agentData.userID = e.target.value;
                                         agentData.accName = unassignedAgentList.find(
-                                            item => item.accID === e.target.value
+                                            item => item.userID === e.target.value
                                         ).accName;
                                         updateData('agentData', agentData);
                                     });
                                 }}
                             >
-                                {unassignedAgentList.map(({ accID, accName }, index) => {
+                                {unassignedAgentList.map(({ userID, accName }, index) => {
                                     return (
-                                        <MenuItem key={`agentOptions ${index}`} value={accID}>
+                                        <MenuItem key={`agentOptions ${index}`} value={userID}>
                                             {accName}
                                         </MenuItem>
                                     );
@@ -122,7 +122,7 @@ const CreateAgentModal = () => {
                         <Button
                             onClick={() => {
                                 closeCreateAgentModal();
-                                updateData('editUserModalVisible', true);
+                                updateData('editTraderModalVisible', true);
                                 resetAgentData();
                             }}
                             variant="outlined"

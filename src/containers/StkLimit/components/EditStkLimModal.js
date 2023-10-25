@@ -36,7 +36,7 @@ const EditStkLimModal = () => {
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={stkLimitData.accId}
+                            value={stkLimitData.manager_id}
                             disabled
                             id="accId"
                             // onChange={e => {

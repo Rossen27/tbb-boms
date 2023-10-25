@@ -1,11 +1,11 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction } from 'mobx';
-import { getUserInfo, updateUserPassword } from '@api';
+import { getTraderInfo, updateUserPassword } from '@api';
 
 const initialState = {
     adid: '',
-    userName: '',
+    traderName: '',
     editAccModalVisible: false,
     newPsd: '',
 };
@@ -18,12 +18,12 @@ const LoginStore = () =>
         closeEditAccModal() {
             this.editAccModalVisible = false;
         },
-        async userInfo() {
+        async traderInfo() {
             runInAction(async () => {
-                const res = await getUserInfo();
+                const res = await getTraderInfo();
                 const adid = res.item.adid;
-                const userName = res.item.userName;
-                this.assignData({ adid, userName });
+                const traderName = res.item.traderName;
+                this.assignData({ adid, traderName });
             });
         },
         async updateUserPsd(postData) {
