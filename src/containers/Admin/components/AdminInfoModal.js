@@ -31,7 +31,7 @@ const AdminInfoModal = () => {
                 <table className="table table-borderless w-75">
                     <tbody>
                         <tr>
-                            <th className="title fw-bolder mb-4 text-danger text-end fs-４">
+                            <th className="title fw-bolder mb-4 text-danger text-end fs-4">
                                 {adminAFlag === 'C' ? '新增' : '更新'}資料，請確認：
                             </th>
                         </tr>

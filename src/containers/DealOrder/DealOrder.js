@@ -19,6 +19,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 const DealOrder = () => {
     const {
         DealOrderStore: { dealOrderList, queryTime, getQryDealOrderList, reset, params, paramsUpdate },
+        LoginStore: { userInfo },
     } = useStore();
     const { startDate, endDate } = params;
 
@@ -354,10 +355,12 @@ const DealOrder = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
+            userInfo();
             getQryDealOrderList();
         }
     };
     useEffect(() => {
+        userInfo();
         getQryDealOrderList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {

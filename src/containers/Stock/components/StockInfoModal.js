@@ -25,7 +25,7 @@ const StockInfoModal = () => {
                 <table className="table table-borderless w-75">
                     <tbody>
                         <tr>
-                            <th className="title fw-bolder mb-4 text-danger text-end fs-４">
+                            <th className="title fw-bolder mb-4 text-danger text-end fs-4">
                                 {actionText.filter(item => item.value === stockAllowAFlag).map(item => item.text)}
                                 資料，請確認：
                             </th>

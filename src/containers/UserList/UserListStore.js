@@ -8,7 +8,9 @@ const initialState = {
     allowTypeOptions: {},
     userList: [],
     queryTime: '',
-    userData: {},
+    userData: {
+        password: '',
+    },
     cUserName: '',
     cUserID: '',
     cADID: '',

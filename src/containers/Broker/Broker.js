@@ -28,6 +28,7 @@ const Broker = () => {
             loadingFail,
             msg,
         },
+        LoginStore: { userInfo },
     } = useStore();
     const { brkid, userID } = params;
 
@@ -74,11 +75,11 @@ const Broker = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
+            userInfo();
             getQryBrokerList();
         }
     };
     useEffect(() => {
-        getQryBrokerList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -87,6 +88,7 @@ const Broker = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
+        userInfo();
         getQryBrokerList();
         if (updateComplete) {
             setTimeout(() => {

@@ -10,6 +10,7 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const {
         AuthStore: { ldapLogin, msg },
+        LoginStore: { userInfo },
     } = useStore();
 
     const navigate = useNavigate();
@@ -39,6 +40,7 @@ const Login = () => {
                     await ldapLogin(isAccount, isPwd);
                     // await login(isAccount, isPwd);
                     if (sessionStorage.getItem('loginCode') === '0') {
+                        userInfo();
                         navigate('/UserList', { replace: true });
                     } else {
                         setShow(true);

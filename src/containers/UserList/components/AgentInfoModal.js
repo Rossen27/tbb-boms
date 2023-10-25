@@ -33,7 +33,7 @@ const AgentInfoModal = () => {
                 <table className="table table-borderless w-75">
                     <tbody>
                         <tr>
-                            <th className="title fw-bolder mb-4 text-danger text-end fs-４">
+                            <th className="title fw-bolder mb-4 text-danger text-end fs-4">
                                 {agentAFlag === 'D' ? '刪除' : '新增'}資料，請確認：
                             </th>
                         </tr>

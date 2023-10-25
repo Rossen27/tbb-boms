@@ -29,6 +29,7 @@ const Admin = () => {
             loadingFail,
             msg,
         },
+        LoginStore: { userInfo },
     } = useStore();
     // const { userID, allowType } = params;
     const columns = [
@@ -79,11 +80,11 @@ const Admin = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
+            userInfo();
             getQryAdminList();
         }
     };
     useEffect(() => {
-        getQryAdminList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -92,6 +93,7 @@ const Admin = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
+        userInfo();
         getQryAdminList();
         if (updateComplete) {
             setTimeout(() => {

@@ -45,6 +45,7 @@ const UserList = () => {
             msg,
             allowTypeOptions,
         },
+        LoginStore: { userInfo },
     } = useStore();
     const { userID, allowType } = params;
     const columns = [
@@ -90,26 +91,26 @@ const UserList = () => {
                 return <p>{pGroupText.filter(item => item.value === params.row.pGroup).map(item => item.text)}</p>;
             },
         },
-        {
-            field: 'tseQuota',
-            headerName: '上市額度',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 150,
-            flex: 1,
-        },
-        {
-            field: 'otcQuota',
-            headerName: '上櫃額度',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 90,
-            flex: 1,
-        },
+        // {
+        //     field: 'tseQuota',
+        //     headerName: '上市額度',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 150,
+        //     flex: 1,
+        // },
+        // {
+        //     field: 'otcQuota',
+        //     headerName: '上櫃額度',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 90,
+        //     flex: 1,
+        // },
         {
             field: 'allowType',
             headerName: '權限',
@@ -132,12 +133,12 @@ const UserList = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
+            userInfo();
             getQryUserList();
         }
     };
     useEffect(() => {
         resetUserData();
-        getQryUserList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -146,6 +147,7 @@ const UserList = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
+        userInfo();
         getQryUserList();
         if (updateComplete) {
             setTimeout(() => {

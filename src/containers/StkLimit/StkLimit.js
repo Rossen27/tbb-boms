@@ -36,6 +36,7 @@ const StkLimit = () => {
             params,
             paramsUpdate,
         },
+        LoginStore: { userInfo },
     } = useStore();
     const { startDate, endDate } = params;
     const columns = [
@@ -117,11 +118,11 @@ const StkLimit = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
+            userInfo();
             getQryStkLimList();
         }
     };
     useEffect(() => {
-        getQryStkLimList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -130,6 +131,7 @@ const StkLimit = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
+        userInfo();
         getQryStkLimList();
         if (updateComplete) {
             setTimeout(() => {

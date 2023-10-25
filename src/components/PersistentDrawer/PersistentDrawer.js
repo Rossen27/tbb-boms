@@ -14,6 +14,10 @@ import {
     ListItem,
     ListItemText,
     ListItemIcon,
+    Avatar,
+    Menu,
+    MenuItem,
+    Tooltip,
 } from '@mui/material';
 import MuiAppBar from '@mui/material/AppBar';
 import MenuIcon from '@mui/icons-material/Menu';
@@ -29,6 +33,11 @@ import RequestPageIcon from '@mui/icons-material/RequestPage';
 import GradingIcon from '@mui/icons-material/Grading';
 import MoveToInboxIcon from '@mui/icons-material/MoveToInbox';
 import ReceiptLongIcon from '@mui/icons-material/ReceiptLong';
+import Settings from '@mui/icons-material/Settings';
+import Logout from '@mui/icons-material/Logout';
+import EditAccModal from '../../containers/Login/components/EditAccModal';
+import { runInAction } from 'mobx';
+
 const drawerWidth = 280;
 
 const Main = styled('main', { shouldForwardProp: prop => prop !== 'open' })(({ theme, open }) => ({
@@ -82,6 +91,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
     const [open, setOpen] = useState(false);
     const {
         AuthStore: { login, logout },
+        LoginStore: { closeEditAccModal, editAccModalVisible, updateData },
     } = useStore();
 
     const handleDrawerOpen = () => {
@@ -90,6 +100,14 @@ const PersistentDrawer = ({ children, ...restProps }) => {
 
     const handleDrawerClose = () => {
         setOpen(false);
+    };
+    const [anchorEl, setAnchorEl] = useState(null);
+    const open2 = Boolean(anchorEl);
+    const handleClick = event => {
+        setAnchorEl(event.currentTarget);
+    };
+    const handleClose = () => {
+        setAnchorEl(null);
     };
 
     return (
@@ -123,17 +141,82 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 登入
                             </button>
                         </li> */}
-                        <li className="mx-1">
-                            <button
-                                className="btn text-white btn-dark rounded-pill"
-                                onClick={async () => {
-                                    logout();
-                                    await navigate('/', { replace: true });
-                                    location.reload();
+                        <li>
+                            <Tooltip title="Account settings">
+                                <IconButton
+                                    onClick={handleClick}
+                                    size="small"
+                                    sx={{ ml: 2 }}
+                                    aria-controls={open ? 'account-menu' : undefined}
+                                    aria-haspopup="true"
+                                    aria-expanded={open ? 'true' : undefined}
+                                >
+                                    <Avatar sx={{ width: 32, height: 32 }}>
+                                        {sessionStorage.getItem('loginUserId').split('')[0]}
+                                    </Avatar>
+                                </IconButton>
+                            </Tooltip>
+                            <Menu
+                                anchorEl={anchorEl}
+                                id="account-menu"
+                                open={open2}
+                                onClose={handleClose}
+                                onClick={handleClose}
+                                PaperProps={{
+                                    elevation: 0,
+                                    sx: {
+                                        overflow: 'visible',
+                                        filter: 'drop-shadow(0px 2px 8px rgba(0,0,0,0.32))',
+                                        mt: 1.5,
+                                        '& .MuiAvatar-root': {
+                                            width: 32,
+                                            height: 32,
+                                            ml: -0.5,
+                                            mr: 1,
+                                        },
+                                        '&:before': {
+                                            content: '""',
+                                            display: 'block',
+                                            position: 'absolute',
+                                            top: 0,
+                                            right: 14,
+                                            width: 10,
+                                            height: 10,
+                                            bgcolor: 'background.paper',
+                                            transform: 'translateY(-50%) rotate(45deg)',
+                                            zIndex: 0,
+                                        },
+                                    },
                                 }}
+                                transformOrigin={{ horizontal: 'right', vertical: 'top' }}
+                                anchorOrigin={{ horizontal: 'right', vertical: 'bottom' }}
                             >
-                                登出
-                            </button>
+                                <MenuItem
+                                    onClick={e => {
+                                        runInAction(() => {
+                                            e.preventDefault();
+                                            updateData('editAccModalVisible', true);
+                                        });
+                                    }}
+                                >
+                                    <ListItemIcon>
+                                        <Settings fontSize="small" />
+                                    </ListItemIcon>
+                                    Settings
+                                </MenuItem>
+                                <MenuItem
+                                    onClick={async () => {
+                                        logout();
+                                        await navigate('/', { replace: true });
+                                        location.reload();
+                                    }}
+                                >
+                                    <ListItemIcon>
+                                        <Logout fontSize="small" />
+                                    </ListItemIcon>
+                                    Logout
+                                </MenuItem>
+                            </Menu>
                         </li>
                     </ul>
                 </Toolbar>
@@ -281,6 +364,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
             </ClickAwayListener>
             <Main open={open}>
                 <DrawerHeader />
+                <EditAccModal />
                 {children}
             </Main>
         </div>
