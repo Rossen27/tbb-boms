@@ -23,7 +23,7 @@ const StkDepositInfoModal = () => {
                 <table className="table table-borderless w-75">
                     <tbody>
                         <tr>
-                            <th className="title fw-bolder mb-4 text-danger text-end fs-４">更新資料，請確認：</th>
+                            <th className="title fw-bolder mb-4 text-danger text-end fs-4">更新資料，請確認：</th>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">

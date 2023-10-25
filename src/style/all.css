@@ -13248,6 +13248,10 @@ fieldset legend {
   border-color: #E24041;
 }
 
+.custom-password-checklist li {
+  align-items: center;
+}
+
 /*借款金額標題*/
 .load {
   color: #717A8C;

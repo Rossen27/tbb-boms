@@ -40,6 +40,7 @@ const Stock = () => {
             loadingFail,
             msg,
         },
+        LoginStore: { userInfo },
     } = useStore();
     const { stockNo, kind } = params;
 
@@ -89,11 +90,11 @@ const Stock = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
+            userInfo();
             getQryStockAllowList();
         }
     };
     useEffect(() => {
-        getQryStockAllowList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -102,6 +103,7 @@ const Stock = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
+        userInfo();
         getQryStockAllowList();
         if (updateComplete) {
             setTimeout(() => {

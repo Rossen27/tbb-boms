@@ -35,6 +35,7 @@ const StkDeposit = () => {
             loadingFail,
             msg,
         },
+        LoginStore: { userInfo },
     } = useStore();
     const { startDate, endDate } = params;
 
@@ -197,11 +198,11 @@ const StkDeposit = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
+            userInfo();
             getQryStkDepositList();
         }
     };
     useEffect(() => {
-        getQryStkDepositList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {
             reset();
@@ -210,6 +211,7 @@ const StkDeposit = () => {
     }, []);
     const navigate = useNavigate();
     useEffect(() => {
+        userInfo();
         getQryStkDepositList();
         if (updateComplete) {
             setTimeout(() => {

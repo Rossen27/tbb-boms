@@ -19,6 +19,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 const History = () => {
     const {
         HistoryStore: { functionOptions, logList, queryTime, getQryLogList, reset, params, paramsUpdate },
+        LoginStore: { userInfo },
     } = useStore();
     const { startDate, endDate, functionId } = params;
 
@@ -66,10 +67,12 @@ const History = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
+            userInfo();
             getQryLogList();
         }
     };
     useEffect(() => {
+        userInfo();
         getQryLogList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {

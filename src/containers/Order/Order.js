@@ -19,6 +19,7 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 const Order = () => {
     const {
         OrderStore: { orderTransList, queryTime, getQryOrderTransList, reset, params, paramsUpdate },
+        LoginStore: { userInfo },
     } = useStore();
     const { startDate, endDate } = params;
 
@@ -315,10 +316,12 @@ const Order = () => {
     ];
     const handleKeyDown = e => {
         if (e.key === 'Enter') {
+            userInfo();
             getQryOrderTransList();
         }
     };
     useEffect(() => {
+        userInfo();
         getQryOrderTransList();
         document.addEventListener('keydown', handleKeyDown);
         return () => {

@@ -1,7 +1,7 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction } from 'mobx';
-import { callLoginUser, getOptionsQuery } from '@api';
+import { callLoginUser } from '@api';
 const initialState = {
     msg: '',
 };

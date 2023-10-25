@@ -8,22 +8,17 @@ const request = axios.create({
 /** -------------------------- 會員 -------------------------- */
 /** 會員登入 [POST]
  */
-// export const callLoginUser = postData =>
-//     request.post('/login', {
-//         account: 'kunlung',
-//         pwd: '111111',
-//     });
-export const callLdapLogin = postData => request.post('/ldapLogin', postData);
+
 export const callLoginUser = postData => request.post('/login', postData);
-export const callLoginTest = postData =>
-    request.post('/SCLOAN090/login', {
-        bid: '2',
-        idno: 'A234567891',
-        loginAccount: 'money',
-    });
-/** callGetCustomerInfo客戶收合資訊 [POST]
+
+/** getUserInfo 客戶資訊 [GET]
  */
-export const callGetCustomerInfo = () => post('/SCLOAN090/customerInfo', {});
+export const getUserInfo = params => get('/manager/getUserInfo', params);
+
+/** updatePassword 客戶密碼維護 [POST]
+ */
+
+export const updateUserPassword = postData => post('/manager/updatePassword', postData);
 
 /** ---------------------------使用者基本資料維護 -------------------------   */
 /*  optionQuery 下拉選單查詢 [GET]

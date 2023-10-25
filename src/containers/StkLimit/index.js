@@ -1,1 +1,1 @@
-export { default } from './StkLimit.js';
+export { default } from './StkLimit';
