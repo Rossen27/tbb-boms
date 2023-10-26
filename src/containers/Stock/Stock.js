@@ -20,7 +20,7 @@ import { Button, TextField } from '@mui/material';
 import CreateStockModal from './components/CreateStockModal';
 import EditStockModal from './components/EditStockModal';
 import StockInfoModal from './components/StockInfoModal';
-import QueryStockModal from './components/QueryStockModal';
+// import QueryStockModal from './components/QueryStockModal';
 // import ExcelJS from 'exceljs';
 
 const Stock = () => {
@@ -195,7 +195,7 @@ const Stock = () => {
                 <CreateStockModal />
                 <EditStockModal />
                 <StockInfoModal />
-                <QueryStockModal />
+                {/* <QueryStockModal /> */}
             </div>
         </PersistentDrawer>
     );

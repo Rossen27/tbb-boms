@@ -22,86 +22,99 @@ const CreateStockModal = () => {
     return (
         <ModalEdit open={createStockModalVisible} onClose={closeCreateStockModal} title={'新增可交易股票資料'}>
             <form>
-                <div className="mb-4 row align-items-center">
-                    <label htmlFor="kind" className="col-sm-2 col-form-label fs-5">
-                        群組
-                    </label>
-                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
-                        <input
-                            className="form-check-input fs-5"
-                            type="radio"
-                            name="kind"
-                            id="short-term"
-                            value={'T'}
-                            checked={stockAllowData.kind === 'T'}
-                            onChange={e => {
-                                runInAction(() => {
-                                    stockAllowData.kind = e.target.value;
-                                    updateData('stockAllowData', stockAllowData);
-                                });
-                            }}
-                        />
-                        <label className="form-check-label fs-5" htmlFor="short-term">
-                            短投
+                <div className="d-flex align-items-baseline">
+                    <div className="mb-4 row me-5 align-items-center">
+                        <label htmlFor="kind" className="col col-form-label fs-5 me-8">
+                            群組
                         </label>
+                        <div className="form-check form-check-inline col me-0 mb-0">
+                            <input
+                                className="form-check-input fs-5"
+                                type="radio"
+                                name="kind"
+                                id="short-term"
+                                value={'T'}
+                                checked={stockAllowData.kind === 'T'}
+                                onChange={e => {
+                                    runInAction(() => {
+                                        stockAllowData.kind = e.target.value;
+                                        updateData('stockAllowData', stockAllowData);
+                                    });
+                                }}
+                            />
+                            <label className="form-check-label fs-5" htmlFor="short-term">
+                                短投
+                            </label>
+                        </div>
+                        <div className="form-check form-check-inline col me-0 mb-0">
+                            <input
+                                className="form-check-input fs-5"
+                                type="radio"
+                                name="kind"
+                                id="long-term"
+                                value={'B'}
+                                checked={stockAllowData.kind === 'B'}
+                                onChange={e => {
+                                    runInAction(() => {
+                                        stockAllowData.kind = e.target.value;
+                                        updateData('stockAllowData', stockAllowData);
+                                    });
+                                }}
+                            />
+                            <label className="form-check-label fs-5" htmlFor="long-term">
+                                長投
+                            </label>
+                        </div>
+                        <div className="form-check form-check-inline col me-0 mb-0">
+                            <input
+                                className="form-check-input fs-5"
+                                type="radio"
+                                name="kind"
+                                id="admin"
+                                value={'S'}
+                                checked={stockAllowData.kind === 'S'}
+                                onChange={e => {
+                                    runInAction(() => {
+                                        stockAllowData.kind = e.target.value;
+                                        updateData('stockAllowData', stockAllowData);
+                                    });
+                                }}
+                            />
+                            <label className="form-check-label fs-5" htmlFor="admin">
+                                管理
+                            </label>
+                        </div>
+                        <div className="form-check form-check-inline col me-0 mb-0">
+                            <input
+                                className="form-check-input fs-5"
+                                type="radio"
+                                name="kind"
+                                id="strategic"
+                                value={'A'}
+                                checked={stockAllowData.kind === 'A'}
+                                onChange={e => {
+                                    runInAction(() => {
+                                        stockAllowData.kind = e.target.value;
+                                        updateData('stockAllowData', stockAllowData);
+                                    });
+                                }}
+                            />
+                            <label className="form-check-label fs-5" htmlFor="strategic">
+                                策略
+                            </label>
+                        </div>
                     </div>
-                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
-                        <input
-                            className="form-check-input fs-5"
-                            type="radio"
-                            name="kind"
-                            id="long-term"
-                            value={'B'}
-                            checked={stockAllowData.kind === 'B'}
-                            onChange={e => {
-                                runInAction(() => {
-                                    stockAllowData.kind = e.target.value;
-                                    updateData('stockAllowData', stockAllowData);
-                                });
-                            }}
-                        />
-                        <label className="form-check-label fs-5" htmlFor="long-term">
-                            長投
-                        </label>
-                    </div>
-                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
-                        <input
-                            className="form-check-input fs-5"
-                            type="radio"
-                            name="kind"
-                            id="admin"
-                            value={'S'}
-                            checked={stockAllowData.kind === 'S'}
-                            onChange={e => {
-                                runInAction(() => {
-                                    stockAllowData.kind = e.target.value;
-                                    updateData('stockAllowData', stockAllowData);
-                                });
-                            }}
-                        />
-                        <label className="form-check-label fs-5" htmlFor="admin">
-                            管理
-                        </label>
-                    </div>
-                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
-                        <input
-                            className="form-check-input fs-5"
-                            type="radio"
-                            name="kind"
-                            id="strategic"
-                            value={'A'}
-                            checked={stockAllowData.kind === 'A'}
-                            onChange={e => {
-                                runInAction(() => {
-                                    stockAllowData.kind = e.target.value;
-                                    updateData('stockAllowData', stockAllowData);
-                                });
-                            }}
-                        />
-                        <label className="form-check-label fs-5" htmlFor="strategic">
-                            策略
-                        </label>
-                    </div>
+                    {/* 查詢股票功能 */}
+                    {/* <button
+                        className="border rounded-pill border-primary p-1 bg-white border-2"
+                        type="button"
+                        onClick={e => {
+                            e.preventDefault();
+                            updateData('queryStockModalVisible', true);
+                        }}
+                    >
+                        查詢股票
+                    </button> */}
                 </div>
                 <div className="mb-4 row">
                     <label htmlFor="stock_NO" className="col-sm-2 col-form-label fs-5">
@@ -122,7 +135,7 @@ const CreateStockModal = () => {
                         />
                     </div>
                 </div>
-                <div className="mb-4 row">
+                {/* <div className="mb-4 row">
                     <label htmlFor="stock_NAME" className="col-sm-2 col-form-label fs-5">
                         股票名稱
                     </label>
@@ -140,7 +153,7 @@ const CreateStockModal = () => {
                             }}
                         />
                     </div>
-                </div>
+                </div> */}
                 <ul className="d-flex justify-content-center align-items-center m-5">
                     <li>
                         <Button

@@ -32,8 +32,8 @@ const CreateAgentModal = () => {
             flex: 1,
         },
         {
-            field: 'accName',
-            headerName: '代理人名稱',
+            field: 'userName',
+            headerName: '契約編號名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -58,7 +58,7 @@ const CreateAgentModal = () => {
                         updateData('agentInfoModalVisible', true);
                         updateData('agentAFlag', 'D');
                         dAgentData.userID = params.row.userID;
-                        dAgentData.accName = params.row.accName;
+                        dAgentData.userName = params.row.userName;
                         updateData('dAgentData', dAgentData);
                     }}
                     variant="outlined"
@@ -69,7 +69,7 @@ const CreateAgentModal = () => {
             ),
         },
     ];
-    if (removeSpace(agentData.accID)) {
+    if (removeSpace(agentData.userID)) {
         updateData('createAgentDisabled', false);
     } else {
         updateData('createAgentDisabled', true);
@@ -101,17 +101,17 @@ const CreateAgentModal = () => {
                                 onChange={e => {
                                     runInAction(() => {
                                         agentData.userID = e.target.value;
-                                        agentData.accName = unassignedAgentList.find(
+                                        agentData.userName = unassignedAgentList.find(
                                             item => item.userID === e.target.value
-                                        ).accName;
+                                        ).userName;
                                         updateData('agentData', agentData);
                                     });
                                 }}
                             >
-                                {unassignedAgentList.map(({ userID, accName }, index) => {
+                                {unassignedAgentList.map(({ userID, userName }, index) => {
                                     return (
                                         <MenuItem key={`agentOptions ${index}`} value={userID}>
-                                            {accName}
+                                            {userName}
                                         </MenuItem>
                                     );
                                 })}

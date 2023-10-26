@@ -17,12 +17,12 @@ const initialState = {
     userAFlag: '',
     agentAFlag: '',
     agentData: {
-        accID: '',
-        accName: '',
+        userID: '',
+        userName: '',
     },
     dAgentData: {
-        accID: '',
-        accName: '',
+        userID: '',
+        userName: '',
     },
     assignedAgentList: [],
     unassignedAgentList: [],
@@ -71,8 +71,8 @@ const TraderListStore = () =>
         resetAgentData() {
             this.reset({
                 agentData: {
-                    accID: '',
-                    accName: '',
+                    userID: '',
+                    userName: '',
                 },
             });
         },

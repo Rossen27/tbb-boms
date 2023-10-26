@@ -44,12 +44,12 @@ const StockInfoModal = () => {
                             </th>
                             <td>{stockAllowAFlag === 'C' ? cStockNO : stockAllowData.stock_NO}</td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                             <th scope="row" className="text-end">
                                 股票名稱
                             </th>
                             <td>{stockAllowAFlag === 'C' ? cStockName : stockAllowData.stock_NAME}</td>
-                        </tr>
+                        </tr> */}
                     </tbody>
                 </table>
 

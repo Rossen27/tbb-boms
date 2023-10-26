@@ -12,14 +12,14 @@ const QueryStockModal = () => {
             queryStockModalVisible,
             closeQueryStockModal,
             updateData,
-            payoffModalData,
-            repaymentDetailList,
+            params,
+            paramsUpdate,
             statusDisabled,
             field,
             keyOptions,
         },
     } = useStore();
-
+    const { stockNo, stockName } = params;
     const columns = [
         {
             field: 'bhno',
@@ -44,42 +44,29 @@ const QueryStockModal = () => {
     return (
         <ModalEdit open={queryStockModalVisible} onClose={closeQueryStockModal} title={'股票查詢'}>
             <form action="">
-                <section>
-                    <Table
-                        header={columns}
-                        data={repaymentDetailList}
-                        onRowClick={params => {
-                            updateData('payoffModalData', {
-                                ...params.row,
-                            });
-                            updateData('editTraderModalVisible', true);
-                            if (parseInt(params.row.status) !== 3) {
-                                updateData('statusDisabled', true);
-                            } else {
-                                updateData('statusDisabled', false);
-                            }
-                        }}
-                        hideFooter={true}
-                    />
-                </section>
                 <ul className="d-flex align-items-center m-5">
                     <li className="col-3">
-                        <SelectInput
-                            options={keyOptions}
-                            selectVal={field}
+                        <TextField
+                            id="outlined-basic"
+                            label="股票代號"
+                            variant="outlined"
+                            size="small"
+                            value={stockNo}
                             onChange={e => {
-                                updateData('field', e.target.value);
+                                paramsUpdate('stockNo', e.target.value);
                             }}
+                            sx={{ width: '120px' }}
                         />
                     </li>
                     <li className="col-2">
                         <TextField
                             id="outlined-basic"
+                            label="股票名稱"
                             variant="outlined"
                             size="small"
-                            value={''}
+                            value={stockName}
                             onChange={e => {
-                                updateData('field', e.target.value);
+                                paramsUpdate('stockName', e.target.value);
                             }}
                             sx={{ width: '120px' }}
                         />
@@ -116,6 +103,24 @@ const QueryStockModal = () => {
                         </Button>
                     </li> */}
                 </ul>
+                <section>
+                    {/* <Table
+                        header={columns}
+                        data={repaymentDetailList}
+                        onRowClick={params => {
+                            updateData('payoffModalData', {
+                                ...params.row,
+                            });
+                            updateData('editTraderModalVisible', true);
+                            if (parseInt(params.row.status) !== 3) {
+                                updateData('statusDisabled', true);
+                            } else {
+                                updateData('statusDisabled', false);
+                            }
+                        }} */}
+
+                    {/* /> */}
+                </section>
             </form>
         </ModalEdit>
     );
