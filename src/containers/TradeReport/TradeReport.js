@@ -39,7 +39,7 @@ const TradeReport = () => {
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
-            minWidth: 140,
+            minWidth: 200,
             flex: 1,
         },
         {

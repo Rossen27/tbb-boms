@@ -40,7 +40,7 @@ const DealOrder = () => {
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
-            minWidth: 100,
+            minWidth: 150,
             flex: 1,
         },
         {
