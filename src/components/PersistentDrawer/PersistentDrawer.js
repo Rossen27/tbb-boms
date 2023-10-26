@@ -257,30 +257,12 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                     </DrawerHeader>
                     <Divider />
                     <List className="text-white">
-                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
-                            return id === '00201' ? ( */}
-                        <ListItem component={Link} to="/TraderList" sx={{ color: 'white' }}>
+                        <ListItem component={Link} to="/User" sx={{ color: 'white' }}>
                             <ListItemIcon>
-                                <PeopleAltIcon sx={{ color: 'white' }} />
+                                <ListAltIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
-                            <ListItemText primary="經理人登入系統基本資料檔維護" />
+                            <ListItemText primary="契約編號查詢" />
                         </ListItem>
-                        {/* ) : (
-                                ''
-                            );
-                        })} */}
-                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
-                            return id === '00101' ? ( */}
-                        <ListItem component={Link} to="/Admin" sx={{ color: 'white' }}>
-                            <ListItemIcon>
-                                <AdminPanelSettingsIcon sx={{ color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="管理員資料維護" />
-                        </ListItem>
-                        {/* ) : (
-                                ''
-                            );
-                        })} */}
                         {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00301' ? ( */}
                         <ListItem component={Link} to="/Broker" sx={{ color: 'white' }}>
@@ -317,6 +299,50 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                             </ListItemIcon>
                             <ListItemText primary="契約庫存資料維護查詢" />
                         </ListItem>
+                        <ListItem component={Link} to="/Order" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <RequestPageIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="委託交易轉檔資料查詢" />
+                        </ListItem>
+                        <ListItem component={Link} to="/DealOrder" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <GradingIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="成交轉檔資料查詢" />
+                        </ListItem>
+
+                        <ListItem component={Link} to="/TradeReport" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <ReceiptLongIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="券商交易成交檔案紀錄查詢" />
+                        </ListItem>
+                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
+                            return id === '00201' ? ( */}
+                        <ListItem component={Link} to="/TraderList" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <PeopleAltIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="經理人登入系統基本資料檔維護" />
+                        </ListItem>
+                        {/* ) : (
+                                ''
+                            );
+                        })} */}
+                        {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
+                            return id === '00101' ? ( */}
+                        <ListItem component={Link} to="/Admin" sx={{ color: 'white' }}>
+                            <ListItemIcon>
+                                <AdminPanelSettingsIcon sx={{ color: 'white' }} />
+                            </ListItemIcon>
+                            <ListItemText primary="管理員資料維護" />
+                        </ListItem>
+                        {/* ) : (
+                                ''
+                            );
+                        })} */}
+
                         {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => { */}
                         {/* return id === '00601' ? ( */}
                         {/* <ListItem key={`idList${index}`} button component={Link} to="/Version">
@@ -341,31 +367,6 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 ''
                             );
                         })} */}
-                        <ListItem component={Link} to="/Order" sx={{ color: 'white' }}>
-                            <ListItemIcon>
-                                <RequestPageIcon sx={{ color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="委託交易轉檔資料查詢" />
-                        </ListItem>
-                        <ListItem component={Link} to="/DealOrder" sx={{ color: 'white' }}>
-                            <ListItemIcon>
-                                <GradingIcon sx={{ color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="成交轉檔資料查詢" />
-                        </ListItem>
-
-                        <ListItem component={Link} to="/TradeReport" sx={{ color: 'white' }}>
-                            <ListItemIcon>
-                                <ReceiptLongIcon sx={{ color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="券商交易成交檔案紀錄查詢" />
-                        </ListItem>
-                        <ListItem component={Link} to="/User" sx={{ color: 'white' }}>
-                            <ListItemIcon>
-                                <ListAltIcon sx={{ color: 'white' }} />
-                            </ListItemIcon>
-                            <ListItemText primary="契約編號查詢" />
-                        </ListItem>
                     </List>
                 </Drawer>
             </ClickAwayListener>

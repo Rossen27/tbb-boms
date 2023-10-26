@@ -16,7 +16,7 @@ const initialState = {
     createStockModalVisible: false,
     queryStockModalVisible: false,
     cStockNO: '',
-    cStockName: '',
+    // cStockName: '',
     params: {
         stockNo: '',
         kind: [],
@@ -49,7 +49,7 @@ const StockStore = () =>
         resetStockAllowData() {
             this.reset({
                 cStockNO: '',
-                cStockName: '',
+                // cStockName: '',
                 stockAllowData: {},
             });
         },

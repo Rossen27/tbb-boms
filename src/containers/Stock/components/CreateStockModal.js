@@ -174,7 +174,7 @@ const CreateStockModal = () => {
                             onClick={e => {
                                 e.preventDefault();
                                 closeCreateStockModal();
-                                if (removeSpace(cStockNO) && removeSpace(cStockName) && stockAllowData.kind) {
+                                if (removeSpace(cStockNO) && stockAllowData.kind) {
                                     updateData('applyDisabled', false);
                                 } else {
                                     updateData('applyDisabled', true);
