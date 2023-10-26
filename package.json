@@ -2,6 +2,7 @@
   "name": "tbb-trans",
   "version": "0.1.10",
   "private": true,
+  "homepage": "/BSOMS",
   "dependencies": {
     "@emotion/react": "^11.11.1",
     "@emotion/styled": "^11.11.0",

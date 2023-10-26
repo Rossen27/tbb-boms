@@ -69,7 +69,7 @@ const Login = () => {
                     <Typography
                         variant="h1"
                         style={{
-                            background: 'url(/images/logo512.png) no-repeat center',
+                            background: 'url(BSOMS/images/logo512.png) no-repeat center',
                             width: '600px',
                             height: '120px',
                             borderRadius: 0,
