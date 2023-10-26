@@ -13,7 +13,7 @@ const initialState = {
     },
     cTraderName: '',
     cTraderID: '',
-    cADID: '',
+    // cADID: '',
     userAFlag: '',
     agentAFlag: '',
     agentData: {
