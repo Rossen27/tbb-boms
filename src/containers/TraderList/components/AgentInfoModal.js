@@ -39,15 +39,15 @@ const AgentInfoModal = () => {
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                代理人代號
+                                契約編號
                             </th>
                             <td>{agentAFlag === 'D' ? dAgentData.userID : agentData.userID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                代理人名稱
+                                契約編號名稱
                             </th>
-                            <td>{agentAFlag === 'D' ? dAgentData.accName : agentData.accName}</td>
+                            <td>{agentAFlag === 'D' ? dAgentData.userName : agentData.userName}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -72,14 +72,14 @@ const AgentInfoModal = () => {
                             let postData = {};
                             if (agentAFlag === 'C') {
                                 postData = {
-                                    userID: agentData.userID,
-                                    traderID: traderData.traderID,
+                                    agentID: agentData.userID,
+                                    userID: traderData.traderID,
                                     actionFlag: agentAFlag,
                                 };
                             } else if (agentAFlag === 'D') {
                                 postData = {
-                                    userID: dAgentData.userID,
-                                    traderID: traderData.traderID,
+                                    agentID: dAgentData.userID,
+                                    userID: traderData.traderID,
                                     actionFlag: agentAFlag,
                                 };
                             }

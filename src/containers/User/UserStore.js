@@ -43,7 +43,7 @@ const initialState = {
         allowType: [],
     },
     agentParams: {
-        userId: '',
+        userID: '',
     },
 };
 
