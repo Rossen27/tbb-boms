@@ -68,16 +68,16 @@ const TraderList = () => {
             flex: 1,
             sortable: false,
         },
-        {
-            field: 'adid',
-            headerName: 'AD帳號',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
+        // {
+        //     field: 'adid',
+        //     headerName: 'AD帳號',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
         // {
         //     field: 'pGroup',
         //     headerName: '群組',
@@ -319,7 +319,7 @@ const TraderList = () => {
                             <Table
                                 header={columns}
                                 data={traderList}
-                                getRowId={row => row.traderID + row.adid}
+                                getRowId={row => row.traderID}
                                 onRowClick={params => {
                                     runInAction(() => {
                                         updateData('userAFlag', 'U');

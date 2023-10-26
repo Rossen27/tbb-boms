@@ -12,7 +12,6 @@ const TraderInfoModal = () => {
             updateData,
             cTraderName,
             cTraderID,
-            cADID,
             traderData,
             updateTraderData,
             applyDisabled,
@@ -56,12 +55,12 @@ const TraderInfoModal = () => {
                             </th>
                             <td>{userAFlag === 'C' ? cTraderName : traderData.traderName}</td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                             <th scope="row" className="text-end">
                                 AD帳號
                             </th>
                             <td>{userAFlag === 'C' ? cADID : traderData.adid}</td>
-                        </tr>
+                        </tr> */}
                         {/* <tr>
                             <th scope="row" className="text-end">
                                 群組
@@ -106,7 +105,7 @@ const TraderInfoModal = () => {
                                     postData = {
                                         traderID: cTraderID,
                                         traderName: cTraderName,
-                                        adid: cADID,
+                                        // adid: cADID,
                                         allowType: traderData.allowType,
                                         // pGroup: traderData.pGroup,
                                         actionFlag: userAFlag,
@@ -115,7 +114,7 @@ const TraderInfoModal = () => {
                                     postData = {
                                         traderID: traderData.traderID,
                                         traderName: traderData.traderName,
-                                        adid: traderData.adid,
+                                        // adid: traderData.adid,
                                         allowType: traderData.allowType,
                                         // pGroup: traderData.pGroup,
                                         actionFlag: userAFlag,
