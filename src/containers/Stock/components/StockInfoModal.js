@@ -13,7 +13,6 @@ const StockInfoModal = () => {
             stockAllowAFlag,
             stockAllowData,
             cStockNO,
-            cStockName,
             updateStockAllowData,
             applyDisabled,
         },
@@ -79,14 +78,14 @@ const StockInfoModal = () => {
                             if (stockAllowAFlag === 'C') {
                                 postData = {
                                     stockNO: cStockNO,
-                                    stockName: cStockName,
+                                    // stockName: cStockName,
                                     kind: stockAllowData.kind,
                                     actionFlag: stockAllowAFlag,
                                 };
                             } else if (stockAllowAFlag === 'U' || stockAllowAFlag === 'D') {
                                 postData = {
                                     stockNO: stockAllowData.stock_NO,
-                                    stockName: stockAllowData.stock_NAME,
+                                    // stockName: stockAllowData.stock_NAME,
                                     kind: stockAllowData.kind,
                                     actionFlag: stockAllowAFlag,
                                 };
