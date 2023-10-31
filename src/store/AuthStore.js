@@ -28,7 +28,7 @@ const AuthStore = () =>
         // },
         async ldapLogin(isAccount, isPwd) {
             const postData = {
-                adid: isAccount,
+                traderID: isAccount,
                 password: isPwd,
             };
             const res = await callLoginUser(postData);
