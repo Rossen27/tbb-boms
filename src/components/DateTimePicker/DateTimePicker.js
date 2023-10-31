@@ -9,6 +9,7 @@ export default function BasicDateTimePicker({ label, value, onChange, start }) {
         <LocalizationProvider dateAdapter={AdapterDateFns}>
             <DemoContainer components={['DateTimePicker']} sx={{ m: 1, mt: 0 }}>
                 <DateTimePicker
+                    views={['year', 'month', 'day', 'hours', 'minutes', 'seconds']}
                     label={label}
                     value={value}
                     onChange={onChange}

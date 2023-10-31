@@ -9,7 +9,7 @@ const initialState = {
     logList: [],
     queryTime: '',
     params: {
-        startDate: new Date().setHours(0, 0, 0, 0),
+        startDate: new Date().setHours(0, 0, 0, 0, 0),
         endDate: new Date(),
         functionId: [],
     },
@@ -40,8 +40,8 @@ const HistoryStore = () =>
                 await this.getOptionsQuery();
                 const passParams = JSON.parse(JSON.stringify(this.params));
                 passParams.startDate =
-                    passParams.startDate && format(new Date(passParams.startDate), 'yyyy/MM/dd HH:mm');
-                passParams.endDate = passParams.endDate && format(new Date(passParams.endDate), 'yyyy/MM/dd HH:mm');
+                    passParams.startDate && format(new Date(passParams.startDate), 'yyyy/MM/dd HH:mm:ss');
+                passParams.endDate = passParams.endDate && format(new Date(passParams.endDate), 'yyyy/MM/dd HH:mm:ss');
                 const functionOptionKeys = Object.keys(this.functionOptions).filter(key =>
                     toJS(passParams).functionId.includes(this.functionOptions[key])
                 );
