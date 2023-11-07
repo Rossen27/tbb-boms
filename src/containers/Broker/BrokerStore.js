@@ -64,8 +64,8 @@ const BrokerStore = () =>
         resetManagerData() {
             this.reset({
                 managerData: {
-                    userID: '',
-                    userName: '',
+                    traderID: '',
+                    traderName: '',
                 },
             });
         },
