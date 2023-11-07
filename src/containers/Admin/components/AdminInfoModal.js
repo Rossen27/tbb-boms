@@ -47,12 +47,12 @@ const AdminInfoModal = () => {
                             </th>
                             <td>{adminAFlag === 'C' ? cTraderName : adminData.traderName}</td>
                         </tr>
-                        <tr>
+                        {/* <tr>
                             <th scope="row" className="text-end">
                                 AD帳號
                             </th>
                             <td>{adminAFlag === 'C' ? cADID : adminData.adid}</td>
-                        </tr>
+                        </tr> */}
                         <tr>
                             <th scope="row" className="text-end">
                                 使用單位
@@ -91,7 +91,7 @@ const AdminInfoModal = () => {
                                     postData = {
                                         traderID: cTraderID,
                                         traderName: cTraderName,
-                                        adid: cADID,
+                                        // adid: cADID,
                                         unit: 1,
                                         actionFlag: adminAFlag,
                                     };
@@ -99,7 +99,7 @@ const AdminInfoModal = () => {
                                     postData = {
                                         traderID: adminData.traderID,
                                         traderName: adminData.traderName,
-                                        adid: adminData.adid,
+                                        // adid: adminData.adid,
                                         unit: adminData.unit,
                                         actionFlag: adminAFlag,
                                     };

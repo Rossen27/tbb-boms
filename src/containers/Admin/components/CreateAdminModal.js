@@ -62,7 +62,7 @@ const CreateAdminModal = () => {
                         />
                     </div>
                 </div>
-                <div className="mb-4 row">
+                {/* <div className="mb-4 row">
                     <label htmlFor="adid" className="col-sm-2 col-form-label fs-5">
                         AD帳號
                     </label>
@@ -81,7 +81,7 @@ const CreateAdminModal = () => {
                             }}
                         />
                     </div>
-                </div>
+                </div> */}
                 <div className="mb-4 row align-items-center">
                     <label htmlFor="unit" className="col-sm-2 col-form-label fs-5">
                         使用單位
