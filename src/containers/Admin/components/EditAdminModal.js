@@ -54,7 +54,7 @@ const EditAdminModal = () => {
                         />
                     </div>
                 </div>
-                <div className="mb-4 row">
+                {/* <div className="mb-4 row">
                     <label htmlFor="adid" className="col-sm-2 col-form-label fs-5">
                         AD帳號
                     </label>
@@ -72,7 +72,7 @@ const EditAdminModal = () => {
                             }}
                         />
                     </div>
-                </div>
+                </div> */}
                 <div className="mb-4 row align-items-center">
                     <label htmlFor="unit" className="col-sm-2 col-form-label fs-5">
                         使用單位
@@ -137,7 +137,7 @@ const EditAdminModal = () => {
                                 e.preventDefault();
                                 if (
                                     removeSpace(adminData.traderName) &&
-                                    removeSpace(adminData.adid) &&
+                                    // removeSpace(adminData.adid) &&
                                     adminData.unit
                                 ) {
                                     updateData('applyDisabled', false);

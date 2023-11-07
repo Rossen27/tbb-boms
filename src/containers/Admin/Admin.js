@@ -52,16 +52,16 @@ const Admin = () => {
             flex: 1,
             sortable: false,
         },
-        {
-            field: 'adid',
-            headerName: 'AD帳號',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
+        // {
+        //     field: 'adid',
+        //     headerName: 'AD帳號',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
         {
             field: 'unit',
             headerName: '使用單位',
@@ -105,18 +105,20 @@ const Admin = () => {
         <PersistentDrawer>
             <div>
                 <Layout title={'管理員資料維護'}>
-                    <div className="d-flex justify-content-end">
-                        <ButtonCreate
-                            onClick={e => {
-                                runInAction(() => {
-                                    e.preventDefault();
-                                    resetAdminData();
-                                    updateData('createAdminModalVisible', true);
-                                    updateData('adminAFlag', 'C');
-                                });
-                            }}
-                        />
-                    </div>
+                    {sessionStorage.getItem('loginUnit') === '1' && (
+                        <div className="d-flex justify-content-end">
+                            <ButtonCreate
+                                onClick={e => {
+                                    runInAction(() => {
+                                        e.preventDefault();
+                                        resetAdminData();
+                                        updateData('createAdminModalVisible', true);
+                                        updateData('adminAFlag', 'C');
+                                    });
+                                }}
+                            />
+                        </div>
+                    )}
                     <div className="d-flex justify-content-end mt-2 align-items-center">
                         <p className="time">
                             <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
@@ -132,11 +134,13 @@ const Admin = () => {
                                 data={adminList}
                                 getRowId={row => row.traderID}
                                 onRowClick={params => {
-                                    updateData('adminData', {
-                                        ...params.row,
-                                    });
-                                    updateData('adminAFlag', 'U');
-                                    updateData('editAdminModalVisible', true);
+                                    if (sessionStorage.getItem('loginUnit') === '1') {
+                                        updateData('adminData', {
+                                            ...params.row,
+                                        });
+                                        updateData('adminAFlag', 'U');
+                                        updateData('editAdminModalVisible', true);
+                                    }
                                 }}
                             />
                         ) : (
