@@ -84,7 +84,7 @@ const EditAccModal = () => {
                     </label>
                     <div className="col-sm-10">
                         <input
-                            type="text"
+                            type="password"
                             className="form-control col-sm-4 w-40 fs-5"
                             id="psd"
                             value={psd}
@@ -119,7 +119,7 @@ const EditAccModal = () => {
                         </label>
                         <div className="col-sm-10">
                             <input
-                                type="text"
+                                type="password"
                                 className="form-control col-sm-4 w-40 fs-5"
                                 id="psd2"
                                 value={newPsd}
