@@ -4,7 +4,7 @@ import { runInAction } from 'mobx';
 import { getTraderInfo, updateUserPassword } from '@api';
 
 const initialState = {
-    adid: '',
+    traderID: '',
     traderName: '',
     editAccModalVisible: false,
     newPsd: '',
@@ -21,9 +21,9 @@ const LoginStore = () =>
         async traderInfo() {
             runInAction(async () => {
                 const res = await getTraderInfo();
-                const adid = res.item.adid;
+                const traderID = res.item.traderID;
                 const traderName = res.item.traderName;
-                this.assignData({ adid, traderName });
+                this.assignData({ traderID, traderName });
             });
         },
         async updateUserPsd(postData) {

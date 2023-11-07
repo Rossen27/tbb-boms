@@ -13,7 +13,7 @@ const EditAccModal = () => {
     const {
         LoginStore: {
             updateData,
-            adid,
+            traderID,
             traderName,
             closeEditAccModal,
             editAccModalVisible,
@@ -64,15 +64,15 @@ const EditAccModal = () => {
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="adid" className="col-sm-2 col-form-label fs-5">
-                        AD帳號
+                    <label htmlFor="traderID" className="col-sm-2 col-form-label fs-5">
+                        經理人代號
                     </label>
                     <div className="col-sm-10">
                         <input
                             type="text"
                             className="form-control col-sm-4 w-40 fs-5"
-                            id="adid"
-                            value={adid}
+                            id="traderID"
+                            value={traderID}
                             disabled
                         />
                     </div>
@@ -172,7 +172,6 @@ const EditAccModal = () => {
                                 const rtn = await updateUserPsd(postData);
                                 if (rtn) {
                                     closeEditAccModal();
-                                    console.log('rtn', rtn);
                                     logout();
                                     await navigate('/', { replace: true });
                                 }
