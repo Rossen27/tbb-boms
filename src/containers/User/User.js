@@ -18,6 +18,11 @@ import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { TextField, Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { pGroupText } from './constant/userList.js';
+import AgentInfoModal from './components/AgentInfoModal.js';
+import EditUserModal from './components/EditUserModal.js';
+import UserInfoModal from './components/UserInfoModal.js';
+import CreateUserModal from './components/CreateUserModal.js';
+import CreateAgentModal from './components/CreateAgentModal.js';
 // import ExcelJS from 'exceljs';
 
 const User = () => {
@@ -329,11 +334,11 @@ const User = () => {
                         )}
                     </section>
                 </Layout>
-                {/* <EditUserModal />
-                <UserInfoModal />
+                <EditUserModal />
                 <AgentInfoModal />
+                <UserInfoModal />
                 <CreateUserModal />
-                <CreateAgentModal /> */}
+                <CreateAgentModal />
             </div>
         </PersistentDrawer>
     );

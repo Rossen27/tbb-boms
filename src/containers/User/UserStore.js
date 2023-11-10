@@ -2,7 +2,8 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { queryUserList, updateUser, queryAgentList, getManagerOptions, updateAgent } from '@api';
+import { queryUserList, updateUser, queryAgentList, getManagerOptions, updateAgent, queryBrokerManager } from '@api';
+
 
 const initialState = {
     allowTypeOptions: {},
@@ -26,6 +27,8 @@ const initialState = {
     },
     assignedAgentList: [],
     unassignedAgentList: [],
+    assignedManagerList: [],
+    unassignedManagerList: [],
     editUserModalVisible: false,
     userInfoModalVisible: false,
     agentInfoModalVisible: false,
@@ -53,6 +56,7 @@ const api = {
     qryAgentList: queryAgentList,
     getOptions: getManagerOptions,
     updateAgent: updateAgent,
+    qryBrokerManager: queryBrokerManager,
 };
 const UserStore = () =>
     useLocalObservable(() => ({
@@ -138,6 +142,14 @@ const UserStore = () =>
                 const unassignedAgentList = res.item.unassignedAgentList;
                 const assignedAgentList = res.item.assignedAgentList;
                 this.assignData({ unassignedAgentList, assignedAgentList });
+            });
+        },
+        async getQryManagerList(userID) {
+            runInAction(async () => {
+                const res = await this.qryBrokerManager({ userID: userID });
+                const unassignedBrokerManager = res.item.unassignedBrokerManager;
+                const assignedBrokerManager = res.item.assignedBrokerManager;
+                this.assignData({ unassignedBrokerManager, assignedBrokerManager });
             });
         },
         async updateAgentData(postData) {
