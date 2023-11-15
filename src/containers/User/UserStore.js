@@ -3,7 +3,7 @@ import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
 import { queryUserList, updateUser, queryAgentList, getManagerOptions, updateAgent, queryBrokerManager } from '@api';
-
+import { getManagerList } from '../../api/api';
 
 const initialState = {
     allowTypeOptions: {},
@@ -54,6 +54,7 @@ const api = {
     qryUserList: queryUserList,
     updateUser: updateUser,
     qryAgentList: queryAgentList,
+    qryManagerList: getManagerList,
     getOptions: getManagerOptions,
     updateAgent: updateAgent,
     qryBrokerManager: queryBrokerManager,

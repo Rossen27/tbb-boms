@@ -17,6 +17,7 @@ const EditUserModal = () => {
             getQryManagerList,
             getQryAgentList,
             agentParams,
+            getManagerList,
         },
     } = useStore();
     return (

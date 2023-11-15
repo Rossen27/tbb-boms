@@ -41,6 +41,10 @@ export const updateUser = postData => post('/manager/updateUser', postData);
  */
 export const queryAgentList = params => get('/manager/getAgentList', params);
 
+/*  getManagerList 查詢代理人清單 [GET]
+ */
+export const getManagerList = params => get('/manager/getManagerList', params);
+
 /*  updateAgent 維護代理人  [POST]
  */
 export const updateAgent = postData => post('/manager/updateAgent', postData);
