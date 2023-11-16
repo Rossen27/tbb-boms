@@ -270,7 +270,7 @@ const CreateTraderModal = () => {
                                     removeSpace(cTraderName) &&
                                     // removeSpace(cADID) &&
                                     // traderData.pGroup &&
-                                    toString(traderData.allowType)
+                                    traderData.allowType != null
                                 ) {
                                     updateData('applyDisabled', false);
                                 } else {

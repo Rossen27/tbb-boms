@@ -79,11 +79,6 @@ const StkLimit = () => {
             sortable: false,
             minWidth: 100,
             flex: 1,
-            renderCell: params => {
-                if (params.row.unit === 1) {
-                    return <p className="text-primary">資訊技術部</p>;
-                }
-            },
         },
         // {
         //     field: 'updDate',

@@ -13,27 +13,12 @@ const initialState = {
     },
     cUserName: '',
     cUserID: '',
-    cADID: '',
     userAFlag: '',
-    agentAFlag: '',
-    agentData: {
-        accID: '',
-        accName: '',
-    },
-    dAgentData: {
-        accID: '',
-        accName: '',
-    },
-    assignedAgentList: [],
-    unassignedAgentList: [],
     editUserModalVisible: false,
     userInfoModalVisible: false,
-    agentInfoModalVisible: false,
     createUserModalVisible: false,
-    createAgentModalVisible: false,
     applyDisabled: false,
-    createAgentDisabled: false,
-    applyAgentDisabled: false,
+
     isLoading: false,
     updateComplete: false,
     loadingFail: false,
@@ -42,17 +27,12 @@ const initialState = {
         userID: '',
         allowType: [],
     },
-    agentParams: {
-        userID: '',
-    },
 };
 
 const api = {
     qryUserList: queryUserList,
     updateUser: updateUser,
-    qryAgentList: queryAgentList,
     getOptions: getManagerOptions,
-    updateAgent: updateAgent,
 };
 const UserStore = () =>
     useLocalObservable(() => ({
@@ -64,16 +44,7 @@ const UserStore = () =>
             this.reset({
                 cUserID: '',
                 cUserName: '',
-                cADID: '',
                 userData: {},
-            });
-        },
-        resetAgentData() {
-            this.reset({
-                agentData: {
-                    accID: '',
-                    accName: '',
-                },
             });
         },
         closeEditUserModal() {
@@ -84,12 +55,6 @@ const UserStore = () =>
         },
         closeCreateUserModal() {
             this.createUserModalVisible = false;
-        },
-        closeCreateAgentModal() {
-            this.createAgentModalVisible = false;
-        },
-        closeAgentInfoModal() {
-            this.agentInfoModalVisible = false;
         },
         async getOptionsQuery() {
             runInAction(async () => {
@@ -123,31 +88,6 @@ const UserStore = () =>
                 const message = res.data.message;
                 if (res) {
                     this.updateData('applyDisabled', false);
-                    this.updateData('updateComplete', true);
-                    this.updateData('isLoading', false);
-                    if (code) {
-                        this.updateData('loadingFail', true);
-                        this.updateData('msg', message);
-                    }
-                }
-            });
-        },
-        async getQryAgentList(userID) {
-            runInAction(async () => {
-                const res = await this.qryAgentList({ userID: userID });
-                const unassignedAgentList = res.item.unassignedAgentList;
-                const assignedAgentList = res.item.assignedAgentList;
-                this.assignData({ unassignedAgentList, assignedAgentList });
-            });
-        },
-        async updateAgentData(postData) {
-            runInAction(async () => {
-                this.updateData('isLoading', true);
-                const res = await this.updateAgent(postData);
-                const code = parseInt(res.data.code);
-                const message = res.data.message;
-                if (res) {
-                    this.updateData('applyAgentDisabled', false);
                     this.updateData('updateComplete', true);
                     this.updateData('isLoading', false);
                     if (code) {
