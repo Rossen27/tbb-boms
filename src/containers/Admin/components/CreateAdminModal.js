@@ -145,7 +145,7 @@ const CreateAdminModal = () => {
                             sx={[btnStyle.btn, btnStyle.btnCreate]}
                             onClick={e => {
                                 e.preventDefault();
-                                if (removeSpace(cTraderID) && removeSpace(cTraderName) && removeSpace(cADID)) {
+                                if (removeSpace(cTraderID) && removeSpace(cTraderName)) {
                                     updateData('applyDisabled', false);
                                 } else {
                                     updateData('applyDisabled', true);

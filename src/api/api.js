@@ -127,3 +127,13 @@ export const updateStockDeposit = postData => post('/stockDeposit/updateStockDep
 /* getTradeReportList 查詢券商交易成交檔案記錄 [GET]
  */
 export const queryTradeReportList = params => get('/tradeReport/getTradeReportList', params);
+
+/** ---------------------------排程管理 -------------------------  */
+
+/* getWorkList 查詢工作清單 [GET]
+ */
+export const queryWorkList = params => get('/getWorkList', params);
+
+/* updateWork 維護排程時間 [POST]
+ */
+export const updateWork = postData => post('/updateWork', postData);

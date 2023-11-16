@@ -11,7 +11,7 @@ const initialState = {
     adminData: {},
     cTraderName: '',
     cTraderID: '',
-    cADID: '',
+    // cADID: '',
     editAdminModalVisible: false,
     adminInfoModalVisible: false,
     createAdminModalVisible: false,
@@ -46,7 +46,7 @@ const AdminStore = () =>
             this.reset({
                 cTraderID: '',
                 cTraderName: '',
-                cADID: '',
+                // cADID: '',
                 adminData: {},
             });
         },
