@@ -3,6 +3,7 @@ import { useStore } from '@store';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
 import { Box, Typography, TextField, Button, Alert } from '@mui/material';
+import logoSrc from '../../assets/images/logo512.png';
 
 const Login = () => {
     const [isAccount, setIsAccount] = useState();
@@ -69,7 +70,7 @@ const Login = () => {
                     <Typography
                         variant="h1"
                         style={{
-                            background: 'url(BSOMS/images/logo512.png) no-repeat center',
+                            background: `url(${logoSrc}) no-repeat center`,
                             width: '600px',
                             height: '120px',
                             borderRadius: 0,

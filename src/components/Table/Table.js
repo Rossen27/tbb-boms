@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { DataGrid } from '@mui/x-data-grid';
 
-const Table = ({ header, data, onRowClick, hideFooter, getRowId }) => {
+const Table = ({ header, data, onRowClick, hideFooter, getRowId, onCellClick }) => {
     const [pageSize, setPageSize] = useState(10);
     return (
         <div style={{}}>
@@ -24,6 +24,7 @@ const Table = ({ header, data, onRowClick, hideFooter, getRowId }) => {
                 rowsPerPageOptions={[10, 20, 30]}
                 pagination
                 onRowClick={onRowClick}
+                onCellClick={onCellClick}
                 disableColumnFilter
                 hideFooter={hideFooter}
                 getRowId={getRowId}

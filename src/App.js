@@ -13,6 +13,7 @@ import StkDeposit from '@containers/StkDeposit';
 import StkLimit from '@containers/StkLimit';
 import TradeReport from '@containers/TradeReport';
 import User from '@containers/User';
+import Scheduler from '@containers/Scheduler';
 import '../node_modules/bootstrap-icons/font/bootstrap-icons.css';
 function App() {
     return (
@@ -31,6 +32,7 @@ function App() {
                     <Route path="/StkDeposit" element={<StkDeposit />} />
                     <Route path="/TradeReport" element={<TradeReport />} />
                     <Route path="/User" element={<User />} />
+                    {/* <Route path="/Scheduler" element={<Scheduler />} /> */}
                 </Routes>
             </BrowserRouter>
         </div>
