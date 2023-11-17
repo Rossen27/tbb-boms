@@ -2,15 +2,18 @@ import React, { useState, useEffect } from 'react';
 import { useStore } from '@store';
 import { useNavigate } from 'react-router-dom';
 import { observer } from 'mobx-react-lite';
-import { Box, Typography, TextField, Button, Alert } from '@mui/material';
+import { Box, Typography, TextField, Button, Alert, InputAdornment, IconButton, OutlinedInput } from '@mui/material';
+import Visibility from '@material-ui/icons/Visibility';
+import VisibilityOff from '@material-ui/icons/VisibilityOff';
 import logoSrc from '../../assets/images/logo512.png';
 
 const Login = () => {
     const [isAccount, setIsAccount] = useState();
-    const [isPwd, setIsPwd] = useState();
+    const [isPsd, setIsPsd] = useState();
+    const [showPsd, setShowPsd] = useState(false);
     const [show, setShow] = useState(false);
     const {
-        AuthStore: { ldapLogin, msg },
+        AuthStore: { login, msg },
         LoginStore: { traderInfo },
     } = useStore();
 
@@ -18,14 +21,14 @@ const Login = () => {
     // useEffect(() => {
     //     login();
     // }, []);
-    // const backgroundStyle = {
-    // background: '#ed8087',
-    // background: '-moz-linear-gradient(left,  #ed8087 0%, #d7424b 100%)',
-    // background: '-webkit-linear-gradient(left,  #ed8087 0%,#d7424b 100%)',
-    // background: 'linear-gradient(to right,  #ed8087 0%,#d7424b 100%)',
-    // filter: 'progid:DXImageTransform.Microsoft.gradient( startColorstr="#ed8087", endColorstr="#d7424b",GradientType=1 )',
-    // };
     const { version } = require('../../../package.json');
+    const handleClickShowPassword = () => {
+        setShowPsd(isShowing => !isShowing);
+    };
+
+    const handleMouseDownPassword = event => {
+        event.preventDefault();
+    };
     return (
         <div
             style={{
@@ -38,8 +41,7 @@ const Login = () => {
                 sx={{ width: '100%', height: '100%' }}
                 onSubmit={async e => {
                     e.preventDefault();
-                    await ldapLogin(isAccount, isPwd);
-                    // await login(isAccount, isPwd);
+                    await login(isAccount, isPsd);
                     if (sessionStorage.getItem('loginCode') === '0') {
                         traderInfo();
                         navigate('/TraderList', { replace: true });
@@ -104,15 +106,28 @@ const Login = () => {
                             setIsAccount(accountValue);
                         }}
                     />
-                    <TextField
-                        type={'password'}
+                    <OutlinedInput
+                        type={showPsd ? 'text' : 'password'}
                         sx={{ width: 400, margin: 'normal', marginTop: 3 }}
                         margin="normal"
                         placeholder="登入密碼"
+                        value={isPsd}
                         onChange={e => {
-                            const pwdValue = e.target.value;
-                            setIsPwd(pwdValue);
+                            const psdValue = e.target.value;
+                            setIsPsd(psdValue);
                         }}
+                        endAdornment={
+                            <InputAdornment position="end">
+                                <IconButton
+                                    aria-label="toggle password visibility"
+                                    onClick={handleClickShowPassword}
+                                    onMouseDown={handleMouseDownPassword}
+                                    edge="end"
+                                >
+                                    {showPsd ? <Visibility /> : <VisibilityOff />}
+                                </IconButton>
+                            </InputAdornment>
+                        }
                     />
                     <Alert severity="error" className={show ? '' : 'd-none'}>
                         登入失敗，{msg}
