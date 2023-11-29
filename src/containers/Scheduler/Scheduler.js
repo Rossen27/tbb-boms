@@ -4,7 +4,7 @@ import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { runInAction } from 'mobx';
 import Layout from '@containers/Layout';
-import { execStatusText, holidayFlagText } from './constant/scheduler';
+import { execStatusText, holidayFlagText, btnStyle } from './constant/scheduler';
 import { format, parse } from 'date-fns';
 import {
     PersistentDrawer,
@@ -27,10 +27,11 @@ const Scheduler = () => {
             workList,
             updateComplete,
             getQryWorkList,
-            schedulerData,
+            handleSchedule,
             loadingFail,
             isLoading,
             msg,
+            execHandleDisabled,
         },
     } = useStore();
     const columns = [
@@ -145,9 +146,16 @@ const Scheduler = () => {
             sortable: false,
             renderCell: params => (
                 <Button
-                    onClick={e => {
+                    disabled={execHandleDisabled}
+                    sx={[btnStyle.btn]}
+                    onClick={async e => {
                         e.preventDefault();
-                        console.log('params', params);
+                        updateData('execHandleDisabled', true);
+                        const postData = {
+                            execCMD: params.row.execCMD,
+                            workID: params.row.workID,
+                        };
+                        await handleSchedule(postData);
                     }}
                     variant="outlined"
                 >

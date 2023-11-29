@@ -120,3 +120,6 @@ export const queryWorkList = params => get('/getWorkList', params);
 
 /* updateWork 維護排程時間 [POST] */
 export const updateWork = postData => post('/updateWork', postData);
+
+/* executeSync 手動執行排成 [POST] */
+export const execSync = postData => post('/executeSync', postData);
