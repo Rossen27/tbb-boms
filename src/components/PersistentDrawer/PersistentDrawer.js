@@ -367,12 +367,12 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                                 ''
                             );
                         })} */}
-                        {/* <ListItem component={Link} to="/Scheduler" sx={{ color: 'white' }}>
+                        <ListItem component={Link} to="/Scheduler" sx={{ color: 'white' }}>
                             <ListItemIcon>
                                 <AdminPanelSettingsIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
                             <ListItemText primary="排程管理" />
-                        </ListItem> */}
+                        </ListItem>
                     </List>
                 </Drawer>
             </ClickAwayListener>

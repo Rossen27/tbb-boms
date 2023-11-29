@@ -26,10 +26,10 @@ const AuthStore = () =>
         //     sessionStorage.setItem('loginAuth', JSON.stringify(items));
         //     sessionStorage.setItem('token', token);
         // },
-        async ldapLogin(isAccount, isPwd) {
+        async login(isAccount, isPsd) {
             const postData = {
                 traderID: isAccount,
-                password: isPwd,
+                password: isPsd,
             };
             const res = await callLoginUser(postData);
             const { token, code, traderID, traderName, unit } = res.data;

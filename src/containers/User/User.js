@@ -14,6 +14,9 @@ import {
     Table,
     ButtonExport,
 } from '@components';
+import EditUserModal from './components/EditUserModal.js';
+import UserInfoModal from './components/UserInfoModal.js';
+import CreateUserModal from './components/CreateUserModal.js';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { TextField, Button } from '@mui/material';
 import { runInAction } from 'mobx';
@@ -54,7 +57,7 @@ const User = () => {
         },
         {
             field: 'userName',
-            headerName: '經理人名稱',
+            headerName: '使用者名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -62,19 +65,19 @@ const User = () => {
             flex: 1,
             sortable: false,
         },
-        {
-            field: 'adid',
-            headerName: 'AD帳號',
-            headerClassName: 'table-header',
-            headerAlign: 'center',
-            align: 'center',
-            sortable: false,
-            minWidth: 100,
-            flex: 1,
-        },
+        // {
+        //     field: 'adid',
+        //     headerName: 'AD帳號',
+        //     headerClassName: 'table-header',
+        //     headerAlign: 'center',
+        //     align: 'center',
+        //     sortable: false,
+        //     minWidth: 100,
+        //     flex: 1,
+        // },
         {
             field: 'pGroup',
-            headerName: '群組',
+            headerName: '權限群組',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -105,6 +108,23 @@ const User = () => {
         //     minWidth: 90,
         //     flex: 1,
         // },
+        {
+            field: 'unit',
+            headerName: '使用單位',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 100,
+            flex: 1,
+            renderCell: params => {
+                if (params.row.unit === 1) {
+                    return <p className="text-primary">資訊技術部</p>;
+                } else {
+                    return <p className="text-primary">證券部</p>;
+                }
+            },
+        },
         {
             field: 'allowType',
             headerName: '權限',
@@ -286,18 +306,18 @@ const User = () => {
                             />
                         </li> */}
                         </ul>
-                        {/* {sessionStorage.getItem('loginUnit') === '1' && (
-                            <ButtonCreate
-                                onClick={e => {
-                                    runInAction(() => {
-                                        e.preventDefault();
-                                        resetUserData();
-                                        updateData('createUserModalVisible', true);
-                                        updateData('userAFlag', 'C');
-                                    });
-                                }}
-                            />
-                        )} */}
+                        {/* {sessionStorage.getItem('loginUnit') === '1' && ( */}
+                        <ButtonCreate
+                            onClick={e => {
+                                runInAction(() => {
+                                    e.preventDefault();
+                                    resetUserData();
+                                    updateData('createUserModalVisible', true);
+                                    updateData('userAFlag', 'C');
+                                });
+                            }}
+                        />
+                        {/* )} */}
                     </div>
 
                     <div className="d-flex justify-content-end mt-2 align-items-center">
@@ -329,11 +349,9 @@ const User = () => {
                         )}
                     </section>
                 </Layout>
-                {/* <EditUserModal />
+                <EditUserModal />
                 <UserInfoModal />
-                <AgentInfoModal />
                 <CreateUserModal />
-                <CreateAgentModal /> */}
             </div>
         </PersistentDrawer>
     );
