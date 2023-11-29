@@ -9,7 +9,7 @@ import logoSrc from '../../assets/images/logo512.png';
 
 const Login = () => {
     const [isAccount, setIsAccount] = useState();
-    const [isPsd, setIsPsd] = useState();
+    const [isPsd, setIsPsd] = useState('');
     const [showPsd, setShowPsd] = useState(false);
     const [show, setShow] = useState(false);
     const {
@@ -109,7 +109,6 @@ const Login = () => {
                     <OutlinedInput
                         type={showPsd ? 'text' : 'password'}
                         sx={{ width: 400, margin: 'normal', marginTop: 3 }}
-                        margin="normal"
                         placeholder="登入密碼"
                         value={isPsd}
                         onChange={e => {

@@ -2,7 +2,7 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { queryWorkList, updateWork } from '@api';
+import { queryWorkList, updateWork, execSync } from '@api';
 
 const initialState = {
     allowTypeOptions: {},
@@ -12,7 +12,7 @@ const initialState = {
     setTimeFormat: '',
     editWorkTimeModalVisible: false,
     workTimeInfoModalVisible: false,
-
+    execHandleDisabled: false,
     applyDisabled: false,
     updateComplete: false,
     isLoading: false,
@@ -23,6 +23,7 @@ const initialState = {
 const api = {
     qryWorkList: queryWorkList,
     updateWork: updateWork,
+    execSync: execSync,
 };
 const SchedulerStore = () =>
     useLocalObservable(() => ({
@@ -52,6 +53,23 @@ const SchedulerStore = () =>
                 const message = res.data.message;
                 if (res) {
                     this.updateData('applyDisabled', false);
+                    this.updateData('updateComplete', true);
+                    this.updateData('isLoading', false);
+                    if (code) {
+                        this.updateData('loadingFail', true);
+                        this.updateData('msg', message);
+                    }
+                }
+            });
+        },
+        async handleSchedule(postData) {
+            runInAction(async () => {
+                this.updateData('isLoading', true);
+                const res = await this.execSync(postData);
+                const code = parseInt(res.data.code);
+                const message = res.data.message;
+                if (res) {
+                    this.updateData('execHandleDisabled', false);
                     this.updateData('updateComplete', true);
                     this.updateData('isLoading', false);
                     if (code) {
