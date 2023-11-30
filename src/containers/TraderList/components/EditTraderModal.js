@@ -15,17 +15,18 @@ const EditTraderModal = () => {
             userAFlag,
             traderData,
             getQryAgentList,
+            updateTraderData,
             agentParams,
         },
     } = useStore();
     return (
         <ModalEdit open={editTraderModalVisible} onClose={closeEditTraderModal} title={'編輯經理人基本資料'}>
             <form>
-                <div className="mb-4 row">
+                <div className="d-flex align-items-baseline mb-4">
                     <label htmlFor="traderID" className="col-sm-2 col-form-label fs-5">
                         經理人代號
                     </label>
-                    <div className="col-sm-10">
+                    <div className="col">
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
@@ -34,6 +35,26 @@ const EditTraderModal = () => {
                             id="traderID"
                         />
                     </div>
+                    {/* 重設密碼 */}
+                    {sessionStorage.getItem('loginUnit') === '1' && (
+                        <button
+                            className="border rounded-pill border-primary p-1 bg-white border-2"
+                            type="button"
+                            onClick={async e => {
+                                e.preventDefault();
+                                const postData = {
+                                    traderID: traderData.traderID,
+                                    traderName: traderData.traderName,
+                                    allowType: traderData.allowType,
+                                    actionFlag: 'R',
+                                };
+                                updateData('editTraderModalVisible', false);
+                                await updateTraderData(postData);
+                            }}
+                        >
+                            重設密碼
+                        </button>
+                    )}
                 </div>
                 <div className="mb-4 row">
                     <label htmlFor="traderName" className="col-sm-2 col-form-label fs-5">
