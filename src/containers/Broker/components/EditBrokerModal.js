@@ -24,12 +24,7 @@ const EditBrokerModal = () => {
                             className="form-control w-40 fs-5"
                             value={brokerData.brkid}
                             id="brkid"
-                            onChange={e => {
-                                runInAction(() => {
-                                    brokerData.brkid = e.target.value;
-                                    updateData('brokerData', brokerData);
-                                });
-                            }}
+                            disabled
                         />
                     </div>
                 </div>
@@ -116,11 +111,7 @@ const EditBrokerModal = () => {
                             onClick={e => {
                                 runInAction(() => {
                                     e.preventDefault();
-                                    if (
-                                        removeSpace(brokerData.brkid) &&
-                                        removeSpace(brokerData.brkName) &&
-                                        removeSpace(brokerData.account)
-                                    ) {
+                                    if (removeSpace(brokerData.brkName) && removeSpace(brokerData.account)) {
                                         updateData('applyDisabled', false);
                                     } else {
                                         updateData('applyDisabled', true);
