@@ -3,15 +3,15 @@ import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import Layout from '@containers/Layout';
-import { PersistentDrawer, ButtonQuery, ButtonReset, Loading, CompleteInfo, Table } from '@components';
+import { PersistentDrawer, ButtonQuery, ButtonReset, ButtonCreate, Loading, CompleteInfo, Table } from '@components';
 import { TextField } from '@mui/material';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import EditBrokerModal from './components/EditBrokerModal';
 import BrokerInfoModal from './components/BrokerInfoModal';
 import CreateManagerModal from './components/CreateManagerModal';
 import ManagerInfoModal from './components/ManagerInfoModal';
-
-// import ExcelJS from 'exceljs';
+import { runInAction } from 'mobx';
+import CreateBrokerModal from './components/CreateBrokerModal';
 
 const Broker = () => {
     const {
@@ -27,6 +27,7 @@ const Broker = () => {
             isLoading,
             loadingFail,
             msg,
+            resetBrokerData,
         },
         LoginStore: { traderInfo },
     } = useStore();
@@ -98,7 +99,7 @@ const Broker = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <div>
+            <>
                 <Layout title={'可下單券商資料維護'}>
                     <div className="d-flex justify-content-between">
                         <ul className="d-flex align-items-center">
@@ -144,6 +145,18 @@ const Broker = () => {
                                 />
                             </li>
                         </ul>
+                        {/* {sessionStorage.getItem('loginUnit') === '1' && ( */}
+                        <ButtonCreate
+                            onClick={e => {
+                                runInAction(() => {
+                                    e.preventDefault();
+                                    resetBrokerData();
+                                    updateData('createBrokerModalVisible', true);
+                                    updateData('brokerAFlag', 'C');
+                                });
+                            }}
+                        />
+                        {/* )} */}
                     </div>
 
                     <div className="d-flex justify-content-end mt-2 align-items-center">
@@ -161,6 +174,7 @@ const Broker = () => {
                                 data={brokerList}
                                 getRowId={row => row.brkid + row.userID}
                                 onRowClick={params => {
+                                    updateData('brokerAFlag', 'U');
                                     updateData('brokerData', {
                                         ...params.row,
                                     });
@@ -172,11 +186,12 @@ const Broker = () => {
                         )}
                     </section>
                 </Layout>
+                <CreateBrokerModal />
                 <EditBrokerModal />
                 <BrokerInfoModal />
                 <CreateManagerModal />
                 <ManagerInfoModal />
-            </div>
+            </>
         </PersistentDrawer>
     );
 };
