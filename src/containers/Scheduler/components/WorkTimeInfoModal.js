@@ -15,6 +15,7 @@ const WorkTimeInfoModal = () => {
             schedulerData,
             applyDisabled,
             updateSchedule,
+            schedulerAFlag,
         },
     } = useStore();
     const setTimeParse = setTimeFormat.replaceAll(':', '');
@@ -49,7 +50,7 @@ const WorkTimeInfoModal = () => {
                             <th scope="row" className="text-end">
                                 作業時間
                             </th>
-                            <td>{setTimeFormat}</td>
+                            <td>{schedulerData.setTime}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
@@ -90,9 +91,9 @@ const WorkTimeInfoModal = () => {
                                     workID: schedulerData.workID,
                                     workName: schedulerData.workName,
                                     execCMD: schedulerData.execCMD,
-                                    setTime: setTimeParse,
+                                    setTime: schedulerData.setTime,
                                     holidayFlag: schedulerData.holidayFlag,
-                                    actionFlag: 'U',
+                                    actionFlag: schedulerAFlag,
                                 };
                                 await updateSchedule(postData);
                                 closeWorkTimeInfoModal();

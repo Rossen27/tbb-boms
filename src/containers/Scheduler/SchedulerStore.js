@@ -5,13 +5,22 @@ import { runInAction, toJS } from 'mobx';
 import { queryWorkList, updateWork, execSync } from '@api';
 
 const initialState = {
-    allowTypeOptions: {},
+    cSchedulerData: {
+        workID: '',
+        workName: '',
+        execCMD: '',
+        setTime: '',
+        holidayFlag: '',
+    },
     workList: [],
     queryTime: '',
     schedulerData: {},
     setTimeFormat: '',
+    schedulerAFlag: '',
     editWorkTimeModalVisible: false,
     workTimeInfoModalVisible: false,
+    createSchedulerModalVisible: false,
+    schedulerInfoModalVisible: false,
     execHandleDisabled: false,
     applyDisabled: false,
     updateComplete: false,
@@ -31,11 +40,28 @@ const SchedulerStore = () =>
         ...initialState,
         ...StoreAction(initialState),
         ...api,
+        resetSchedulerData() {
+            this.reset({
+                cSchedulerData: {
+                    workID: '',
+                    workName: '',
+                    execCMD: '',
+                    setTime: '',
+                    holidayFlag: '',
+                },
+            });
+        },
         closeEditWorkTimeModal() {
             this.editWorkTimeModalVisible = false;
         },
         closeWorkTimeInfoModal() {
             this.workTimeInfoModalVisible = false;
+        },
+        closeCreateSchedulerModalVisible() {
+            this.createSchedulerModalVisible = false;
+        },
+        closeSchedulerInfoModal() {
+            this.schedulerInfoModalVisible = false;
         },
         async getQryWorkList() {
             runInAction(async () => {

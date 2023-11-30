@@ -20,6 +20,8 @@ import {
 import { Button } from '@mui/material';
 import EditWorkTimeModal from './components/EditWorkTimeModal';
 import WorkTimeInfoModal from './components/WorkTimeInfoModal';
+import SchedulerInfoModal from './components/SchedulerInfoModal';
+import CreateSchedulerModal from './components/CreateSchedulerModal';
 const Scheduler = () => {
     const {
         SchedulerStore: {
@@ -32,6 +34,7 @@ const Scheduler = () => {
             isLoading,
             msg,
             execHandleDisabled,
+            resetSchedulerData,
         },
     } = useStore();
     const columns = [
@@ -62,16 +65,16 @@ const Scheduler = () => {
             minWidth: 140,
             flex: 1,
             sortable: false,
-            renderCell: params => {
-                const timeFormat = [];
-                for (const [index] of [...params.row.setTime].entries()) {
-                    if (index % 2 === 0) {
-                        timeFormat.push(params.row.setTime.slice(index, index + 2));
-                    }
-                }
-                const setTimeFormat = timeFormat.join(':');
-                return <p>{setTimeFormat}</p>;
-            },
+            // renderCell: params => {
+            //     const timeFormat = [];
+            //     for (const [index] of [...params.row.setTime].entries()) {
+            //         if (index % 2 === 0) {
+            //             timeFormat.push(params.row.setTime.slice(index, index + 2));
+            //         }
+            //     }
+            //     const setTimeFormat = timeFormat.join(':');
+            //     return <p>{setTimeFormat}</p>;
+            // },
         },
         {
             field: 'nexecTime',
@@ -82,11 +85,11 @@ const Scheduler = () => {
             minWidth: 180,
             flex: 1,
             sortable: false,
-            renderCell: params => {
-                return (
-                    <p>{format(parse(params.row.nexecTime, 'yyyyMMddHHmmss', new Date()), 'yyyy/MM/dd HH:mm:ss')}</p>
-                );
-            },
+            // renderCell: params => {
+            //     return (
+            //         <p>{format(parse(params.row.nexecTime, 'yyyyMMddHHmmss', new Date()), 'yyyy/MM/dd HH:mm:ss')}</p>
+            //     );
+            // },
         },
         {
             field: 'lexecTime',
@@ -97,11 +100,11 @@ const Scheduler = () => {
             minWidth: 180,
             flex: 1,
             sortable: false,
-            renderCell: params => {
-                return (
-                    <p>{format(parse(params.row.lexecTime, 'yyyyMMddHHmmss', new Date()), 'yyyy/MM/dd HH:mm:ss')}</p>
-                );
-            },
+            // renderCell: params => {
+            //     return (
+            //         <p>{format(parse(params.row.lexecTime, 'yyyyMMddHHmmss', new Date()), 'yyyy/MM/dd HH:mm:ss')}</p>
+            //     );
+            // },
         },
         {
             field: 'execStatus',
@@ -150,16 +153,20 @@ const Scheduler = () => {
                     sx={[btnStyle.btn]}
                     onClick={async e => {
                         e.preventDefault();
-                        updateData('execHandleDisabled', true);
-                        const postData = {
-                            execCMD: params.row.execCMD,
-                            workID: params.row.workID,
-                        };
-                        await handleSchedule(postData);
+                        if (params.row.execCMD === 'UPLOAD') {
+                            console.log('上傳');
+                        } else {
+                            updateData('execHandleDisabled', true);
+                            const postData = {
+                                execCMD: params.row.execCMD,
+                                workID: params.row.workID,
+                            };
+                            await handleSchedule(postData);
+                        }
                     }}
                     variant="outlined"
                 >
-                    執行
+                    {params.row.execCMD === 'UPLOAD' ? '上傳' : '執行'}
                 </Button>
             ),
         },
@@ -177,6 +184,20 @@ const Scheduler = () => {
     return (
         <PersistentDrawer>
             <Layout title={'排程管理'}>
+                <section className="d-flex justify-content-end">
+                    {sessionStorage.getItem('loginUnit') === '1' && (
+                        <ButtonCreate
+                            onClick={e => {
+                                runInAction(() => {
+                                    e.preventDefault();
+                                    resetSchedulerData();
+                                    updateData('createSchedulerModalVisible', true);
+                                    updateData('schedulerAFlag', 'C');
+                                });
+                            }}
+                        />
+                    )}
+                </section>
                 <section>
                     {isLoading ? (
                         <Loading isLoading={isLoading} />
@@ -187,14 +208,14 @@ const Scheduler = () => {
                             getRowId={row => row.workID}
                             onCellClick={params => {
                                 runInAction(() => {
-                                    const timeFormat = [];
-                                    for (const [index] of [...params.row.setTime].entries()) {
-                                        if (index % 2 === 0) {
-                                            timeFormat.push(params.row.setTime.slice(index, index + 2));
-                                        }
-                                    }
-                                    const setTimeFormat = timeFormat.join(':');
-                                    updateData('setTimeFormat', setTimeFormat);
+                                    // const timeFormat = [];
+                                    // for (const [index] of [...params.row.setTime].entries()) {
+                                    //     if (index % 2 === 0) {
+                                    //         timeFormat.push(params.row.setTime.slice(index, index + 2));
+                                    //     }
+                                    // }
+                                    // const setTimeFormat = timeFormat.join(':');
+                                    // updateData('setTimeFormat', setTimeFormat);
                                     if (params.field !== 'execBtn') {
                                         updateData('editWorkTimeModalVisible', true);
                                         updateData('schedulerData', {
@@ -219,8 +240,10 @@ const Scheduler = () => {
                     )}
                 </section>
             </Layout>
+            <CreateSchedulerModal />
             <EditWorkTimeModal />
             <WorkTimeInfoModal />
+            <SchedulerInfoModal />
         </PersistentDrawer>
     );
 };

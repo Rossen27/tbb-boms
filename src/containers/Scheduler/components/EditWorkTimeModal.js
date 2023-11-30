@@ -73,13 +73,12 @@ const EditWorkTimeModal = () => {
                             type="time"
                             step="1"
                             className="form-control w-40 fs-5"
-                            value={setTimeFormat}
+                            value={schedulerData.setTime}
                             id="setTime"
                             onChange={e => {
                                 runInAction(() => {
-                                    console.log(e.target.value);
-                                    const finalSetTime = e.target.value;
-                                    updateData('setTimeFormat', finalSetTime);
+                                    schedulerData.setTime = e.target.value;
+                                    updateData('schedulerData', schedulerData);
                                 });
                             }}
                         />
@@ -105,6 +104,20 @@ const EditWorkTimeModal = () => {
                 <ul className="d-flex justify-content-center align-items-center m-5">
                     <li>
                         <Button
+                            onClick={e => {
+                                e.preventDefault();
+                                updateData('schedulerInfoModalVisible', true);
+                                updateData('schedulerAFlag', 'D');
+                                closeEditWorkTimeModal();
+                            }}
+                            variant="outlined"
+                            sx={[btnStyle.btn, btnStyle.btnDelete]}
+                        >
+                            刪除
+                        </Button>
+                    </li>
+                    <li className="ms-auto">
+                        <Button
                             onClick={closeEditWorkTimeModal}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
@@ -120,6 +133,7 @@ const EditWorkTimeModal = () => {
                             onClick={e => {
                                 e.preventDefault();
                                 updateData('workTimeInfoModalVisible', true);
+                                updateData('schedulerAFlag', 'U');
                                 closeEditWorkTimeModal();
                             }}
                         >
