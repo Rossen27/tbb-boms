@@ -8,6 +8,12 @@ const initialState = {
     brokerList: [],
     queryTime: '',
     brokerData: {},
+    cBrokerData: {
+        brkid: '',
+        brkName: '',
+        account: '',
+        userID: '',
+    },
     managerData: {
         traderID: '',
         traderName: '',
@@ -18,6 +24,7 @@ const initialState = {
     },
     brokerAFlag: '',
     managerAFlag: '',
+    createBrokerModalVisible: false,
     editBrokerModalVisible: false,
     brokerInfoModalVisible: false,
     managerInfoModalVisible: false,
@@ -49,6 +56,19 @@ const BrokerStore = () =>
         ...initialState,
         ...StoreAction(initialState),
         ...api,
+        resetBrokerData() {
+            this.reset({
+                cBrokerData: {
+                    brkid: '',
+                    brkName: '',
+                    account: '',
+                    userID: '',
+                },
+            });
+        },
+        closeCreateBrokerModalVisible() {
+            this.createBrokerModalVisible = false;
+        },
         closeEditBrokerModal() {
             this.editBrokerModalVisible = false;
         },

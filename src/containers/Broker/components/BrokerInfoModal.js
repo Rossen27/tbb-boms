@@ -13,6 +13,7 @@ const BrokerInfoModal = () => {
             updateData,
             brokerAFlag,
             brokerData,
+            cBrokerData,
             updateBrokerData,
             applyDisabled,
         },
@@ -23,31 +24,33 @@ const BrokerInfoModal = () => {
                 <table className="table table-borderless w-75">
                     <tbody>
                         <tr>
-                            <th className="title fw-bolder mb-4 text-danger text-end fs-4">更新資料，請確認：</th>
+                            <th className="title fw-bolder mb-4 text-danger text-end fs-4">
+                                {brokerAFlag === 'C' ? '新增' : '更新'}資料，請確認：
+                            </th>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 券商代號
                             </th>
-                            <td>{brokerData.brkid}</td>
+                            <td>{brokerAFlag === 'C' ? cBrokerData.brkid : brokerData.brkid}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 券商名稱
                             </th>
-                            <td>{brokerData.brkName}</td>
+                            <td>{brokerAFlag === 'C' ? cBrokerData.brkName : brokerData.brkName}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 券商帳號
                             </th>
-                            <td>{brokerData.account}</td>
+                            <td>{brokerAFlag === 'C' ? cBrokerData.account : brokerData.account}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 契約編號
                             </th>
-                            <td>{brokerData.userID}</td>
+                            <td>{brokerAFlag === 'C' ? cBrokerData.userID : brokerData.userID}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -57,7 +60,11 @@ const BrokerInfoModal = () => {
                         <Button
                             onClick={e => {
                                 e.preventDefault();
-                                updateData('editBrokerModalVisible', true);
+                                if (brokerAFlag === 'C') {
+                                    updateData('createBrokerModalVisible', true);
+                                } else if (brokerAFlag === 'U') {
+                                    updateData('editBrokerModalVisible', true);
+                                }
                                 closeBrokerInfoModal();
                             }}
                             variant="outlined"
@@ -74,14 +81,24 @@ const BrokerInfoModal = () => {
                             onClick={async e => {
                                 e.preventDefault();
                                 updateData('applyDisabled', true);
-                                const postData = {
-                                    // accID: brokerData.accID,
-                                    brkid: brokerData.brkid,
-                                    brkName: brokerData.brkName,
-                                    userID: brokerData.userID,
-                                    account: brokerData.account,
-                                    actionFlag: brokerAFlag,
-                                };
+                                let postData = {};
+                                if (brokerAFlag === 'C') {
+                                    postData = {
+                                        brkid: cBrokerData.brkid,
+                                        brkName: cBrokerData.brkName,
+                                        userID: cBrokerData.userID,
+                                        account: cBrokerData.account,
+                                        actionFlag: brokerAFlag,
+                                    };
+                                } else if (brokerAFlag === 'U') {
+                                    postData = {
+                                        brkid: brokerData.brkid,
+                                        brkName: brokerData.brkName,
+                                        userID: brokerData.userID,
+                                        account: brokerData.account,
+                                        actionFlag: brokerAFlag,
+                                    };
+                                }
                                 await updateBrokerData(postData);
                                 closeBrokerInfoModal();
                             }}

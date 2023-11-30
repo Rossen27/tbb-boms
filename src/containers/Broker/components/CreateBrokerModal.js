@@ -6,13 +6,19 @@ import { removeSpace } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/broker';
-const EditBrokerModal = () => {
+const CreateBrokerModal = () => {
     const {
-        BrokerStore: { editBrokerModalVisible, closeEditBrokerModal, brokerData, updateData, getQryManagerList },
+        BrokerStore: {
+            createBrokerModalVisible,
+            closeCreateBrokerModalVisible,
+            cBrokerData,
+            updateData,
+            getQryManagerList,
+        },
     } = useStore();
 
     return (
-        <ModalEdit open={editBrokerModalVisible} onClose={closeEditBrokerModal} title={'編輯可下單券商資料'}>
+        <ModalEdit open={createBrokerModalVisible} onClose={closeCreateBrokerModalVisible} title={'新增可下單券商資料'}>
             <form action="">
                 <div className="mb-4 row">
                     <label htmlFor="brkid" className="col-sm-2 col-form-label fs-5">
@@ -22,12 +28,12 @@ const EditBrokerModal = () => {
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={brokerData.brkid}
+                            value={cBrokerData.brkid}
                             id="brkid"
                             onChange={e => {
                                 runInAction(() => {
-                                    brokerData.brkid = e.target.value;
-                                    updateData('brokerData', brokerData);
+                                    cBrokerData.brkid = e.target.value;
+                                    updateData('cBrokerData', cBrokerData);
                                 });
                             }}
                         />
@@ -41,12 +47,12 @@ const EditBrokerModal = () => {
                         <input
                             type="text"
                             className="form-control w-40 fs-5"
-                            value={brokerData.brkName}
+                            value={cBrokerData.brkName}
                             id="brkName"
                             onChange={e => {
                                 runInAction(() => {
-                                    brokerData.brkName = e.target.value;
-                                    updateData('brokerData', brokerData);
+                                    cBrokerData.brkName = e.target.value;
+                                    updateData('cBrokerData', cBrokerData);
                                 });
                             }}
                         />
@@ -61,11 +67,11 @@ const EditBrokerModal = () => {
                             type="text"
                             className="form-control col-sm-4 w-40 fs-5"
                             id="account"
-                            value={brokerData.account}
+                            value={cBrokerData.account}
                             onChange={e => {
                                 runInAction(() => {
-                                    brokerData.account = e.target.value;
-                                    updateData('brokerData', brokerData);
+                                    cBrokerData.account = e.target.value;
+                                    updateData('cBrokerData', cBrokerData);
                                 });
                             }}
                         />
@@ -80,30 +86,22 @@ const EditBrokerModal = () => {
                             type="text"
                             className="form-control col-sm-4 w-40 fs-5"
                             id="userID"
-                            value={brokerData.userID}
-                            disabled
+                            value={cBrokerData.userID}
+                            onChange={e => {
+                                runInAction(() => {
+                                    cBrokerData.userID = e.target.value;
+                                    updateData('cBrokerData', cBrokerData);
+                                });
+                            }}
                         />
                     </div>
                 </div>
                 <ul className="d-flex justify-content-center align-items-center m-5">
                     <li>
                         <Button
-                            onClick={() => {
-                                closeEditBrokerModal();
-                                getQryManagerList(brokerData.userID);
-                                updateData('createManagerModalVisible', true);
-                            }}
-                            variant="outlined"
-                            sx={[btnStyle.btn, btnStyle.btnCreate]}
-                        >
-                            經理人設定
-                        </Button>
-                    </li>
-                    <li className="ms-auto">
-                        <Button
                             onClick={e => {
                                 e.preventDefault();
-                                closeEditBrokerModal();
+                                closeCreateBrokerModalVisible();
                             }}
                             variant="outlined"
                             sx={[btnStyle.btn, btnStyle.btnCancel]}
@@ -117,16 +115,17 @@ const EditBrokerModal = () => {
                                 runInAction(() => {
                                     e.preventDefault();
                                     if (
-                                        removeSpace(brokerData.brkid) &&
-                                        removeSpace(brokerData.brkName) &&
-                                        removeSpace(brokerData.account)
+                                        removeSpace(cBrokerData.brkid) &&
+                                        removeSpace(cBrokerData.brkName) &&
+                                        removeSpace(cBrokerData.account) &&
+                                        removeSpace(cBrokerData.userID)
                                     ) {
                                         updateData('applyDisabled', false);
                                     } else {
                                         updateData('applyDisabled', true);
                                     }
                                     updateData('brokerInfoModalVisible', true);
-                                    closeEditBrokerModal();
+                                    closeCreateBrokerModalVisible();
                                 });
                             }}
                             variant="outlined"
@@ -141,4 +140,4 @@ const EditBrokerModal = () => {
     );
 };
 
-export default observer(EditBrokerModal);
+export default observer(CreateBrokerModal);
