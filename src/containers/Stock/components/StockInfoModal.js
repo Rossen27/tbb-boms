@@ -90,7 +90,6 @@ const StockInfoModal = () => {
                                     actionFlag: stockAllowAFlag,
                                 };
                             }
-                            console.log('postData', postData);
                             await updateStockAllowData(postData);
                             closeStockInfoModal();
                         }}

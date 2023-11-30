@@ -109,8 +109,6 @@ const History = () => {
                                 className="mt-0"
                                 value={endDate}
                                 onChange={value => {
-                                    console.log('endDate', endDate);
-                                    console.log(value);
                                     paramsUpdate('endDate', value);
                                 }}
                                 start={startDate}

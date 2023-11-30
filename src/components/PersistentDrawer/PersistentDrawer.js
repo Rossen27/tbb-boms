@@ -261,7 +261,7 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                             <ListItemIcon>
                                 <ListAltIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
-                            <ListItemText primary="契約編號查詢" />
+                            <ListItemText primary="契約編號維護" />
                         </ListItem>
                         {/* {JSON.parse(sessionStorage.getItem('loginAuth')).map(({ id }, index) => {
                             return id === '00301' ? ( */}
