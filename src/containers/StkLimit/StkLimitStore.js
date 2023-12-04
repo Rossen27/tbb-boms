@@ -7,12 +7,20 @@ import { format } from 'date-fns';
 const initialState = {
     stkLimitList: [],
     stkLimitData: {},
+    todayDate: '',
+    cStkLimitData: {
+        lim_date: '',
+        manager_id: '',
+        lim_type: '',
+        lim_val: '',
+    },
     queryTime: '',
     stkLimAFlag: '',
     params: {
         startDate: new Date(),
         endDate: new Date(),
     },
+    createStkLimModalVisible: false,
     editStkLimModalVisible: false,
     stkLimInfoModalVisible: false,
     applyDisabled: false,
@@ -32,6 +40,9 @@ const StkLimitStore = () =>
         ...initialState,
         ...StoreAction(initialState),
         ...api,
+        closeCreateStkLimModal() {
+            this.createStkLimModalVisible = false;
+        },
         closeEditStkLimModal() {
             this.editStkLimModalVisible = false;
         },

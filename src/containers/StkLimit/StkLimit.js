@@ -19,6 +19,7 @@ import { limTypeText } from './constant/stkLimit';
 import { runInAction } from 'mobx';
 import EditStkLimModal from './components/EditStkLimModal';
 import StkLimInfoModal from './components/StkLimInfoModal';
+import CreateStkLimModal from './components/CreateStkLimModal';
 // import ExcelJS from 'exceljs';
 
 const StkLimit = () => {
@@ -136,46 +137,59 @@ const StkLimit = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <div>
+            <>
                 <Layout title={'可下單額度維護'}>
-                    <ul className="d-flex align-items-center">
-                        <li>
-                            <CustomDatePicker
-                                date={startDate}
-                                onChange={value => {
-                                    paramsUpdate('startDate', value);
-                                }}
-                                start={undefined}
-                                label={'申請日期(起)'}
-                            />
-                        </li>
-                        <li>
-                            <CustomDatePicker
-                                date={endDate}
-                                onChange={value => {
-                                    paramsUpdate('endDate', value);
-                                }}
-                                start={startDate}
-                                label={'申請日期(迄)'}
-                            />
-                        </li>
-                        <li>
-                            <ButtonQuery
-                                onClick={() => {
-                                    getQryStkLimList();
-                                }}
-                            />
-                        </li>
-                        <li>
-                            <ButtonReset
-                                onClick={() => {
-                                    reset();
-                                    getQryStkLimList();
-                                }}
-                            />
-                        </li>
-                    </ul>
-
+                    <div className="d-flex justify-content-between">
+                        <ul className="d-flex align-items-center">
+                            <li>
+                                <CustomDatePicker
+                                    date={startDate}
+                                    onChange={value => {
+                                        paramsUpdate('startDate', value);
+                                    }}
+                                    start={undefined}
+                                    label={'申請日期(起)'}
+                                />
+                            </li>
+                            <li>
+                                <CustomDatePicker
+                                    date={endDate}
+                                    onChange={value => {
+                                        paramsUpdate('endDate', value);
+                                    }}
+                                    start={startDate}
+                                    label={'申請日期(迄)'}
+                                />
+                            </li>
+                            <li>
+                                <ButtonQuery
+                                    onClick={() => {
+                                        getQryStkLimList();
+                                    }}
+                                />
+                            </li>
+                            <li>
+                                <ButtonReset
+                                    onClick={() => {
+                                        reset();
+                                        getQryStkLimList();
+                                    }}
+                                />
+                            </li>
+                        </ul>
+                        {/* {sessionStorage.getItem('loginUnit') === '1' && ( */}
+                        <ButtonCreate
+                            onClick={e => {
+                                runInAction(() => {
+                                    e.preventDefault();
+                                    // resetStkLimitData();
+                                    updateData('createStkLimModalVisible', true);
+                                    updateData('stkLimAFlag', 'C');
+                                });
+                            }}
+                        />
+                        {/* )} */}
+                    </div>
                     <div className="d-flex justify-content-end mt-2 align-items-center">
                         <p className="time">
                             <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
@@ -203,9 +217,10 @@ const StkLimit = () => {
                         )}
                     </section>
                 </Layout>
+                <CreateStkLimModal />
                 <EditStkLimModal />
                 <StkLimInfoModal />
-            </div>
+            </>
         </PersistentDrawer>
     );
 };
