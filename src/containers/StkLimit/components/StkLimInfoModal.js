@@ -13,41 +13,51 @@ const StkLimInfoModal = () => {
             updateData,
             stkLimAFlag,
             stkLimitData,
+            cStkLimitData,
             updateStkLimData,
             applyDisabled,
+            todayDate,
         },
     } = useStore();
+    let limTypeT = '';
+    if (stkLimAFlag === 'C') {
+        limTypeT = cStkLimitData.lim_type;
+    } else if (stkLimAFlag === 'U') {
+        limTypeT = stkLimitData.lim_type;
+    }
     return (
         <ModalEdit open={stkLimInfoModalVisible} onClose={closeStkLimInfoModal} title={'確認券商資料'}>
             <form>
                 <table className="table table-borderless w-75">
                     <tbody>
                         <tr>
-                            <th className="title fw-bolder mb-4 text-danger text-end fs-4">更新資料，請確認：</th>
+                            <th className="title fw-bolder mb-4 text-danger text-end fs-4">
+                                {stkLimAFlag === 'C' ? '新增' : '更新'}資料，請確認：
+                            </th>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 額度日期
                             </th>
-                            <td>{stkLimitData.lim_date}</td>
+                            <td>{stkLimAFlag === 'C' ? cStkLimitData.lim_date : stkLimitData.lim_date}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 交易員代號
                             </th>
-                            <td>{stkLimitData.manager_id}</td>
+                            <td>{stkLimAFlag === 'C' ? cStkLimitData.manager_id : stkLimitData.manager_id}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 上市櫃
                             </th>
-                            <td>{stkLimitData.lim_type === '1' ? '上市' : '上櫃'}</td>
+                            <td>{limTypeT === '1' ? '上市' : '上櫃'}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 操作限額
                             </th>
-                            <td>{stkLimitData.lim_val}</td>
+                            <td>{stkLimAFlag === 'C' ? cStkLimitData.lim_val : stkLimitData.lim_val}</td>
                         </tr>
                     </tbody>
                 </table>
@@ -57,7 +67,11 @@ const StkLimInfoModal = () => {
                         <Button
                             onClick={e => {
                                 e.preventDefault();
-                                updateData('editStkLimModalVisible', true);
+                                if (stkLimAFlag === 'C') {
+                                    updateData('createStkLimModalVisible', true);
+                                } else if (stkLimAFlag === 'U') {
+                                    updateData('editStkLimModalVisible', true);
+                                }
                                 closeStkLimInfoModal();
                             }}
                             variant="outlined"
@@ -74,13 +88,24 @@ const StkLimInfoModal = () => {
                             onClick={async e => {
                                 e.preventDefault();
                                 updateData('applyDisabled', true);
-                                const postData = {
-                                    manager_id: stkLimitData.manager_id,
-                                    lim_date: stkLimitData.lim_date,
-                                    lim_type: stkLimitData.lim_type,
-                                    lim_val: stkLimitData.lim_val,
-                                    actionFlag: stkLimAFlag,
-                                };
+                                let postData = {};
+                                if (stkLimAFlag === 'C') {
+                                    postData = {
+                                        manager_id: cStkLimitData.manager_id,
+                                        lim_date: cStkLimitData.lim_date,
+                                        lim_type: cStkLimitData.lim_type,
+                                        lim_val: cStkLimitData.lim_val,
+                                        actionFlag: stkLimAFlag,
+                                    };
+                                } else if (stkLimAFlag === 'U') {
+                                    postData = {
+                                        manager_id: stkLimitData.manager_id,
+                                        lim_date: stkLimitData.lim_date,
+                                        lim_type: stkLimitData.lim_type,
+                                        lim_val: stkLimitData.lim_val,
+                                        actionFlag: stkLimAFlag,
+                                    };
+                                }
 
                                 await updateStkLimData(postData);
                                 closeStkLimInfoModal();

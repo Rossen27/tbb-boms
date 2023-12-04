@@ -104,7 +104,7 @@ const EditStkLimModal = () => {
                             sx={[btnStyle.btn, btnStyle.btnUpdate]}
                             onClick={e => {
                                 e.preventDefault();
-                                if (removeSpace(stkLimitData.lim_val) && parseInt(stkLimitData.lim_val) > 0) {
+                                if (parseInt(stkLimitData.lim_val) > 0) {
                                     updateData('applyDisabled', false);
                                 } else {
                                     updateData('applyDisabled', true);
