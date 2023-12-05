@@ -1,4 +1,4 @@
-import { formPost, get, put, post } from './restAPI';
+import { formPost, get, getBTrade, post } from './restAPI';
 import axios from 'axios';
 
 const request = axios.create({
@@ -76,6 +76,9 @@ export const getStockAllowOptions = params => get('/stockAllow/optionQuery', par
 
 /* updateStockAllow 維護可交易股票 [POST] */
 export const updateStockAllow = postData => post('/stockAllow/updateStockAllow', postData);
+
+/*  getSyncStkAllow 立即同步BTrade [GET] */
+export const getSyncStkAllow = params => getBTrade('/action?funcName=reLoadAllowStockList', params);
 
 /* ---------------------------可下單額度維護 -------------------------  */
 

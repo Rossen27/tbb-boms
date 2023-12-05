@@ -14,7 +14,7 @@ import {
     CompleteInfo,
     ButtonExport,
 } from '@components';
-import { pGroupText } from './constant/stock';
+import { pGroupText, btnStyle } from './constant/stock';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { Button, TextField } from '@mui/material';
 import CreateStockModal from './components/CreateStockModal';
@@ -39,6 +39,7 @@ const Stock = () => {
             isLoading,
             loadingFail,
             msg,
+            getSyncStkAllowData,
         },
         LoginStore: { traderInfo },
     } = useStore();
@@ -113,7 +114,7 @@ const Stock = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <div>
+            <>
                 <Layout title={'可交易股票資料維護'}>
                     <div className="d-flex justify-content-between">
                         <ul className="d-flex align-items-center">
@@ -156,13 +157,18 @@ const Stock = () => {
                                 />
                             </li>
                         </ul>
-                        <ButtonCreate
-                            onClick={() => {
-                                resetStockAllowData();
-                                updateData('createStockModalVisible', true);
-                                updateData('stockAllowAFlag', 'C');
-                            }}
-                        />
+                        <ul>
+                            <Button sx={[btnStyle.btn]} onClick={getSyncStkAllowData}>
+                                立即同步
+                            </Button>
+                            <ButtonCreate
+                                onClick={() => {
+                                    resetStockAllowData();
+                                    updateData('createStockModalVisible', true);
+                                    updateData('stockAllowAFlag', 'C');
+                                }}
+                            />
+                        </ul>
                     </div>
 
                     <div className="d-flex justify-content-end mt-2 align-items-center">
@@ -196,7 +202,7 @@ const Stock = () => {
                 <EditStockModal />
                 <StockInfoModal />
                 {/* <QueryStockModal /> */}
-            </div>
+            </>
         </PersistentDrawer>
     );
 };
