@@ -2,7 +2,8 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { getStockAllowOptions, queryStockAllowList, updateStockAllow } from '@api';
+import { getStockAllowOptions, queryStockAllowList, updateStockAllow, getSyncStkAllow } from '@api';
+import XMLParser from 'react-xml-parser';
 
 const initialState = {
     pGroupOptions: {},
@@ -27,6 +28,7 @@ const api = {
     qryStockAllowList: queryStockAllowList,
     getOptions: getStockAllowOptions,
     updateStockAllow: updateStockAllow,
+    getSyncStkAllow: getSyncStkAllow,
 };
 const StockStore = () =>
     useLocalObservable(() => ({
@@ -90,6 +92,26 @@ const StockStore = () =>
                     if (code) {
                         this.updateData('loadingFail', true);
                         this.updateData('msg', message);
+                    }
+                }
+            });
+        },
+        async getSyncStkAllowData() {
+            runInAction(async () => {
+                this.updateData('isLoading', true);
+                const res = await this.getSyncStkAllow();
+                const syncData = res;
+                const parsedXML = new XMLParser().parseFromString(syncData);
+                const retElement = parsedXML.getElementsByTagName('ret')[0];
+                if (!retElement) {
+                    throw new Error('Invalid XML structure - <ret> element not found');
+                }
+                const retCodeValue = retElement.attributes.retcode;
+                if (retCodeValue) {
+                    this.updateData('updateComplete', true);
+                    this.updateData('isLoading', false);
+                    if (retCodeValue !== '000000') {
+                        this.updateData('loadingFail', true);
                     }
                 }
             });

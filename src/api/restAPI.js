@@ -2,6 +2,7 @@
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL;
+const API_BTRADE = process.env.REACT_APP_API_URL_BTRADE;
 
 export const formPost = async (url, data, debug = false, timeout = 10000) => {
     const token = sessionStorage.getItem('token');
@@ -72,6 +73,33 @@ export const post = async (url, data, debug = false, timeout = 600000) => {
         });
 };
 export const get = async (endPoint, params, debug = false, timeout = 10000) => {
+    const token = sessionStorage.getItem('token');
+
+    return axios
+        .get(API_URL + endPoint, {
+            params,
+            headers: {
+                'Content-Type': 'application/json; charset=UTF-8',
+                Accept: '*/*',
+                Authorization: `Bearer ${token}`,
+            },
+        })
+        .then(response => {
+            if (response && debug) {
+                console.log(`------------------res:${endPoint}------------------`);
+                console.log(response.data);
+            }
+            if (response.status !== 200) {
+                return response;
+            }
+            return response.data;
+        })
+        .catch(e => {
+            catchError(e);
+            throw e;
+        });
+};
+export const getBTrade = async (endPoint, params, debug = false, timeout = 10000) => {
     const token = sessionStorage.getItem('token');
 
     return axios
