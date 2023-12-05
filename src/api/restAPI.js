@@ -103,7 +103,7 @@ export const getBTrade = async (endPoint, params, debug = false, timeout = 10000
     const token = sessionStorage.getItem('token');
 
     return axios
-        .get(API_URL + endPoint, {
+        .get(API_BTRADE + endPoint, {
             params,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',

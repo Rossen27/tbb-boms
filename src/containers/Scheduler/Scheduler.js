@@ -22,6 +22,7 @@ import EditWorkTimeModal from './components/EditWorkTimeModal';
 import WorkTimeInfoModal from './components/WorkTimeInfoModal';
 import SchedulerInfoModal from './components/SchedulerInfoModal';
 import CreateSchedulerModal from './components/CreateSchedulerModal';
+import UploadFileModal from './components/UploadFileModal';
 const Scheduler = () => {
     const {
         SchedulerStore: {
@@ -154,7 +155,7 @@ const Scheduler = () => {
                     onClick={async e => {
                         e.preventDefault();
                         if (params.row.execCMD === 'UPLOAD') {
-                            console.log('上傳');
+                            updateData('uploadFileModalVisible', true);
                         } else {
                             updateData('execHandleDisabled', true);
                             const postData = {
@@ -244,6 +245,7 @@ const Scheduler = () => {
             <EditWorkTimeModal />
             <WorkTimeInfoModal />
             <SchedulerInfoModal />
+            <UploadFileModal />
         </PersistentDrawer>
     );
 };

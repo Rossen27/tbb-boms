@@ -23,9 +23,26 @@ export const btnStyle = {
         borderRadius: '36px',
         px: 4,
         minWidth: '120px',
+        '&:focus': {
+            borderColor: '#1976d2',
+        },
     },
     btnQuery: {
         borderColor: '#1976d2',
+    },
+    btnUpload: {
+        color: 'white',
+        backgroundColor: '#4a4a4a',
+        borderColor: '#adb5bd',
+        '&:hover': {
+            backgroundColor: '#6c757d',
+            borderColor: '#eeeeee',
+        },
+        '&:disabled': {
+            color: 'white',
+            backgroundColor: '#adb5bd',
+            borderColor: '#eeeeee',
+        },
     },
     btnUpdate: {
         color: 'white',
@@ -65,5 +82,15 @@ export const btnStyle = {
             borderColor: '#E24041',
             backgroundColor: '#f86060',
         },
+    },
+};
+export const uploadStyle = {
+    outer: {
+        borderColor: '#aaaaaa',
+        borderRadius: '20px',
+        borderStyle: 'dotted',
+        p: 4,
+        marginBottom: 2,
+        innerHeight: '200px',
     },
 };
