@@ -119,10 +119,15 @@ export const queryTradeReportList = params => get('/tradeReport/getTradeReportLi
 /* ---------------------------排程管理 -------------------------  */
 
 /* getWorkList 查詢工作清單 [GET] */
-export const queryWorkList = params => get('/getWorkList', params);
+export const queryWorkList = params => get('/Scheduled/getWorkList', params);
 
 /* updateWork 維護排程時間 [POST] */
-export const updateWork = postData => post('/updateWork', postData);
+export const updateWork = postData => post('/Scheduled/updateWork', postData);
 
 /* executeSync 手動執行排成 [POST] */
-export const execSync = postData => post('/executeSync', postData);
+export const execSync = postData => post('/Scheduled/executeSync', postData);
+
+/* ---------------------------文件處理-------------------------  */
+
+/* uploadFile 上傳檔案 [GET] */
+export const uploadFile = postData => formPost('/File/uploadFile', postData);

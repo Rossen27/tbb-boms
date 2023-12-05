@@ -2,7 +2,7 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction, toJS } from 'mobx';
-import { queryWorkList, updateWork, execSync } from '@api';
+import { queryWorkList, updateWork, execSync, uploadFile } from '@api';
 
 const initialState = {
     cSchedulerData: {
@@ -21,8 +21,10 @@ const initialState = {
     workTimeInfoModalVisible: false,
     createSchedulerModalVisible: false,
     schedulerInfoModalVisible: false,
+    uploadFileModalVisible: false,
     execHandleDisabled: false,
     applyDisabled: false,
+    uploadDisabled: false,
     updateComplete: false,
     isLoading: false,
     msg: '',
@@ -33,6 +35,7 @@ const api = {
     qryWorkList: queryWorkList,
     updateWork: updateWork,
     execSync: execSync,
+    uploadFile: uploadFile,
 };
 const SchedulerStore = () =>
     useLocalObservable(() => ({
@@ -62,6 +65,9 @@ const SchedulerStore = () =>
         },
         closeSchedulerInfoModal() {
             this.schedulerInfoModalVisible = false;
+        },
+        closeUploadFileModal() {
+            this.uploadFileModalVisible = false;
         },
         async getQryWorkList() {
             runInAction(async () => {
@@ -102,6 +108,16 @@ const SchedulerStore = () =>
                         this.updateData('loadingFail', true);
                         this.updateData('msg', message);
                     }
+                }
+            });
+        },
+        async upload(formData) {
+            runInAction(async () => {
+                const res = await this.uploadFile(formData);
+                if (res) {
+                    alert(res.data.message);
+                    this.getQryWorkList();
+                    return res.data.code;
                 }
             });
         },
