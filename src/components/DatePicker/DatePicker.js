@@ -31,7 +31,7 @@ const CustomDatePicker = ({ date, onChange, start, label }) => {
                 <DatePicker
                     sx={{ m: 1 }}
                     label={label}
-                    inputFormat="yyyy/MM/dd"
+                    format="yyyy/MM/dd"
                     value={date}
                     onChange={onChange}
                     minDate={start}
