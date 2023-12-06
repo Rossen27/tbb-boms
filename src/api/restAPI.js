@@ -2,7 +2,6 @@
 import axios from 'axios';
 
 const API_URL = process.env.REACT_APP_API_URL;
-const API_BTRADE = process.env.REACT_APP_API_URL_BTRADE;
 
 export const formPost = async (url, data, debug = false, timeout = 10000) => {
     const token = sessionStorage.getItem('token');
@@ -103,7 +102,7 @@ export const getBTrade = async (endPoint, params, debug = false, timeout = 10000
     const token = sessionStorage.getItem('token');
 
     return axios
-        .get(API_BTRADE + endPoint, {
+        .get(API_URL + endPoint, {
             params,
             headers: {
                 'Content-Type': 'application/json; charset=UTF-8',
