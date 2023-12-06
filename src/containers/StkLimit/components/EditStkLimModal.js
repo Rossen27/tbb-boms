@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { removeSpace, removeNonNumeric } from '@helper';
+import { removeNonNumeric } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/stkLimit';

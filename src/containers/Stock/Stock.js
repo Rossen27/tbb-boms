@@ -114,95 +114,92 @@ const Stock = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <>
-                <Layout title={'可交易股票資料維護'}>
-                    <div className="d-flex justify-content-between">
-                        <ul className="d-flex align-items-center">
-                            <li className="me-5">
-                                <SelectMultiple
-                                    title={'類別'}
-                                    options={pGroupOptions}
-                                    selectArr={kind}
-                                    onChange={value => {
-                                        paramsUpdate('kind', value);
-                                    }}
-                                />
-                            </li>
-                            <li className="me-3">
-                                <TextField
-                                    id="outlined-basic"
-                                    label="股票代號"
-                                    variant="outlined"
-                                    size="small"
-                                    value={stockNo}
-                                    onChange={e => {
-                                        paramsUpdate('stockNo', e.target.value);
-                                    }}
-                                    sx={{ width: '120px' }}
-                                />
-                            </li>
-                            <li>
-                                <ButtonQuery
-                                    onClick={() => {
-                                        getQryStockAllowList();
-                                    }}
-                                />
-                            </li>
-                            <li>
-                                <ButtonReset
-                                    onClick={() => {
-                                        reset();
-                                        getQryStockAllowList();
-                                    }}
-                                />
-                            </li>
-                        </ul>
-                        <ul>
-                            <Button sx={[btnStyle.btn]} onClick={getSyncStkAllowData}>
-                                立即同步
-                            </Button>
-                            <ButtonCreate
+            <Layout title={'可交易股票資料維護'}>
+                <div className="d-flex justify-content-between">
+                    <ul className="d-flex align-items-center">
+                        <li className="me-5">
+                            <SelectMultiple
+                                title={'類別'}
+                                options={pGroupOptions}
+                                selectArr={kind}
+                                onChange={value => {
+                                    paramsUpdate('kind', value);
+                                }}
+                            />
+                        </li>
+                        <li className="me-3">
+                            <TextField
+                                id="outlined-basic"
+                                label="股票代號"
+                                variant="outlined"
+                                size="small"
+                                value={stockNo}
+                                onChange={e => {
+                                    paramsUpdate('stockNo', e.target.value);
+                                }}
+                                sx={{ width: '120px' }}
+                            />
+                        </li>
+                        <li>
+                            <ButtonQuery
                                 onClick={() => {
-                                    resetStockAllowData();
-                                    updateData('createStockModalVisible', true);
-                                    updateData('stockAllowAFlag', 'C');
+                                    getQryStockAllowList();
                                 }}
                             />
-                        </ul>
-                    </div>
-
-                    <div className="d-flex justify-content-end mt-2 align-items-center">
-                        <p className="time">
-                            <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
-                            查詢時間：{queryTime}
-                        </p>
-                    </div>
-                    <section>
-                        {isLoading ? (
-                            <Loading isLoading={isLoading} />
-                        ) : !updateComplete ? (
-                            <Table
-                                header={columns}
-                                data={stockAllowList}
-                                getRowId={row => row.id}
-                                onRowClick={params => {
-                                    updateData('stockAllowData', {
-                                        ...params.row,
-                                    });
-                                    updateData('editStockModalVisible', true);
+                        </li>
+                        <li>
+                            <ButtonReset
+                                onClick={() => {
+                                    reset();
+                                    getQryStockAllowList();
                                 }}
                             />
-                        ) : (
-                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
-                        )}
-                    </section>
-                </Layout>
+                        </li>
+                    </ul>
+                    <ul>
+                        <Button sx={[btnStyle.btn]} onClick={getSyncStkAllowData}>
+                            立即同步
+                        </Button>
+                        <ButtonCreate
+                            onClick={() => {
+                                resetStockAllowData();
+                                updateData('createStockModalVisible', true);
+                                updateData('stockAllowAFlag', 'C');
+                            }}
+                        />
+                    </ul>
+                </div>
 
-                <CreateStockModal />
-                <EditStockModal />
-                <StockInfoModal />
-                {/* <QueryStockModal /> */}
-            </>
+                <div className="d-flex justify-content-end mt-2 align-items-center">
+                    <p className="time">
+                        <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
+                        查詢時間：{queryTime}
+                    </p>
+                </div>
+                <section>
+                    {isLoading ? (
+                        <Loading isLoading={isLoading} />
+                    ) : !updateComplete ? (
+                        <Table
+                            header={columns}
+                            data={stockAllowList}
+                            getRowId={row => row.id}
+                            onRowClick={params => {
+                                updateData('stockAllowData', {
+                                    ...params.row,
+                                });
+                                updateData('editStockModalVisible', true);
+                            }}
+                        />
+                    ) : (
+                        <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                    )}
+                </section>
+            </Layout>
+            <CreateStockModal />
+            <EditStockModal />
+            <StockInfoModal />
+            {/* <QueryStockModal /> */}
         </PersistentDrawer>
     );
 };

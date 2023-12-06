@@ -11,14 +11,11 @@ import {
     ButtonQuery,
     ButtonReset,
     Table,
-    ButtonExport,
     CustomDatePicker,
 } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import EditStkDepositModal from './components/EditStkDepositModal';
 import StkDepositInfoModal from './components/StkDepositInfoModal';
-
-// import ExcelJS from 'exceljs';
 
 const StkDeposit = () => {
     const {
@@ -221,76 +218,74 @@ const StkDeposit = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <div>
-                <Layout title={'契約庫存資料維護查詢'}>
-                    <ul className="d-flex align-items-center">
-                        <li>
-                            <CustomDatePicker
-                                date={startDate}
-                                onChange={value => {
-                                    paramsUpdate('startDate', value);
-                                }}
-                                start={undefined}
-                                label={'申請日期(起)'}
-                            />
-                        </li>
-                        <li>
-                            <CustomDatePicker
-                                date={endDate}
-                                onChange={value => {
-                                    paramsUpdate('endDate', value);
-                                }}
-                                start={startDate}
-                                label={'申請日期(迄)'}
-                            />
-                        </li>
-                        <li>
-                            <ButtonQuery
-                                onClick={() => {
-                                    getQryStkDepositList();
-                                }}
-                            />
-                        </li>
-                        <li>
-                            <ButtonReset
-                                onClick={() => {
-                                    reset();
-                                    getQryStkDepositList();
-                                }}
-                            />
-                        </li>
-                    </ul>
+            <Layout title={'契約庫存資料維護查詢'}>
+                <ul className="d-flex align-items-center">
+                    <li>
+                        <CustomDatePicker
+                            date={startDate}
+                            onChange={value => {
+                                paramsUpdate('startDate', value);
+                            }}
+                            start={undefined}
+                            label={'庫存日期(起)'}
+                        />
+                    </li>
+                    <li>
+                        <CustomDatePicker
+                            date={endDate}
+                            onChange={value => {
+                                paramsUpdate('endDate', value);
+                            }}
+                            start={startDate}
+                            label={'庫存日期(迄)'}
+                        />
+                    </li>
+                    <li>
+                        <ButtonQuery
+                            onClick={() => {
+                                getQryStkDepositList();
+                            }}
+                        />
+                    </li>
+                    <li>
+                        <ButtonReset
+                            onClick={() => {
+                                reset();
+                                getQryStkDepositList();
+                            }}
+                        />
+                    </li>
+                </ul>
 
-                    <div className="d-flex justify-content-end mt-2 align-items-center">
-                        <p className="time">
-                            <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
-                            查詢時間：{queryTime}
-                        </p>
-                    </div>
-                    <section>
-                        {isLoading ? (
-                            <Loading isLoading={isLoading} />
-                        ) : !updateComplete ? (
-                            <Table
-                                header={columns}
-                                data={stkDepositList}
-                                getRowId={row => row.depositDate + row.userID + row.brkid + row.stockID}
-                                onRowClick={params => {
-                                    updateData('stkDepositData', {
-                                        ...params.row,
-                                    });
-                                    updateData('stkDepositAFlag', 'U');
-                                    updateData('editStkDepositModalVisible', true);
-                                }}
-                            />
-                        ) : (
-                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
-                        )}
-                    </section>
-                </Layout>
-                <EditStkDepositModal />
-                <StkDepositInfoModal />
-            </div>
+                <div className="d-flex justify-content-end mt-2 align-items-center">
+                    <p className="time">
+                        <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
+                        查詢時間：{queryTime}
+                    </p>
+                </div>
+                <section>
+                    {isLoading ? (
+                        <Loading isLoading={isLoading} />
+                    ) : !updateComplete ? (
+                        <Table
+                            header={columns}
+                            data={stkDepositList}
+                            getRowId={row => row.depositDate + row.userID + row.brkid + row.stockID}
+                            onRowClick={params => {
+                                updateData('stkDepositData', {
+                                    ...params.row,
+                                });
+                                updateData('stkDepositAFlag', 'U');
+                                updateData('editStkDepositModalVisible', true);
+                            }}
+                        />
+                    ) : (
+                        <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                    )}
+                </section>
+            </Layout>
+            <EditStkDepositModal />
+            <StkDepositInfoModal />
         </PersistentDrawer>
     );
 };

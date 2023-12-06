@@ -12,19 +12,15 @@ import {
     ButtonReset,
     ButtonCreate,
     Table,
-    ButtonExport,
 } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { pGroupText, btnStyle } from './constant/traderList';
 import EditTraderModal from './components/EditTraderModal';
-import { TextField, Button } from '@mui/material';
+import { TextField } from '@mui/material';
 import TraderInfoModal from './components/TraderInfoModal';
 import CreateTraderModal from './components/CreateTraderModal';
 import CreateAgentModal from './components/CreateAgentModal';
 import AgentInfoModal from './components/AgentInfoModal';
 import { runInAction } from 'mobx';
-
-// import ExcelJS from 'exceljs';
 
 const TraderList = () => {
     const {
@@ -36,8 +32,6 @@ const TraderList = () => {
             reset,
             params,
             paramsUpdate,
-            traderData,
-            getQryAgentList,
             resetTraderData,
             updateComplete,
             isLoading,
@@ -157,190 +151,94 @@ const TraderList = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <div>
-                <Layout title={'經理人登入系統基本資料維護'}>
-                    <div className="d-flex justify-content-between">
-                        <ul className="d-flex align-items-center">
-                            <li className="me-3">
-                                <TextField
-                                    id="outlined-basic"
-                                    label="經理人代號"
-                                    variant="outlined"
-                                    size="small"
-                                    value={traderID}
-                                    onChange={e => {
-                                        paramsUpdate('traderID', e.target.value);
-                                    }}
-                                    sx={{ width: '120px' }}
-                                />
-                            </li>
-                            <li>
-                                <SelectMultiple
-                                    title={'過濾權限'}
-                                    options={allowTypeOptions}
-                                    onChange={value => paramsUpdate('allowType', value)}
-                                    selectArr={allowType}
-                                />
-                            </li>
-                            <li>
-                                <ButtonQuery
-                                    onClick={() => {
-                                        getQryTraderList();
-                                    }}
-                                />
-                            </li>
-                            <li>
-                                <ButtonReset
-                                    onClick={() => {
-                                        reset();
-                                        getQryTraderList();
-                                    }}
-                                />
-                            </li>
-                            {/* <li>
-                            <ButtonExport
-                                data={repaymentDetailList}
+            <Layout title={'經理人登入系統基本資料維護'}>
+                <div className="d-flex justify-content-between">
+                    <ul className="d-flex align-items-center">
+                        <li className="me-3">
+                            <TextField
+                                id="outlined-basic"
+                                label="經理人代號"
+                                variant="outlined"
+                                size="small"
+                                value={traderID}
+                                onChange={e => {
+                                    paramsUpdate('traderID', e.target.value);
+                                }}
+                                sx={{ width: '120px' }}
+                            />
+                        </li>
+                        <li>
+                            <SelectMultiple
+                                title={'過濾權限'}
+                                options={allowTypeOptions}
+                                onChange={value => paramsUpdate('allowType', value)}
+                                selectArr={allowType}
+                            />
+                        </li>
+                        <li>
+                            <ButtonQuery
                                 onClick={() => {
-                                    const repaymentWorkbook = new ExcelJS.Workbook();
-                                    const repaymentWorksheet = repaymentWorkbook.addWorksheet();
-                                    repaymentWorksheet.addRow([
-                                        '申請日期',
-                                        '申請書編號',
-                                        '分公司',
-                                        '帳號',
-                                        '姓名',
-                                        '止息日',
-                                        '利息',
-                                        '還款金額',
-                                        '淨收付金額',
-                                        '還款種類',
-                                        '賣股張數',
-                                        '收款時間',
-                                        '帳務日期',
-                                        '狀態',
-                                        '申請方式',
-                                        '還款帳戶',
-                                        '客戶性質',
-                                    ]);
-                                    repaymentDetailList.map(row => {
-                                        return repaymentWorksheet.addRow([
-                                            row.repayMentDate,
-                                            row.applicationNumber,
-                                            row.bhno,
-                                            row.account,
-                                            row.name,
-                                            row.restDate,
-                                            row.repayMentInterest,
-                                            row.repayMentAmount,
-                                            row.netPayAmount,
-                                            row.repayMentAccountType,
-                                            row.collateralNumber,
-                                            row.grantTime,
-                                            row.grantDate,
-                                            row.status,
-                                            row.applyType,
-                                            row.repayMentAccount,
-                                            row.accountType,
-                                        ]);
-                                    });
-                                    repaymentWorksheet.eachRow({ includeEmpty: true }, function (row, rowNumber) {
-                                        if (rowNumber > 1) {
-                                            const value = row.getCell(10).value;
-                                            if (value === 'c') {
-                                                row.getCell(10).value = '現金還款';
-                                                row.getCell(11).value = '-';
-                                            } else if (value === 's') {
-                                                row.getCell(10).value = '賣股還款';
-                                            }
-                                        }
-                                    });
-                                    repaymentWorksheet.eachRow({ includeEmpty: true }, function (row, rowNumber) {
-                                        if (rowNumber > 1) {
-                                            const value = row.getCell(14).value;
-                                            if (value === '0') {
-                                                row.getCell(14).value = '成功';
-                                            } else if (value === '1') {
-                                                row.getCell(14).value = '失敗';
-                                            } else if (value === '2') {
-                                                row.getCell(14).value = '取消';
-                                            } else if (value === '3') {
-                                                row.getCell(14).value = '待處理';
-                                            }
-                                        }
-                                    });
-                                    repaymentWorksheet.eachRow({ includeEmpty: true }, function (row, rowNumber) {
-                                        if (rowNumber > 1) {
-                                            const value = row.getCell(17).value;
-                                            if (value === 'G') {
-                                                row.getCell(17).value = '一般客戶';
-                                            } else if (value === 'B') {
-                                                row.getCell(17).value = '分戶帳';
-                                            }
-                                        }
-                                    });
-                                    repaymentWorkbook.xlsx.writeBuffer().then(buffer => {
-                                        const link = document.createElement('a');
-                                        const blobData = new Blob([buffer], {
-                                            type: 'application/vnd.ms-excel;charset=utf-8;',
-                                        });
-                                        const fileName = `還款申請資料${queryTime.replace(/\D/g, '')}.xlsx`;
-                                        link.download = fileName;
-                                        link.href = URL.createObjectURL(blobData);
-                                        link.click();
-                                    });
+                                    getQryTraderList();
                                 }}
                             />
-                        </li> */}
-                        </ul>
-                        {sessionStorage.getItem('loginUnit') === '1' && (
-                            <ButtonCreate
-                                onClick={e => {
-                                    runInAction(() => {
-                                        e.preventDefault();
-                                        resetTraderData();
-                                        updateData('createTraderModalVisible', true);
-                                        updateData('userAFlag', 'C');
-                                    });
+                        </li>
+                        <li>
+                            <ButtonReset
+                                onClick={() => {
+                                    reset();
+                                    getQryTraderList();
                                 }}
                             />
-                        )}
-                    </div>
+                        </li>
+                    </ul>
+                    {sessionStorage.getItem('loginUnit') === '1' && (
+                        <ButtonCreate
+                            onClick={e => {
+                                runInAction(() => {
+                                    e.preventDefault();
+                                    resetTraderData();
+                                    updateData('createTraderModalVisible', true);
+                                    updateData('userAFlag', 'C');
+                                });
+                            }}
+                        />
+                    )}
+                </div>
 
-                    <div className="d-flex justify-content-end mt-2 align-items-center">
-                        <p className="time">
-                            <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
-                            查詢時間：{queryTime}
-                        </p>
-                    </div>
-                    <section>
-                        {isLoading ? (
-                            <Loading isLoading={isLoading} />
-                        ) : !updateComplete ? (
-                            <Table
-                                header={columns}
-                                data={traderList}
-                                getRowId={row => row.traderID}
-                                onRowClick={params => {
-                                    runInAction(() => {
-                                        updateData('userAFlag', 'U');
-                                        updateData('traderData', {
-                                            ...params.row,
-                                        });
-                                        updateData('editTraderModalVisible', true);
+                <div className="d-flex justify-content-end mt-2 align-items-center">
+                    <p className="time">
+                        <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
+                        查詢時間：{queryTime}
+                    </p>
+                </div>
+                <section>
+                    {isLoading ? (
+                        <Loading isLoading={isLoading} />
+                    ) : !updateComplete ? (
+                        <Table
+                            header={columns}
+                            data={traderList}
+                            getRowId={row => row.traderID}
+                            onRowClick={params => {
+                                runInAction(() => {
+                                    updateData('userAFlag', 'U');
+                                    updateData('traderData', {
+                                        ...params.row,
                                     });
-                                }}
-                            />
-                        ) : (
-                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
-                        )}
-                    </section>
-                </Layout>
-                <EditTraderModal />
-                <TraderInfoModal />
-                <AgentInfoModal />
-                <CreateTraderModal />
-                <CreateAgentModal />
-            </div>
+                                    updateData('editTraderModalVisible', true);
+                                });
+                            }}
+                        />
+                    ) : (
+                        <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                    )}
+                </section>
+            </Layout>
+            <EditTraderModal />
+            <TraderInfoModal />
+            <AgentInfoModal />
+            <CreateTraderModal />
+            <CreateAgentModal />
         </PersistentDrawer>
     );
 };

@@ -3,18 +3,8 @@ import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import Layout from '@containers/Layout';
 import { bsTypeText, tradeTypeName, opCodeName, rtnCodeText, opStatusText } from './constant/dealOrder';
-import {
-    PersistentDrawer,
-    SelectMultiple,
-    ButtonQuery,
-    ButtonReset,
-    Table,
-    ButtonExport,
-    CustomDatePicker,
-} from '@components';
+import { PersistentDrawer, ButtonQuery, ButtonReset, Table, CustomDatePicker } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-
-// import ExcelJS from 'exceljs';
 
 const DealOrder = () => {
     const {
@@ -371,66 +361,59 @@ const DealOrder = () => {
 
     return (
         <PersistentDrawer>
-            <div>
-                <Layout title={'成交轉檔資料查詢'}>
-                    <ul className="d-flex align-items-center">
-                        <li>
-                            <CustomDatePicker
-                                date={startDate}
-                                onChange={value => {
-                                    paramsUpdate('startDate', value);
-                                }}
-                                start={undefined}
-                                label={'申請日期(起)'}
-                            />
-                        </li>
-                        <li>
-                            <CustomDatePicker
-                                date={endDate}
-                                onChange={value => {
-                                    paramsUpdate('endDate', value);
-                                }}
-                                start={startDate}
-                                label={'申請日期(迄)'}
-                            />
-                        </li>
-                        <li>
-                            <ButtonQuery
-                                onClick={() => {
-                                    getQryDealOrderList();
-                                }}
-                            />
-                        </li>
-                        <li>
-                            <ButtonReset
-                                onClick={() => {
-                                    reset();
-                                    getQryDealOrderList();
-                                }}
-                            />
-                        </li>
-                    </ul>
-
-                    <div className="d-flex justify-content-end mt-2 align-items-center">
-                        <p className="time">
-                            <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
-                            查詢時間：{queryTime}
-                        </p>
-                    </div>
-                    <section>
-                        <Table
-                            header={columns}
-                            data={dealOrderList}
-                            getRowId={row => row.orderDate + row.TxOrderID + row.userID}
+            <Layout title={'成交轉檔資料查詢'}>
+                <ul className="d-flex align-items-center">
+                    <li>
+                        <CustomDatePicker
+                            date={startDate}
+                            onChange={value => {
+                                paramsUpdate('startDate', value);
+                            }}
+                            start={undefined}
+                            label={'委託日期(起)'}
                         />
-                    </section>
-                </Layout>
-                {/* <EditUserModal />
-                <EditInfoModal />
-                <CreateUserModal />
-                <CreateAgentModal />
-                <EditAgentModal /> */}
-            </div>
+                    </li>
+                    <li>
+                        <CustomDatePicker
+                            date={endDate}
+                            onChange={value => {
+                                paramsUpdate('endDate', value);
+                            }}
+                            start={startDate}
+                            label={'委託日期(迄)'}
+                        />
+                    </li>
+                    <li>
+                        <ButtonQuery
+                            onClick={() => {
+                                getQryDealOrderList();
+                            }}
+                        />
+                    </li>
+                    <li>
+                        <ButtonReset
+                            onClick={() => {
+                                reset();
+                                getQryDealOrderList();
+                            }}
+                        />
+                    </li>
+                </ul>
+
+                <div className="d-flex justify-content-end mt-2 align-items-center">
+                    <p className="time">
+                        <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
+                        查詢時間：{queryTime}
+                    </p>
+                </div>
+                <section>
+                    <Table
+                        header={columns}
+                        data={dealOrderList}
+                        getRowId={row => row.orderDate + row.TxOrderID + row.userID}
+                    />
+                </section>
+            </Layout>
         </PersistentDrawer>
     );
 };

@@ -12,7 +12,6 @@ import {
     ButtonCreate,
     Table,
     CustomDatePicker,
-    ButtonExport,
 } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { limTypeText, btnStyle } from './constant/stkLimit';
@@ -20,7 +19,6 @@ import { runInAction } from 'mobx';
 import EditStkLimModal from './components/EditStkLimModal';
 import StkLimInfoModal from './components/StkLimInfoModal';
 import CreateStkLimModal from './components/CreateStkLimModal';
-// import ExcelJS from 'exceljs';
 
 const StkLimit = () => {
     const {
@@ -137,91 +135,89 @@ const StkLimit = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <>
-                <Layout title={'可下單額度維護'}>
-                    <div className="d-flex justify-content-between align-items-center">
-                        <ul className="d-flex align-items-center">
-                            <li>
-                                <CustomDatePicker
-                                    date={startDate}
-                                    onChange={value => {
-                                        paramsUpdate('startDate', value);
-                                    }}
-                                    start={undefined}
-                                    label={'額度日期(起)'}
-                                />
-                            </li>
-                            <li>
-                                <CustomDatePicker
-                                    date={endDate}
-                                    onChange={value => {
-                                        paramsUpdate('endDate', value);
-                                    }}
-                                    start={startDate}
-                                    label={'額度日期(迄)'}
-                                />
-                            </li>
-                            <li>
-                                <ButtonQuery
-                                    onClick={() => {
-                                        getQryStkLimList();
-                                    }}
-                                />
-                            </li>
-                            <li>
-                                <ButtonReset
-                                    onClick={() => {
-                                        reset();
-                                        getQryStkLimList();
-                                    }}
-                                />
-                            </li>
-                        </ul>
-                        {/* {sessionStorage.getItem('loginUnit') === '1' && ( */}
-                        <ButtonCreate
-                            sx={[btnStyle.btn, btnStyle.btnCreate]}
-                            onClick={e => {
-                                runInAction(() => {
-                                    e.preventDefault();
-                                    // resetStkLimitData();
-                                    updateData('createStkLimModalVisible', true);
-                                    updateData('stkLimAFlag', 'C');
-                                });
-                            }}
-                        />
-                        {/* )} */}
-                    </div>
-                    <div className="d-flex justify-content-end mt-2 align-items-center">
-                        <p className="time">
-                            <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
-                            查詢時間：{queryTime}
-                        </p>
-                    </div>
-                    <section>
-                        {isLoading ? (
-                            <Loading isLoading={isLoading} />
-                        ) : !updateComplete ? (
-                            <Table
-                                header={columns}
-                                data={stkLimitList}
-                                getRowId={row => row.lim_date + row.accId + row.lim_type}
-                                onRowClick={params => {
-                                    updateData('stkLimitData', {
-                                        ...params.row,
-                                    });
-                                    updateData('stkLimAFlag', 'U');
-                                    updateData('editStkLimModalVisible', true);
+            <Layout title={'可下單額度維護'}>
+                <div className="d-flex justify-content-between align-items-center">
+                    <ul className="d-flex align-items-center">
+                        <li>
+                            <CustomDatePicker
+                                date={startDate}
+                                onChange={value => {
+                                    paramsUpdate('startDate', value);
+                                }}
+                                start={undefined}
+                                label={'額度日期(起)'}
+                            />
+                        </li>
+                        <li>
+                            <CustomDatePicker
+                                date={endDate}
+                                onChange={value => {
+                                    paramsUpdate('endDate', value);
+                                }}
+                                start={startDate}
+                                label={'額度日期(迄)'}
+                            />
+                        </li>
+                        <li>
+                            <ButtonQuery
+                                onClick={() => {
+                                    getQryStkLimList();
                                 }}
                             />
-                        ) : (
-                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
-                        )}
-                    </section>
-                </Layout>
-                <CreateStkLimModal />
-                <EditStkLimModal />
-                <StkLimInfoModal />
-            </>
+                        </li>
+                        <li>
+                            <ButtonReset
+                                onClick={() => {
+                                    reset();
+                                    getQryStkLimList();
+                                }}
+                            />
+                        </li>
+                    </ul>
+                    {/* {sessionStorage.getItem('loginUnit') === '1' && ( */}
+                    <ButtonCreate
+                        sx={[btnStyle.btn, btnStyle.btnCreate]}
+                        onClick={e => {
+                            runInAction(() => {
+                                e.preventDefault();
+                                // resetStkLimitData();
+                                updateData('createStkLimModalVisible', true);
+                                updateData('stkLimAFlag', 'C');
+                            });
+                        }}
+                    />
+                    {/* )} */}
+                </div>
+                <div className="d-flex justify-content-end mt-2 align-items-center">
+                    <p className="time">
+                        <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
+                        查詢時間：{queryTime}
+                    </p>
+                </div>
+                <section>
+                    {isLoading ? (
+                        <Loading isLoading={isLoading} />
+                    ) : !updateComplete ? (
+                        <Table
+                            header={columns}
+                            data={stkLimitList}
+                            getRowId={row => row.lim_date + row.accId + row.lim_type}
+                            onRowClick={params => {
+                                updateData('stkLimitData', {
+                                    ...params.row,
+                                });
+                                updateData('stkLimAFlag', 'U');
+                                updateData('editStkLimModalVisible', true);
+                            }}
+                        />
+                    ) : (
+                        <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                    )}
+                </section>
+            </Layout>
+            <CreateStkLimModal />
+            <EditStkLimModal />
+            <StkLimInfoModal />
         </PersistentDrawer>
     );
 };

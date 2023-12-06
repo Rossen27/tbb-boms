@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';

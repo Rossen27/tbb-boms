@@ -99,99 +99,97 @@ const Broker = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <>
-                <Layout title={'可下單券商資料維護'}>
-                    <div className="d-flex justify-content-between">
-                        <ul className="d-flex align-items-center">
-                            <li className="me-3">
-                                <TextField
-                                    id="outlined-basic"
-                                    label="券商代號"
-                                    variant="outlined"
-                                    size="small"
-                                    value={brkid}
-                                    onChange={e => {
-                                        paramsUpdate('brkid', e.target.value);
-                                    }}
-                                    sx={{ width: '120px' }}
-                                />
-                            </li>
-                            <li>
-                                <TextField
-                                    id="outlined-basic"
-                                    label="契約編號"
-                                    variant="outlined"
-                                    size="small"
-                                    value={userID}
-                                    onChange={e => {
-                                        paramsUpdate('userID', e.target.value);
-                                    }}
-                                    sx={{ width: '120px' }}
-                                />
-                            </li>
-                            <li>
-                                <ButtonQuery
-                                    onClick={() => {
-                                        getQryBrokerList();
-                                    }}
-                                />
-                            </li>
-                            <li>
-                                <ButtonReset
-                                    onClick={() => {
-                                        reset();
-                                        getQryBrokerList();
-                                    }}
-                                />
-                            </li>
-                        </ul>
-                        {/* {sessionStorage.getItem('loginUnit') === '1' && ( */}
-                        <ButtonCreate
-                            onClick={e => {
-                                runInAction(() => {
-                                    e.preventDefault();
-                                    resetBrokerData();
-                                    updateData('createBrokerModalVisible', true);
-                                    updateData('brokerAFlag', 'C');
-                                });
-                            }}
-                        />
-                        {/* )} */}
-                    </div>
-
-                    <div className="d-flex justify-content-end mt-2 align-items-center">
-                        <p className="time">
-                            <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
-                            查詢時間：{queryTime}
-                        </p>
-                    </div>
-                    <section>
-                        {isLoading ? (
-                            <Loading isLoading={isLoading} />
-                        ) : !updateComplete ? (
-                            <Table
-                                header={columns}
-                                data={brokerList}
-                                getRowId={row => row.brkid + row.userID}
-                                onRowClick={params => {
-                                    updateData('brokerAFlag', 'U');
-                                    updateData('brokerData', {
-                                        ...params.row,
-                                    });
-                                    updateData('editBrokerModalVisible', true);
+            <Layout title={'可下單券商資料維護'}>
+                <div className="d-flex justify-content-between">
+                    <ul className="d-flex align-items-center">
+                        <li className="me-3">
+                            <TextField
+                                id="outlined-basic"
+                                label="券商代號"
+                                variant="outlined"
+                                size="small"
+                                value={brkid}
+                                onChange={e => {
+                                    paramsUpdate('brkid', e.target.value);
+                                }}
+                                sx={{ width: '120px' }}
+                            />
+                        </li>
+                        <li>
+                            <TextField
+                                id="outlined-basic"
+                                label="契約編號"
+                                variant="outlined"
+                                size="small"
+                                value={userID}
+                                onChange={e => {
+                                    paramsUpdate('userID', e.target.value);
+                                }}
+                                sx={{ width: '120px' }}
+                            />
+                        </li>
+                        <li>
+                            <ButtonQuery
+                                onClick={() => {
+                                    getQryBrokerList();
                                 }}
                             />
-                        ) : (
-                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
-                        )}
-                    </section>
-                </Layout>
-                <CreateBrokerModal />
-                <EditBrokerModal />
-                <BrokerInfoModal />
-                <CreateManagerModal />
-                <ManagerInfoModal />
-            </>
+                        </li>
+                        <li>
+                            <ButtonReset
+                                onClick={() => {
+                                    reset();
+                                    getQryBrokerList();
+                                }}
+                            />
+                        </li>
+                    </ul>
+                    {/* {sessionStorage.getItem('loginUnit') === '1' && ( */}
+                    <ButtonCreate
+                        onClick={e => {
+                            runInAction(() => {
+                                e.preventDefault();
+                                resetBrokerData();
+                                updateData('createBrokerModalVisible', true);
+                                updateData('brokerAFlag', 'C');
+                            });
+                        }}
+                    />
+                    {/* )} */}
+                </div>
+
+                <div className="d-flex justify-content-end mt-2 align-items-center">
+                    <p className="time">
+                        <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
+                        查詢時間：{queryTime}
+                    </p>
+                </div>
+                <section>
+                    {isLoading ? (
+                        <Loading isLoading={isLoading} />
+                    ) : !updateComplete ? (
+                        <Table
+                            header={columns}
+                            data={brokerList}
+                            getRowId={row => row.brkid + row.userID}
+                            onRowClick={params => {
+                                updateData('brokerAFlag', 'U');
+                                updateData('brokerData', {
+                                    ...params.row,
+                                });
+                                updateData('editBrokerModalVisible', true);
+                            }}
+                        />
+                    ) : (
+                        <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                    )}
+                </section>
+            </Layout>
+            <CreateBrokerModal />
+            <EditBrokerModal />
+            <BrokerInfoModal />
+            <CreateManagerModal />
+            <ManagerInfoModal />
         </PersistentDrawer>
     );
 };

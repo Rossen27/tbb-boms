@@ -16,7 +16,6 @@ const StkLimInfoModal = () => {
             cStkLimitData,
             updateStkLimData,
             applyDisabled,
-            todayDate,
         },
     } = useStore();
     let limTypeT = '';

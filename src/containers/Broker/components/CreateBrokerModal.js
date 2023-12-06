@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalEdit, SelectMultiple } from '@components';
+import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { removeSpace } from '@helper';
@@ -8,13 +8,7 @@ import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/broker';
 const CreateBrokerModal = () => {
     const {
-        BrokerStore: {
-            createBrokerModalVisible,
-            closeCreateBrokerModalVisible,
-            cBrokerData,
-            updateData,
-            getQryManagerList,
-        },
+        BrokerStore: { createBrokerModalVisible, closeCreateBrokerModalVisible, cBrokerData, updateData },
     } = useStore();
 
     return (

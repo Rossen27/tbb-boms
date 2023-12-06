@@ -3,18 +3,8 @@ import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import Layout from '@containers/Layout';
 import { functionName } from './constant/history';
-import {
-    PersistentDrawer,
-    SelectMultiple,
-    ButtonQuery,
-    ButtonReset,
-    Table,
-    ButtonExport,
-    BasicDateTimePicker,
-} from '@components';
+import { PersistentDrawer, SelectMultiple, ButtonQuery, ButtonReset, Table, BasicDateTimePicker } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-
-// import ExcelJS from 'exceljs';
 
 const History = () => {
     const {
@@ -83,71 +73,64 @@ const History = () => {
 
     return (
         <PersistentDrawer>
-            <div>
-                <Layout title={'異動修改紀錄'}>
-                    <ul className="d-flex align-items-center">
-                        <li>
-                            <SelectMultiple
-                                title={'異動功能'}
-                                options={functionOptions}
-                                onChange={value => paramsUpdate('functionId', value)}
-                                selectArr={functionId}
-                            />
-                        </li>
-                        <li>
-                            <BasicDateTimePicker
-                                value={startDate}
-                                onChange={value => {
-                                    paramsUpdate('startDate', value);
-                                }}
-                                start={undefined}
-                                label={'申請日期(起)'}
-                            />
-                        </li>
-                        <li>
-                            <BasicDateTimePicker
-                                className="mt-0"
-                                value={endDate}
-                                onChange={value => {
-                                    paramsUpdate('endDate', value);
-                                }}
-                                start={startDate}
-                                label={'申請日期(迄)'}
-                            />
-                        </li>
-                        <li>
-                            <ButtonQuery
-                                onClick={() => {
-                                    getQryLogList();
-                                }}
-                            />
-                        </li>
-                        <li>
-                            <ButtonReset
-                                onClick={() => {
-                                    reset();
-                                    getQryLogList();
-                                }}
-                            />
-                        </li>
-                    </ul>
+            <Layout title={'異動修改紀錄'}>
+                <ul className="d-flex align-items-center">
+                    <li>
+                        <SelectMultiple
+                            title={'異動功能'}
+                            options={functionOptions}
+                            onChange={value => paramsUpdate('functionId', value)}
+                            selectArr={functionId}
+                        />
+                    </li>
+                    <li>
+                        <BasicDateTimePicker
+                            value={startDate}
+                            onChange={value => {
+                                paramsUpdate('startDate', value);
+                            }}
+                            start={undefined}
+                            label={'異動日期(起)'}
+                        />
+                    </li>
+                    <li>
+                        <BasicDateTimePicker
+                            className="mt-0"
+                            value={endDate}
+                            onChange={value => {
+                                paramsUpdate('endDate', value);
+                            }}
+                            start={startDate}
+                            label={'異動日期(迄)'}
+                        />
+                    </li>
+                    <li>
+                        <ButtonQuery
+                            onClick={() => {
+                                getQryLogList();
+                            }}
+                        />
+                    </li>
+                    <li>
+                        <ButtonReset
+                            onClick={() => {
+                                reset();
+                                getQryLogList();
+                            }}
+                        />
+                    </li>
+                </ul>
 
-                    <div className="d-flex justify-content-end mt-2 align-items-center">
-                        <p className="time">
-                            <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
-                            查詢時間：{queryTime}
-                        </p>
-                    </div>
-                    <section>
-                        <Table header={columns} data={logList} getRowId={row => row.id} />
-                    </section>
-                </Layout>
-                {/* <EditUserModal />
-                <EditInfoModal />
-                <CreateUserModal />
-                <CreateAgentModal />
-                <EditAgentModal /> */}
-            </div>
+                <div className="d-flex justify-content-end mt-2 align-items-center">
+                    <p className="time">
+                        <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
+                        查詢時間：{queryTime}
+                    </p>
+                </div>
+                <section>
+                    <Table header={columns} data={logList} getRowId={row => row.id} />
+                </section>
+            </Layout>
         </PersistentDrawer>
     );
 };

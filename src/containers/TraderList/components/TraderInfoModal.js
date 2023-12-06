@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@mui/material';
-import { pGroupText, btnStyle } from '../constant/traderList';
+import { btnStyle } from '../constant/traderList';
 const TraderInfoModal = () => {
     const {
         TraderListStore: {
@@ -35,7 +35,6 @@ const TraderInfoModal = () => {
             title={'確認經理人基本資料'}
         >
             <form>
-                {/* <h3 className="title fw-bolder mb-4 text-danger text-center">新增</h3> */}
                 <table className="table table-borderless w-75">
                     <tbody>
                         <tr>

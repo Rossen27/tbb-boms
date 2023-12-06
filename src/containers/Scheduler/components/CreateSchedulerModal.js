@@ -5,17 +5,10 @@ import { observer } from 'mobx-react-lite';
 import { removeSpace } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
-import { btnStyle, holidayFlagText } from '../constant/scheduler';
+import { btnStyle } from '../constant/scheduler';
 const CreateSchedulerModal = () => {
     const {
-        SchedulerStore: {
-            createSchedulerModalVisible,
-            closeCreateSchedulerModalVisible,
-            updateData,
-            cSchedulerData,
-            setTimeFormat,
-            statusDisabled,
-        },
+        SchedulerStore: { createSchedulerModalVisible, closeCreateSchedulerModalVisible, updateData, cSchedulerData },
     } = useStore();
 
     return (

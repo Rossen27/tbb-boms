@@ -18,7 +18,6 @@ const CreateManagerModal = () => {
             unassignedAgentList,
             resetManagerData,
             createManagerDisabled,
-            managerAFlag,
         },
     } = useStore();
 

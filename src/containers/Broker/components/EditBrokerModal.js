@@ -1,5 +1,5 @@
 import React from 'react';
-import { ModalEdit, SelectMultiple } from '@components';
+import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { removeSpace } from '@helper';

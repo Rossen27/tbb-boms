@@ -1,23 +1,12 @@
 import React from 'react';
-import { ModalEdit, Table, SelectInput } from '@components';
+import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { addCommas, removeNonNumeric } from '@helper';
 import { Button, TextField } from '@mui/material';
-import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/stock';
 const QueryStockModal = () => {
     const {
-        StockStore: {
-            queryStockModalVisible,
-            closeQueryStockModal,
-            updateData,
-            params,
-            paramsUpdate,
-            statusDisabled,
-            field,
-            keyOptions,
-        },
+        StockStore: { queryStockModalVisible, closeQueryStockModal, params, paramsUpdate },
     } = useStore();
     const { stockNo, stockName } = params;
     const columns = [

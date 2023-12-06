@@ -17,7 +17,6 @@ const EditWorkTimeModal = () => {
             statusDisabled,
         },
     } = useStore();
-    // console.log(setTimeFormat);
 
     return (
         <ModalEdit open={editWorkTimeModalVisible} onClose={closeEditWorkTimeModal} title={'編輯排程'}>

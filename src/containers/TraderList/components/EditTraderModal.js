@@ -16,7 +16,6 @@ const EditTraderModal = () => {
             traderData,
             getQryAgentList,
             updateTraderData,
-            agentParams,
         },
     } = useStore();
     return (

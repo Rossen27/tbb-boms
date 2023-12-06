@@ -3,15 +3,7 @@ import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import Layout from '@containers/Layout';
 import { flagName, bsTypeText } from './constant/tradeReport';
-import {
-    PersistentDrawer,
-    SelectMultiple,
-    ButtonQuery,
-    ButtonReset,
-    Table,
-    ButtonExport,
-    CustomDatePicker,
-} from '@components';
+import { PersistentDrawer, ButtonQuery, ButtonReset, Table, CustomDatePicker } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 
 // import ExcelJS from 'exceljs';
@@ -245,61 +237,58 @@ const TradeReport = () => {
 
     return (
         <PersistentDrawer>
-            <div>
-                <Layout title={'券商交易成交檔案記錄查詢'}>
-                    <ul className="d-flex align-items-center">
-                        <li>
-                            <CustomDatePicker
-                                date={startDate}
-                                onChange={value => {
-                                    paramsUpdate('startDate', value);
-                                }}
-                                start={undefined}
-                                label={'申請日期(起)'}
-                            />
-                        </li>
-                        <li>
-                            <CustomDatePicker
-                                date={endDate}
-                                onChange={value => {
-                                    paramsUpdate('endDate', value);
-                                }}
-                                start={startDate}
-                                label={'申請日期(迄)'}
-                            />
-                        </li>
-                        <li>
-                            <ButtonQuery
-                                onClick={() => {
-                                    getQryTradeReportList();
-                                }}
-                            />
-                        </li>
-                        <li>
-                            <ButtonReset
-                                onClick={() => {
-                                    reset();
-                                    getQryTradeReportList();
-                                }}
-                            />
-                        </li>
-                    </ul>
-
-                    <div className="d-flex justify-content-end mt-2 align-items-center">
-                        <p className="time">
-                            <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
-                            查詢時間：{queryTime}
-                        </p>
-                    </div>
-                    <section>
-                        <Table
-                            header={columns}
-                            data={tradeReportList}
-                            getRowId={row => row.tradedate + row.broker_ID + row.tradeno}
+            <Layout title={'券商交易成交檔案記錄查詢'}>
+                <ul className="d-flex align-items-center">
+                    <li>
+                        <CustomDatePicker
+                            date={startDate}
+                            onChange={value => {
+                                paramsUpdate('startDate', value);
+                            }}
+                            start={undefined}
+                            label={'轉檔日期(起)'}
                         />
-                    </section>
-                </Layout>
-            </div>
+                    </li>
+                    <li>
+                        <CustomDatePicker
+                            date={endDate}
+                            onChange={value => {
+                                paramsUpdate('endDate', value);
+                            }}
+                            start={startDate}
+                            label={'轉檔日期(迄)'}
+                        />
+                    </li>
+                    <li>
+                        <ButtonQuery
+                            onClick={() => {
+                                getQryTradeReportList();
+                            }}
+                        />
+                    </li>
+                    <li>
+                        <ButtonReset
+                            onClick={() => {
+                                reset();
+                                getQryTradeReportList();
+                            }}
+                        />
+                    </li>
+                </ul>
+                <div className="d-flex justify-content-end mt-2 align-items-center">
+                    <p className="time">
+                        <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
+                        查詢時間：{queryTime}
+                    </p>
+                </div>
+                <section>
+                    <Table
+                        header={columns}
+                        data={tradeReportList}
+                        getRowId={row => row.tradedate + row.broker_ID + row.tradeno}
+                    />
+                </section>
+            </Layout>
         </PersistentDrawer>
     );
 };

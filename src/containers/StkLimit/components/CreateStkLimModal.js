@@ -1,12 +1,12 @@
 import React from 'react';
-import { ModalEdit, CustomDatePicker } from '@components';
+import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { removeSpace, removeNonNumeric } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/stkLimit';
-import { format, parse } from 'date-fns';
+
 const CreateStkLimModal = () => {
     const {
         StkLimitStore: { createStkLimModalVisible, closeCreateStkLimModal, updateData, cStkLimitData, todayDate },
@@ -20,14 +20,6 @@ const CreateStkLimModal = () => {
                         額度日期
                     </label>
                     <div className="col-sm-10">
-                        {/* <CustomDatePicker
-                            date={''}
-                            onChange={value => {
-                                updateData('todayDate', value);
-                            }}
-                            start={undefined}
-                        /> */}
-
                         <input
                             type="date"
                             className="form-control w-40 fs-5"
@@ -35,7 +27,6 @@ const CreateStkLimModal = () => {
                             id="lim_date"
                             onChange={e => {
                                 runInAction(() => {
-                                    console.log(e.target.value);
                                     cStkLimitData.lim_date = e.target.value;
                                     updateData('cStkLimitData', cStkLimitData);
                                 });
@@ -152,7 +143,6 @@ const CreateStkLimModal = () => {
                                 } else {
                                     updateData('applyDisabled', true);
                                 }
-                                console.log(cStkLimitData);
                                 updateData('stkLimInfoModalVisible', true);
                                 closeCreateStkLimModal();
                             }}

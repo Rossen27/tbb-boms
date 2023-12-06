@@ -11,14 +11,13 @@ const WorkTimeInfoModal = () => {
             workTimeInfoModalVisible,
             closeWorkTimeInfoModal,
             updateData,
-            setTimeFormat,
             schedulerData,
             applyDisabled,
             updateSchedule,
             schedulerAFlag,
         },
     } = useStore();
-    const setTimeParse = setTimeFormat.replaceAll(':', '');
+    // const setTimeParse = setTimeFormat.replaceAll(':', '');
 
     return (
         <ModalEdit open={workTimeInfoModalVisible} onClose={closeWorkTimeInfoModal} title={'確認排程作業時間'}>

@@ -15,8 +15,6 @@ const CreateTraderModal = () => {
             traderData,
             cTraderID,
             cTraderName,
-            userAFlag,
-            applyDisabled,
         },
     } = useStore();
 

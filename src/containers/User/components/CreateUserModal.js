@@ -8,16 +8,7 @@ import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/userList';
 const CreateUserModal = () => {
     const {
-        UserStore: {
-            createUserModalVisible,
-            closeCreateUserModal,
-            updateData,
-            userData,
-            cUserID,
-            cUserName,
-            userAFlag,
-            applyDisabled,
-        },
+        UserStore: { createUserModalVisible, closeCreateUserModal, updateData, userData, cUserID, cUserName },
     } = useStore();
 
     return (

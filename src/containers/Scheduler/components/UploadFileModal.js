@@ -3,27 +3,16 @@ import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { useDropzone } from 'react-dropzone';
-import { Box, Button, TextField } from '@mui/material';
-import { uploadStyle, holidayFlagText, btnStyle } from '../constant/scheduler';
+import { Box, Button } from '@mui/material';
+import { uploadStyle, btnStyle } from '../constant/scheduler';
 
 const UploadFileModal = () => {
     const {
-        SchedulerStore: {
-            uploadFileModalVisible,
-            closeUploadFileModal,
-            upload,
-            updateData,
-            uploadDisabled,
-            schedulerData,
-            cSchedulerData,
-            applyDisabled,
-            updateSchedule,
-            schedulerAFlag,
-        },
+        SchedulerStore: { uploadFileModalVisible, closeUploadFileModal, upload, updateData, uploadDisabled },
     } = useStore();
     const [acceptedFiles, setAcceptedFiles] = useState([]);
     const onDrop = (accepted, rejected) => {
-        // 处理已接受的文件
+        // 處理已接受的文件
         setAcceptedFiles(accepted);
     };
     const { getRootProps, getInputProps, open } = useDropzone({ onDrop });

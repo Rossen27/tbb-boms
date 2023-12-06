@@ -3,17 +3,12 @@ import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { useNavigate } from 'react-router-dom';
 import Layout from '@containers/Layout';
-import { PersistentDrawer, Loading, CompleteInfo, ButtonCreate, Table, ButtonExport } from '@components';
-import { addCommas, removeNonNumeric } from '@helper';
-import MoreVertIcon from '@mui/icons-material/MoreVert';
+import { PersistentDrawer, Loading, CompleteInfo, ButtonCreate, Table } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { OverlayTrigger, Tooltip } from 'react-bootstrap';
-import { TextField } from '@mui/material';
 import EditAdminModal from './components/EditAdminModal';
 import CreateAdminModal from './components/CreateAdminModal';
 import AdminInfoModal from './components/AdminInfoModal';
 import { runInAction } from 'mobx';
-// import ExcelJS from 'exceljs';
 
 const Admin = () => {
     const {
@@ -103,55 +98,53 @@ const Admin = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <div>
-                <Layout title={'管理員資料維護'}>
-                    {sessionStorage.getItem('loginUnit') === '1' && (
-                        <div className="d-flex justify-content-end">
-                            <ButtonCreate
-                                onClick={e => {
-                                    runInAction(() => {
-                                        e.preventDefault();
-                                        resetAdminData();
-                                        updateData('createAdminModalVisible', true);
-                                        updateData('adminAFlag', 'C');
-                                    });
-                                }}
-                            />
-                        </div>
-                    )}
-                    <div className="d-flex justify-content-end mt-2 align-items-center">
-                        <p className="time">
-                            <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
-                            查詢時間：{queryTime}
-                        </p>
+            <Layout title={'管理員資料維護'}>
+                {sessionStorage.getItem('loginUnit') === '1' && (
+                    <div className="d-flex justify-content-end">
+                        <ButtonCreate
+                            onClick={e => {
+                                runInAction(() => {
+                                    e.preventDefault();
+                                    resetAdminData();
+                                    updateData('createAdminModalVisible', true);
+                                    updateData('adminAFlag', 'C');
+                                });
+                            }}
+                        />
                     </div>
-                    <section>
-                        {isLoading ? (
-                            <Loading isLoading={isLoading} />
-                        ) : !updateComplete ? (
-                            <Table
-                                header={columns}
-                                data={adminList}
-                                getRowId={row => row.traderID}
-                                onRowClick={params => {
-                                    if (sessionStorage.getItem('loginUnit') === '1') {
-                                        updateData('adminData', {
-                                            ...params.row,
-                                        });
-                                        updateData('adminAFlag', 'U');
-                                        updateData('editAdminModalVisible', true);
-                                    }
-                                }}
-                            />
-                        ) : (
-                            <CompleteInfo loadingFail={loadingFail} msg={msg} />
-                        )}
-                    </section>
-                </Layout>
-                <EditAdminModal />
-                <AdminInfoModal />
-                <CreateAdminModal />
-            </div>
+                )}
+                <div className="d-flex justify-content-end mt-2 align-items-center">
+                    <p className="time">
+                        <AccessTimeIcon sx={{ verticalAlign: 'bottom' }} />
+                        查詢時間：{queryTime}
+                    </p>
+                </div>
+                <section>
+                    {isLoading ? (
+                        <Loading isLoading={isLoading} />
+                    ) : !updateComplete ? (
+                        <Table
+                            header={columns}
+                            data={adminList}
+                            getRowId={row => row.traderID}
+                            onRowClick={params => {
+                                if (sessionStorage.getItem('loginUnit') === '1') {
+                                    updateData('adminData', {
+                                        ...params.row,
+                                    });
+                                    updateData('adminAFlag', 'U');
+                                    updateData('editAdminModalVisible', true);
+                                }
+                            }}
+                        />
+                    ) : (
+                        <CompleteInfo loadingFail={loadingFail} msg={msg} />
+                    )}
+                </section>
+            </Layout>
+            <EditAdminModal />
+            <AdminInfoModal />
+            <CreateAdminModal />
         </PersistentDrawer>
     );
 };
