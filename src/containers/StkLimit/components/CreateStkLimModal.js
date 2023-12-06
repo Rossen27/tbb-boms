@@ -29,12 +29,13 @@ const CreateStkLimModal = () => {
                         /> */}
 
                         <input
-                            type="text"
+                            type="date"
                             className="form-control w-40 fs-5"
                             value={cStkLimitData.lim_date}
                             id="lim_date"
                             onChange={e => {
                                 runInAction(() => {
+                                    console.log(e.target.value);
                                     cStkLimitData.lim_date = e.target.value;
                                     updateData('cStkLimitData', cStkLimitData);
                                 });
@@ -137,7 +138,7 @@ const CreateStkLimModal = () => {
                         <Button
                             type="button"
                             variant="contained"
-                            sx={[btnStyle.btn, btnStyle.btnUpdate]}
+                            sx={[btnStyle.btn, btnStyle.btnCreate]}
                             onClick={e => {
                                 e.preventDefault();
                                 if (

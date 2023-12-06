@@ -7,9 +7,10 @@ import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 export default function BasicDateTimePicker({ label, value, onChange, start }) {
     return (
         <LocalizationProvider dateAdapter={AdapterDateFns}>
-            <DemoContainer components={['DateTimePicker']} sx={{ m: 1, mt: 0, p: 0 }}>
+            <DemoContainer components={['DateTimePicker']} sx={{ mt: 0, p: 1 }}>
                 <DateTimePicker
                     views={['year', 'month', 'day', 'hours', 'minutes', 'seconds']}
+                    format="yyyy/MM/dd HH:mm:ss"
                     label={label}
                     value={value}
                     onChange={onChange}

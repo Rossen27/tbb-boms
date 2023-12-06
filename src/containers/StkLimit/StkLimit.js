@@ -15,7 +15,7 @@ import {
     ButtonExport,
 } from '@components';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
-import { limTypeText } from './constant/stkLimit';
+import { limTypeText, btnStyle } from './constant/stkLimit';
 import { runInAction } from 'mobx';
 import EditStkLimModal from './components/EditStkLimModal';
 import StkLimInfoModal from './components/StkLimInfoModal';
@@ -139,7 +139,7 @@ const StkLimit = () => {
         <PersistentDrawer>
             <>
                 <Layout title={'可下單額度維護'}>
-                    <div className="d-flex justify-content-between">
+                    <div className="d-flex justify-content-between align-items-center">
                         <ul className="d-flex align-items-center">
                             <li>
                                 <CustomDatePicker
@@ -148,7 +148,7 @@ const StkLimit = () => {
                                         paramsUpdate('startDate', value);
                                     }}
                                     start={undefined}
-                                    label={'申請日期(起)'}
+                                    label={'額度日期(起)'}
                                 />
                             </li>
                             <li>
@@ -158,7 +158,7 @@ const StkLimit = () => {
                                         paramsUpdate('endDate', value);
                                     }}
                                     start={startDate}
-                                    label={'申請日期(迄)'}
+                                    label={'額度日期(迄)'}
                                 />
                             </li>
                             <li>
@@ -179,6 +179,7 @@ const StkLimit = () => {
                         </ul>
                         {/* {sessionStorage.getItem('loginUnit') === '1' && ( */}
                         <ButtonCreate
+                            sx={[btnStyle.btn, btnStyle.btnCreate]}
                             onClick={e => {
                                 runInAction(() => {
                                     e.preventDefault();
