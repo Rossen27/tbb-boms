@@ -217,7 +217,7 @@ const Scheduler = () => {
                                     // }
                                     // const setTimeFormat = timeFormat.join(':');
                                     // updateData('setTimeFormat', setTimeFormat);
-                                    if (params.field !== 'execBtn') {
+                                    if (params.field !== 'execBtn' && params.row.execCMD !== 'UPLOAD') {
                                         updateData('editWorkTimeModalVisible', true);
                                         updateData('schedulerData', {
                                             ...params.row,
