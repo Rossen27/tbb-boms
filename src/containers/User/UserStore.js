@@ -11,14 +11,18 @@ const initialState = {
     userData: {
         password: '',
     },
-    cUserName: '',
-    cUserID: '',
+    cUserData: {
+        userName: '',
+        userID: '',
+        pGroup: 'T',
+        unit: 0,
+        allowType: 1,
+    },
     userAFlag: '',
     editUserModalVisible: false,
     userInfoModalVisible: false,
     createUserModalVisible: false,
     applyDisabled: false,
-
     isLoading: false,
     updateComplete: false,
     loadingFail: false,
@@ -42,8 +46,13 @@ const UserStore = () =>
         ...api,
         resetUserData() {
             this.reset({
-                cUserID: '',
-                cUserName: '',
+                cUserData: {
+                    userName: '',
+                    userID: '',
+                    pGroup: 'T',
+                    unit: 0,
+                    allowType: 1,
+                },
                 userData: {},
             });
         },

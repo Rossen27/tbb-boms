@@ -55,7 +55,7 @@ const User = () => {
         },
         {
             field: 'userName',
-            headerName: '使用者名稱',
+            headerName: '契約名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -119,7 +119,7 @@ const User = () => {
                 if (params.row.unit === 1) {
                     return <p className="text-primary">資訊技術部</p>;
                 } else {
-                    return <p className="text-primary">證券部</p>;
+                    return <p className="text-primary">信託部</p>;
                 }
             },
         },

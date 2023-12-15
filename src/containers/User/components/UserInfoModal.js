@@ -10,8 +10,7 @@ const TraderInfoModal = () => {
             userInfoModalVisible,
             closeUserInfoModal,
             updateData,
-            cUserName,
-            cUserID,
+            cUserData,
             userData,
             updateUserData,
             applyDisabled,
@@ -19,17 +18,18 @@ const TraderInfoModal = () => {
         },
     } = useStore();
     let allowTypeText = '';
-    if (parseInt(userData.allowType) === 0) {
-        allowTypeText = '檢視權限';
-    } else if (parseInt(userData.allowType) === 1) {
+    const allowType = userAFlag === 'C' ? cUserData.allowType : userData.allowType;
+
+    if (parseInt(allowType) === 1) {
         allowTypeText = '交易權限';
-    } else if (parseInt(userData.allowType) === 3) {
-        allowTypeText = '停用帳號';
+    } else if (parseInt(allowType) === 3) {
+        allowTypeText = '停用契約';
     }
+
     let unitText = '';
-    if (parseInt(userData.unit) === 0) {
-        unitText = '證券部';
-    } else if (parseInt(userData.unit) === 1) {
+    if (parseInt(userData.unit) === 0 || parseInt(cUserData.unit) === 0) {
+        unitText = '信託部';
+    } else if (parseInt(userData.unit) === 1 || parseInt(cUserData.unit) === 1) {
         unitText = '資訊技術部';
     }
     return (
@@ -52,19 +52,23 @@ const TraderInfoModal = () => {
                             <th scope="row" className="text-end">
                                 契約編號
                             </th>
-                            <td>{userAFlag === 'C' ? cUserID : userData.userID}</td>
+                            <td>{userAFlag === 'C' ? cUserData.userID : userData.userID}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                使用者名稱
+                                契約名稱
                             </th>
-                            <td>{userAFlag === 'C' ? cUserName : userData.userName}</td>
+                            <td>{userAFlag === 'C' ? cUserData.userName : userData.userName}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
                                 權限群組
                             </th>
-                            <td>{pGroupText.filter(item => item.value === userData.pGroup).map(item => item.text)}</td>
+                            <td>
+                                {userAFlag === 'C'
+                                    ? pGroupText.filter(item => item.value === cUserData.pGroup).map(item => item.text)
+                                    : pGroupText.filter(item => item.value === userData.pGroup).map(item => item.text)}
+                            </td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
@@ -108,10 +112,11 @@ const TraderInfoModal = () => {
                                 let postData = {};
                                 if (userAFlag === 'C') {
                                     postData = {
-                                        userID: cUserID,
-                                        userName: cUserName,
-                                        allowType: userData.allowType,
-                                        pGroup: userData.pGroup,
+                                        userID: cUserData.userID,
+                                        userName: cUserData.userName,
+                                        allowType: cUserData.allowType,
+                                        unit: cUserData.unit,
+                                        pGroup: cUserData.pGroup,
                                         actionFlag: userAFlag,
                                     };
                                 } else if (userAFlag === 'U') {
@@ -119,6 +124,7 @@ const TraderInfoModal = () => {
                                         userID: userData.userID,
                                         userName: userData.userName,
                                         allowType: userData.allowType,
+                                        unit: userData.unit,
                                         pGroup: userData.pGroup,
                                         actionFlag: userAFlag,
                                     };

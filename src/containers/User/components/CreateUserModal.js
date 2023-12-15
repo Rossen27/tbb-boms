@@ -8,7 +8,7 @@ import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/userList';
 const CreateUserModal = () => {
     const {
-        UserStore: { createUserModalVisible, closeCreateUserModal, updateData, userData, cUserID, cUserName },
+        UserStore: { createUserModalVisible, closeCreateUserModal, cUserData, updateData },
     } = useStore();
 
     return (
@@ -29,12 +29,12 @@ const CreateUserModal = () => {
                             type="text"
                             className="form-control w-40 fs-5"
                             required
-                            value={cUserID}
+                            value={cUserData.userID}
                             id="userID"
                             onChange={e => {
                                 runInAction(() => {
-                                    const userID = e.target.value;
-                                    updateData('cUserID', userID);
+                                    cUserData.userID = e.target.value;
+                                    updateData('cUserData', cUserData);
                                 });
                             }}
                         />
@@ -42,7 +42,7 @@ const CreateUserModal = () => {
                 </div>
                 <div className="mb-4 row">
                     <label htmlFor="userName" className="col-sm-2 col-form-label fs-5">
-                        使用者名稱
+                        契約名稱
                     </label>
                     <div className="col-sm-10">
                         <input
@@ -50,11 +50,11 @@ const CreateUserModal = () => {
                             className="form-control w-40 fs-5"
                             id="userName"
                             required
-                            value={cUserName}
+                            value={cUserData.userName}
                             onChange={e => {
                                 runInAction(() => {
-                                    const userName = e.target.value;
-                                    updateData('cUserName', userName);
+                                    cUserData.userName = e.target.value;
+                                    updateData('cUserData', cUserData);
                                 });
                             }}
                         />
@@ -72,11 +72,11 @@ const CreateUserModal = () => {
                             id="short-term"
                             required
                             value={'T'}
-                            checked={userData.pGroup === 'T'}
+                            checked={cUserData.pGroup === 'T'}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.pGroup = e.target.value;
-                                    updateData('userData', userData);
+                                    cUserData.pGroup = e.target.value;
+                                    updateData('cUserData', cUserData);
                                 });
                             }}
                         />
@@ -84,7 +84,7 @@ const CreateUserModal = () => {
                             短投
                         </label>
                     </div>
-                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
+                    {/* <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
                             type="radio"
@@ -141,7 +141,7 @@ const CreateUserModal = () => {
                         <label className="form-check-label fs-5" htmlFor="strategic">
                             策略
                         </label>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="mb-4 row align-items-center">
                     <label htmlFor="unit" className="col-sm-2 col-form-label fs-5">
@@ -154,19 +154,19 @@ const CreateUserModal = () => {
                             name="unit"
                             id="user"
                             value={0}
-                            checked={parseInt(userData.unit) === 0}
+                            checked={parseInt(cUserData.unit) === 0}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.unit = e.target.value;
-                                    updateData('userData', userData);
+                                    cUserData.unit = e.target.value;
+                                    updateData('cUserData', cUserData);
                                 });
                             }}
                         />
                         <label className="form-check-label fs-5" htmlFor="user">
-                            證券部
+                            信託部
                         </label>
                     </div>
-                    <div className="form-check form-check-inline col-sm-3 me-0 mb-0">
+                    {/* <div className="form-check form-check-inline col-sm-3 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
                             type="radio"
@@ -184,13 +184,13 @@ const CreateUserModal = () => {
                         <label className="form-check-label fs-5" htmlFor="admin">
                             資訊技術部
                         </label>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="mb-4 row align-items-center border-bottom pb-5">
                     <label htmlFor="allowType" className="col-sm-2 col-form-label fs-5">
                         權限
                     </label>
-                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
+                    {/* <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
                             type="radio"
@@ -208,7 +208,7 @@ const CreateUserModal = () => {
                         <label className="form-check-label fs-5" htmlFor="view">
                             檢視權限
                         </label>
-                    </div>
+                    </div> */}
                     <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
@@ -216,11 +216,11 @@ const CreateUserModal = () => {
                             name="allowType"
                             id="trade"
                             value={1}
-                            checked={parseInt(userData.allowType) === 1}
+                            checked={parseInt(cUserData.allowType) === 1}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.allowType = e.target.value;
-                                    updateData('userData', userData);
+                                    cUserData.allowType = e.target.value;
+                                    updateData('cUserData', cUserData);
                                 });
                             }}
                         />
@@ -235,16 +235,16 @@ const CreateUserModal = () => {
                             name="allowType"
                             id="disable"
                             value={3}
-                            checked={parseInt(userData.allowType) === 3}
+                            checked={parseInt(cUserData.allowType) === 3}
                             onChange={e => {
                                 runInAction(() => {
-                                    userData.allowType = e.target.value;
-                                    updateData('userData', userData);
+                                    cUserData.allowType = e.target.value;
+                                    updateData('cUserData', cUserData);
                                 });
                             }}
                         />
                         <label className="form-check-label fs-5" htmlFor="disable">
-                            停用帳號
+                            停用契約
                         </label>
                     </div>
                 </div>
@@ -266,11 +266,11 @@ const CreateUserModal = () => {
                             onClick={e => {
                                 e.preventDefault();
                                 if (
-                                    removeSpace(cUserID) &&
-                                    removeSpace(cUserName) &&
-                                    userData.pGroup &&
-                                    userData.unit != null &&
-                                    userData.allowType != null
+                                    removeSpace(cUserData.userID) &&
+                                    removeSpace(cUserData.userName) &&
+                                    cUserData.pGroup &&
+                                    cUserData.unit != null &&
+                                    cUserData.allowType != null
                                 ) {
                                     updateData('applyDisabled', false);
                                 } else {

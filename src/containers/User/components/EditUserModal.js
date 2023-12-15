@@ -29,7 +29,7 @@ const EditTraderModal = () => {
                 </div>
                 <div className="mb-4 row">
                     <label htmlFor="userName" className="col-sm-2 col-form-label fs-5">
-                        使用者名稱
+                        契約名稱
                     </label>
                     <div className="col-sm-10">
                         <input
@@ -69,7 +69,7 @@ const EditTraderModal = () => {
                             短投
                         </label>
                     </div>
-                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
+                    {/* <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
                             type="radio"
@@ -125,7 +125,7 @@ const EditTraderModal = () => {
                         <label className="form-check-label fs-5" htmlFor="strategic">
                             策略
                         </label>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="mb-4 row align-items-center">
                     <label htmlFor="unit" className="col-sm-2 col-form-label fs-5">
@@ -139,13 +139,18 @@ const EditTraderModal = () => {
                             id="user"
                             value={0}
                             checked={parseInt(userData.unit) === 0}
-                            disabled
+                            onChange={e => {
+                                runInAction(() => {
+                                    userData.allowType = e.target.value;
+                                    updateData('userData', userData);
+                                });
+                            }}
                         />
                         <label className="form-check-label fs-5" htmlFor="user">
-                            證券部
+                            信託部
                         </label>
                     </div>
-                    <div className="form-check form-check-inline col-sm-3 me-0 mb-0">
+                    {/* <div className="form-check form-check-inline col-sm-3 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
                             type="radio"
@@ -158,13 +163,13 @@ const EditTraderModal = () => {
                         <label className="form-check-label fs-5" htmlFor="admin">
                             資訊技術部
                         </label>
-                    </div>
+                    </div> */}
                 </div>
                 <div className="mb-4 row align-items-center border-bottom pb-5">
                     <label htmlFor="allowType" className="col-sm-2 col-form-label fs-5">
                         權限
                     </label>
-                    <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
+                    {/* <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
                             type="radio"
@@ -182,7 +187,7 @@ const EditTraderModal = () => {
                         <label className="form-check-label fs-5" htmlFor="view">
                             檢視權限
                         </label>
-                    </div>
+                    </div> */}
                     <div className="form-check form-check-inline col-sm-2 me-0 mb-0">
                         <input
                             className="form-check-input fs-5"
@@ -218,7 +223,7 @@ const EditTraderModal = () => {
                             }}
                         />
                         <label className="form-check-label fs-5" htmlFor="disable">
-                            停用帳號
+                            停用契約
                         </label>
                     </div>
                 </div>
