@@ -33,7 +33,7 @@ const CreateAgentModal = () => {
         },
         {
             field: 'userName',
-            headerName: '契約編號名稱',
+            headerName: '契約名稱',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',

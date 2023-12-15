@@ -101,20 +101,22 @@ const EditWorkTimeModal = () => {
                 </div>
 
                 <ul className="d-flex justify-content-center align-items-center m-5">
-                    <li>
-                        <Button
-                            onClick={e => {
-                                e.preventDefault();
-                                updateData('schedulerInfoModalVisible', true);
-                                updateData('schedulerAFlag', 'D');
-                                closeEditWorkTimeModal();
-                            }}
-                            variant="outlined"
-                            sx={[btnStyle.btn, btnStyle.btnDelete]}
-                        >
-                            刪除
-                        </Button>
-                    </li>
+                    {sessionStorage.getItem('loginUnit') === '1' && (
+                        <li>
+                            <Button
+                                onClick={e => {
+                                    e.preventDefault();
+                                    updateData('schedulerInfoModalVisible', true);
+                                    updateData('schedulerAFlag', 'D');
+                                    closeEditWorkTimeModal();
+                                }}
+                                variant="outlined"
+                                sx={[btnStyle.btn, btnStyle.btnDelete]}
+                            >
+                                刪除
+                            </Button>
+                        </li>
+                    )}
                     <li className="ms-auto">
                         <Button
                             onClick={closeEditWorkTimeModal}

@@ -45,7 +45,7 @@ const AgentInfoModal = () => {
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                契約編號名稱
+                                契約名稱
                             </th>
                             <td>{agentAFlag === 'D' ? dAgentData.userName : agentData.userName}</td>
                         </tr>
