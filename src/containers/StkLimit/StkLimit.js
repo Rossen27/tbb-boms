@@ -35,6 +35,7 @@ const StkLimit = () => {
             msg,
             params,
             paramsUpdate,
+            resetStkLimitData,
         },
         LoginStore: { traderInfo },
     } = useStore();
@@ -182,7 +183,7 @@ const StkLimit = () => {
                         onClick={e => {
                             runInAction(() => {
                                 e.preventDefault();
-                                // resetStkLimitData();
+                                resetStkLimitData();
                                 updateData('createStkLimModalVisible', true);
                                 updateData('stkLimAFlag', 'C');
                             });

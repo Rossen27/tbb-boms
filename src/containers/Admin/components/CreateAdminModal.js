@@ -102,7 +102,7 @@ const CreateAdminModal = () => {
                             }}
                         />
                         <label className="form-check-label fs-5" htmlFor="user">
-                            證券部
+                            信託部
                         </label>
                     </div> */}
                     <div className="form-check form-check-inline col-sm-3 me-0 mb-0">

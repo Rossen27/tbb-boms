@@ -40,6 +40,16 @@ const StkLimitStore = () =>
         ...initialState,
         ...StoreAction(initialState),
         ...api,
+        resetStkLimitData() {
+            this.reset({
+                cStkLimitData: {
+                    lim_date: '',
+                    manager_id: '',
+                    lim_type: '',
+                    lim_val: '',
+                },
+            });
+        },
         closeCreateStkLimModal() {
             this.createStkLimModalVisible = false;
         },

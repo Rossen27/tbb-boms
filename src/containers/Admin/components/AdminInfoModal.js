@@ -21,7 +21,7 @@ const AdminInfoModal = () => {
     } = useStore();
     let unitText = '';
     if (parseInt(adminData.unit) === 0) {
-        unitText = '證券部';
+        unitText = '信託部';
     } else {
         unitText = '資訊技術部';
     }

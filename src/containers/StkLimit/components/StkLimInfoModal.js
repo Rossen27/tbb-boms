@@ -3,7 +3,7 @@ import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@mui/material';
-import { btnStyle } from '../constant/stkLimit';
+import { btnStyle, limTypeText } from '../constant/stkLimit';
 import { removeNonNumeric, addCommas } from '@helper';
 const StkLimInfoModal = () => {
     const {
@@ -50,7 +50,7 @@ const StkLimInfoModal = () => {
                             <th scope="row" className="text-end">
                                 上市櫃
                             </th>
-                            <td>{limTypeT === '1' ? '上市' : '上櫃'}</td>
+                            <td>{limTypeText[limTypeT]?.text || ''}</td>
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">

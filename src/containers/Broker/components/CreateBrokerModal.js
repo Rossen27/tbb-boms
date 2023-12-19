@@ -123,9 +123,9 @@ const CreateBrokerModal = () => {
                                 });
                             }}
                             variant="outlined"
-                            sx={[btnStyle.btn, btnStyle.btnUpdate]}
+                            sx={[btnStyle.btn, btnStyle.btnCreate]}
                         >
-                            更新資料
+                            新增資料
                         </Button>
                     </li>
                 </ul>
