@@ -81,7 +81,7 @@ const EditBrokerModal = () => {
                     </div>
                 </div>
                 <ul className="d-flex justify-content-center align-items-center m-5">
-                    <li>
+                    {/* <li>
                         <Button
                             onClick={() => {
                                 closeEditBrokerModal();
@@ -93,8 +93,9 @@ const EditBrokerModal = () => {
                         >
                             經理人設定
                         </Button>
-                    </li>
-                    <li className="ms-auto">
+                    </li> */}
+                    <li>
+                        {/* <li className="ms-auto"> */}
                         <Button
                             onClick={e => {
                                 e.preventDefault();
@@ -106,7 +107,8 @@ const EditBrokerModal = () => {
                             取消
                         </Button>
                     </li>
-                    <li className="ms-3">
+                    <li>
+                        {/* <li className="ms-3"> */}
                         <Button
                             onClick={e => {
                                 runInAction(() => {

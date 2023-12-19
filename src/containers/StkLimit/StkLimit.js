@@ -13,6 +13,7 @@ import {
     Table,
     CustomDatePicker,
 } from '@components';
+import { addCommas } from '@helper';
 import AccessTimeIcon from '@mui/icons-material/AccessTime';
 import { limTypeText, btnStyle } from './constant/stkLimit';
 import { runInAction } from 'mobx';
@@ -50,7 +51,7 @@ const StkLimit = () => {
         },
         {
             field: 'manager_id',
-            headerName: '交易員代號',
+            headerName: '契約代號',
             headerClassName: 'table-header',
             headerAlign: 'center',
             align: 'center',
@@ -78,6 +79,7 @@ const StkLimit = () => {
             sortable: false,
             minWidth: 100,
             flex: 1,
+            renderCell: params => <p>{addCommas(params.row.lim_val)}</p>,
         },
         // {
         //     field: 'updDate',
@@ -135,7 +137,7 @@ const StkLimit = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <Layout title={'可下單額度維護'}>
+            <Layout title={'交易限額維護'}>
                 <div className="d-flex justify-content-between align-items-center">
                     <ul className="d-flex align-items-center">
                         <li>

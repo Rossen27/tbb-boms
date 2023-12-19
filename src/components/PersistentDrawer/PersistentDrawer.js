@@ -291,13 +291,13 @@ const PersistentDrawer = ({ children, ...restProps }) => {
                             <ListItemIcon>
                                 <CurrencyExchangeIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
-                            <ListItemText primary="可下單額度維護" />
+                            <ListItemText primary="交易限額維護" />
                         </ListItem>
                         <ListItem component={Link} to="/StkDeposit" sx={{ color: 'white' }}>
                             <ListItemIcon>
                                 <MoveToInboxIcon sx={{ color: 'white' }} />
                             </ListItemIcon>
-                            <ListItemText primary="契約庫存資料維護查詢" />
+                            <ListItemText primary="契約庫存資料查詢" />
                         </ListItem>
                         <ListItem component={Link} to="/Order" sx={{ color: 'white' }}>
                             <ListItemIcon>

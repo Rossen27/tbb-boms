@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { removeNonNumeric } from '@helper';
+import { removeNonNumeric, addCommas } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/stkLimit';
@@ -12,7 +12,7 @@ const EditStkLimModal = () => {
     } = useStore();
 
     return (
-        <ModalEdit open={editStkLimModalVisible} onClose={closeEditStkLimModal} title={'編輯可交割額度'}>
+        <ModalEdit open={editStkLimModalVisible} onClose={closeEditStkLimModal} title={'編輯交易限額'}>
             <form>
                 <div className="mb-4 row">
                     <label htmlFor="lim_date" className="col-sm-2 col-form-label fs-5">
@@ -29,8 +29,8 @@ const EditStkLimModal = () => {
                     </div>
                 </div>
                 <div className="mb-4 row">
-                    <label htmlFor="accId" className="col-sm-2 col-form-label fs-5">
-                        交易員代號
+                    <label htmlFor="manager_id" className="col-sm-2 col-form-label fs-5">
+                        契約代號
                     </label>
                     <div className="col-sm-10">
                         <input
@@ -38,7 +38,7 @@ const EditStkLimModal = () => {
                             className="form-control w-40 fs-5"
                             value={stkLimitData.manager_id}
                             disabled
-                            id="accId"
+                            id="manager_id"
                             // onChange={e => {
                             //     runInAction(() => {
                             //         stkLimitData.userName = e.target.value;
@@ -76,7 +76,7 @@ const EditStkLimModal = () => {
                         <input
                             type="tel"
                             className="form-control w-40 fs-5"
-                            value={stkLimitData.lim_val}
+                            value={addCommas(removeNonNumeric(stkLimitData.lim_val || ''))}
                             id="lim_val"
                             onChange={e => {
                                 runInAction(() => {

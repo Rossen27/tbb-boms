@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { removeSpace, removeNonNumeric } from '@helper';
+import { removeSpace, removeNonNumeric, addCommas } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/stkLimit';
@@ -13,7 +13,7 @@ const CreateStkLimModal = () => {
     } = useStore();
 
     return (
-        <ModalEdit open={createStkLimModalVisible} onClose={closeCreateStkLimModal} title={'新增可交割額度'}>
+        <ModalEdit open={createStkLimModalVisible} onClose={closeCreateStkLimModal} title={'新增交易限額'}>
             <form>
                 <div className="mb-4 row">
                     <label htmlFor="lim_date" className="col-sm-2 col-form-label fs-5">
@@ -36,7 +36,7 @@ const CreateStkLimModal = () => {
                 </div>
                 <div className="mb-4 row">
                     <label htmlFor="manager_id" className="col-sm-2 col-form-label fs-5">
-                        交易員代號
+                        契約代號
                     </label>
                     <div className="col-sm-10">
                         <input
@@ -104,11 +104,11 @@ const CreateStkLimModal = () => {
                         <input
                             type="tel"
                             className="form-control w-40 fs-5"
-                            value={cStkLimitData.lim_val}
+                            value={addCommas(removeNonNumeric(cStkLimitData.lim_val))}
                             id="lim_val"
                             onChange={e => {
                                 runInAction(() => {
-                                    cStkLimitData.lim_val = removeNonNumeric(e.target.value);
+                                    cStkLimitData.lim_val = addCommas(removeNonNumeric(e.target.value));
                                     updateData('cStkLimitData', cStkLimitData);
                                 });
                             }}

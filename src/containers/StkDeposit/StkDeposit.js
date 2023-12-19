@@ -218,7 +218,7 @@ const StkDeposit = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <Layout title={'契約庫存資料維護查詢'}>
+            <Layout title={'契約庫存資料查詢'}>
                 <ul className="d-flex align-items-center">
                     <li>
                         <CustomDatePicker

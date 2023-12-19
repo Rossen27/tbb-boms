@@ -4,7 +4,7 @@ import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@mui/material';
 import { btnStyle } from '../constant/stkLimit';
-
+import { removeNonNumeric, addCommas } from '@helper';
 const StkLimInfoModal = () => {
     const {
         StkLimitStore: {
@@ -25,7 +25,7 @@ const StkLimInfoModal = () => {
         limTypeT = stkLimitData.lim_type;
     }
     return (
-        <ModalEdit open={stkLimInfoModalVisible} onClose={closeStkLimInfoModal} title={'確認券商資料'}>
+        <ModalEdit open={stkLimInfoModalVisible} onClose={closeStkLimInfoModal} title={'確認交易限額資料'}>
             <form>
                 <table className="table table-borderless w-75">
                     <tbody>
@@ -42,7 +42,7 @@ const StkLimInfoModal = () => {
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
-                                交易員代號
+                                契約代號
                             </th>
                             <td>{stkLimAFlag === 'C' ? cStkLimitData.manager_id : stkLimitData.manager_id}</td>
                         </tr>
@@ -56,7 +56,11 @@ const StkLimInfoModal = () => {
                             <th scope="row" className="text-end">
                                 操作限額
                             </th>
-                            <td>{stkLimAFlag === 'C' ? cStkLimitData.lim_val : stkLimitData.lim_val}</td>
+                            <td>
+                                {stkLimAFlag === 'C'
+                                    ? addCommas(removeNonNumeric(cStkLimitData.lim_val || ''))
+                                    : addCommas(removeNonNumeric(stkLimitData.lim_val || ''))}
+                            </td>
                         </tr>
                     </tbody>
                 </table>
@@ -93,7 +97,7 @@ const StkLimInfoModal = () => {
                                         manager_id: cStkLimitData.manager_id,
                                         lim_date: cStkLimitData.lim_date,
                                         lim_type: cStkLimitData.lim_type,
-                                        lim_val: cStkLimitData.lim_val,
+                                        lim_val: removeNonNumeric(cStkLimitData.lim_val),
                                         actionFlag: stkLimAFlag,
                                     };
                                 } else if (stkLimAFlag === 'U') {
@@ -101,7 +105,7 @@ const StkLimInfoModal = () => {
                                         manager_id: stkLimitData.manager_id,
                                         lim_date: stkLimitData.lim_date,
                                         lim_type: stkLimitData.lim_type,
-                                        lim_val: stkLimitData.lim_val,
+                                        lim_val: removeNonNumeric(stkLimitData.lim_val),
                                         actionFlag: stkLimAFlag,
                                     };
                                 }
