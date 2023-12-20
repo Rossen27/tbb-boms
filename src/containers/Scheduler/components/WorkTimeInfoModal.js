@@ -90,7 +90,7 @@ const WorkTimeInfoModal = () => {
                                     workID: schedulerData.workID,
                                     workName: schedulerData.workName,
                                     execCMD: schedulerData.execCMD,
-                                    setTime: schedulerData.setTime,
+                                    setTime: schedulerData.setTime.replaceAll(':', ''),
                                     holidayFlag: schedulerData.holidayFlag,
                                     actionFlag: schedulerAFlag,
                                 };
