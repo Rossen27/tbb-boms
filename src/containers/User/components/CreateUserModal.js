@@ -2,7 +2,7 @@ import React from 'react';
 import { ModalEdit } from '@components';
 import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
-import { removeSpace } from '@helper';
+import { removeSpace, removeNonNumeric, addCommas } from '@helper';
 import { Button } from '@mui/material';
 import { runInAction } from 'mobx';
 import { btnStyle } from '../constant/userList';
@@ -143,6 +143,25 @@ const CreateUserModal = () => {
                         </label>
                     </div> */}
                 </div>
+                <div className="mb-4 row">
+                    <label htmlFor="tseQuota" className="col-sm-2 col-form-label fs-5">
+                        上市額度
+                    </label>
+                    <div className="col-sm-10">
+                        <input
+                            type="tel"
+                            className="form-control w-40 fs-5"
+                            value={addCommas(removeNonNumeric(cUserData.tseQuota))}
+                            id="tseQuota"
+                            onChange={e => {
+                                runInAction(() => {
+                                    cUserData.tseQuota = addCommas(removeNonNumeric(e.target.value));
+                                    updateData('cUserData', cUserData);
+                                });
+                            }}
+                        />
+                    </div>
+                </div>
                 <div className="mb-4 row align-items-center">
                     <label htmlFor="unit" className="col-sm-2 col-form-label fs-5">
                         使用單位
@@ -270,7 +289,8 @@ const CreateUserModal = () => {
                                     removeSpace(cUserData.userName) &&
                                     cUserData.pGroup &&
                                     cUserData.unit != null &&
-                                    cUserData.allowType != null
+                                    cUserData.allowType != null &&
+                                    parseInt(cUserData.tseQuota) > 0
                                 ) {
                                     updateData('applyDisabled', false);
                                 } else {
