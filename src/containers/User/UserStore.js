@@ -17,6 +17,7 @@ const initialState = {
         pGroup: 'T',
         unit: 0,
         allowType: 1,
+        tseQuota: '',
     },
     userAFlag: '',
     editUserModalVisible: false,
@@ -52,6 +53,7 @@ const UserStore = () =>
                     pGroup: 'T',
                     unit: 0,
                     allowType: 1,
+                    tseQuota: '',
                 },
                 userData: {},
             });

@@ -13,6 +13,7 @@ import {
     ButtonCreate,
     Table,
 } from '@components';
+import { addCommas } from '@helper';
 import EditUserModal from './components/EditUserModal.js';
 import UserInfoModal from './components/UserInfoModal.js';
 import CreateUserModal from './components/CreateUserModal.js';
@@ -86,16 +87,17 @@ const User = () => {
                 return <p>{pGroupText.filter(item => item.value === params.row.pGroup).map(item => item.text)}</p>;
             },
         },
-        // {
-        //     field: 'tseQuota',
-        //     headerName: '上市額度',
-        //     headerClassName: 'table-header',
-        //     headerAlign: 'center',
-        //     align: 'center',
-        //     sortable: false,
-        //     minWidth: 150,
-        //     flex: 1,
-        // },
+        {
+            field: 'tseQuota',
+            headerName: '上市額度',
+            headerClassName: 'table-header',
+            headerAlign: 'center',
+            align: 'center',
+            sortable: false,
+            minWidth: 150,
+            flex: 1,
+            renderCell: params => <p>{addCommas(params.row.tseQuota)}</p>,
+        },
         // {
         //     field: 'otcQuota',
         //     headerName: '上櫃額度',
@@ -169,7 +171,7 @@ const User = () => {
     }, [updateComplete]);
     return (
         <PersistentDrawer>
-            <Layout title={'契約編號查詢'}>
+            <Layout title={'契約編號維護'}>
                 <div className="d-flex justify-content-between">
                     <ul className="d-flex align-items-center">
                         <li className="me-3">

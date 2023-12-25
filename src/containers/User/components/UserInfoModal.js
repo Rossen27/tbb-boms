@@ -4,6 +4,7 @@ import { useStore } from '@store';
 import { observer } from 'mobx-react-lite';
 import { Button } from '@mui/material';
 import { pGroupText, btnStyle } from '../constant/userList';
+import { removeNonNumeric, addCommas } from '@helper';
 const TraderInfoModal = () => {
     const {
         UserStore: {
@@ -72,6 +73,16 @@ const TraderInfoModal = () => {
                         </tr>
                         <tr>
                             <th scope="row" className="text-end">
+                                操作限額
+                            </th>
+                            <td>
+                                {userAFlag === 'C'
+                                    ? addCommas(removeNonNumeric(cUserData.tseQuota || ''))
+                                    : addCommas(removeNonNumeric(userData.tseQuota || ''))}
+                            </td>
+                        </tr>
+                        <tr>
+                            <th scope="row" className="text-end">
                                 使用單位
                             </th>
                             <td>{unitText}</td>
@@ -117,6 +128,7 @@ const TraderInfoModal = () => {
                                         allowType: cUserData.allowType,
                                         unit: cUserData.unit,
                                         pGroup: cUserData.pGroup,
+                                        tseQuota: removeNonNumeric(cUserData.tseQuota),
                                         actionFlag: userAFlag,
                                     };
                                 } else if (userAFlag === 'U') {
@@ -126,6 +138,7 @@ const TraderInfoModal = () => {
                                         allowType: userData.allowType,
                                         unit: userData.unit,
                                         pGroup: userData.pGroup,
+                                        tseQuota: removeNonNumeric(userData.tseQuota),
                                         actionFlag: userAFlag,
                                     };
                                 }
