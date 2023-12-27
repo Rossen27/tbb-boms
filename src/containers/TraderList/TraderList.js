@@ -121,6 +121,8 @@ const TraderList = () => {
                     return <p className="border-3 border-bottom border-warning">交易</p>;
                 } else if (params.row.allowType === 3) {
                     return <p className="p-1 bg-info rounded text-white">停用</p>;
+                } else {
+                    return <p></p>;
                 }
             },
         },

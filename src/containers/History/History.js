@@ -32,7 +32,7 @@ const History = () => {
             align: 'center',
             maxWidth: 300,
             flex: 1,
-            renderCell: params => <p>{functionName[params.row.functionId].text}</p>,
+            renderCell: params => <p>{functionName[params.row.functionId]?.text || ''}</p>,
         },
         {
             field: 'description',

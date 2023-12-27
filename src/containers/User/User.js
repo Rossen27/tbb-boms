@@ -120,8 +120,10 @@ const User = () => {
             renderCell: params => {
                 if (params.row.unit === 1) {
                     return <p className="text-primary">資訊技術部</p>;
-                } else {
+                } else if (params.row.unit === 0) {
                     return <p className="text-primary">信託部</p>;
+                } else {
+                    return <p></p>;
                 }
             },
         },
@@ -141,6 +143,8 @@ const User = () => {
                     return <p className="border-3 border-bottom border-warning">交易</p>;
                 } else if (params.row.allowType === 3) {
                     return <p className="p-1 bg-info rounded text-white">停用</p>;
+                } else {
+                    return <p></p>;
                 }
             },
         },

@@ -43,7 +43,7 @@ const TradeReport = () => {
             minWidth: 120,
             flex: 1,
             sortable: false,
-            renderCell: params => <p>{flagName[params.row.manaual_FLAG].text}</p>,
+            renderCell: params => <p>{flagName[params.row.manaual_FLAG]?.text || ''}</p>,
         },
         {
             field: 'manager_ID',
