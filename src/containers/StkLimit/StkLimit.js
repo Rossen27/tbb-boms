@@ -69,7 +69,7 @@ const StkLimit = () => {
             sortable: false,
             minWidth: 100,
             flex: 1,
-            renderCell: params => <p>{limTypeText[params.row.lim_type].text}</p>,
+            renderCell: params => <p>{limTypeText[params.row.lim_type]?.text || ''}</p>,
         },
         {
             field: 'lim_val',

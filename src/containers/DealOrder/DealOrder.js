@@ -270,7 +270,7 @@ const DealOrder = () => {
             sortable: false,
             minWidth: 100,
             flex: 1,
-            renderCell: params => <p>{opStatusText[params.row.opStatus].text}</p>,
+            renderCell: params => <p>{opStatusText[params.row.opStatus]?.text || ''}</p>,
         },
         {
             field: 'orderTime',
@@ -410,7 +410,7 @@ const DealOrder = () => {
                     <Table
                         header={columns}
                         data={dealOrderList}
-                        getRowId={row => row.orderDate + row.TxOrderID + row.userID}
+                        getRowId={row => row.orderDate + row.txOrderID + row.userID}
                     />
                 </section>
             </Layout>
