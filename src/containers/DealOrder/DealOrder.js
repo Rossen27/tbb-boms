@@ -115,7 +115,7 @@ const DealOrder = () => {
             sortable: false,
             minWidth: 100,
             flex: 1,
-            renderCell: params => <p>{tradeTypeName[params.row.tradeType].text}</p>,
+            renderCell: params => <p>{tradeTypeName[params.row.tradeType]?.text || ''}</p>,
         },
         {
             field: 'payDate',
@@ -156,7 +156,7 @@ const DealOrder = () => {
             sortable: false,
             minWidth: 100,
             flex: 1,
-            renderCell: params => <p>{opCodeName[params.row.opCode].text}</p>,
+            renderCell: params => <p>{opCodeName[params.row.opCode]?.text || ''}</p>,
         },
         {
             field: 'priceLimit',
