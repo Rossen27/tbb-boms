@@ -14,7 +14,7 @@ const Login = () => {
     const [show, setShow] = useState(false);
     const {
         AuthStore: { login, msg },
-        LoginStore: { traderInfo },
+        LoginStore: { traderInfo, getIdleTime },
     } = useStore();
 
     const navigate = useNavigate();
@@ -41,6 +41,7 @@ const Login = () => {
                 sx={{ width: '100%', height: '100%' }}
                 onSubmit={async e => {
                     e.preventDefault();
+                    const idleTime = await getIdleTime();
                     await login(isAccount, isPsd);
                     if (sessionStorage.getItem('loginCode') === '0') {
                         traderInfo();

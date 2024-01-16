@@ -1,7 +1,7 @@
 import { useLocalObservable } from 'mobx-react-lite';
 import StoreAction from '@store/StoreAction';
 import { runInAction } from 'mobx';
-import { getTraderInfo, updateUserPassword } from '@api';
+import { getTraderInfo, updateUserPassword, getIdleTime } from '@api';
 
 const initialState = {
     traderID: '',
@@ -41,6 +41,16 @@ const LoginStore = () =>
                 this.updateData('applyDisabled', false);
             });
             return rtnCode;
+        },
+        async getIdleTime() {
+            let idleTime;
+            runInAction(async () => {
+                const res = await getIdleTime();
+                idleTime = res.idleTime;
+                sessionStorage.setItem('idleTime', idleTime);
+                this.assignData({ idleTime });
+            });
+            return idleTime;
         },
     }));
 

@@ -7,15 +7,16 @@ const request = axios.create({
 });
 /** -------------------------- 會員 -------------------------- */
 /* 會員登入 [POST] */
-
 export const callLoginUser = postData => request.post('/tbbManager/login', postData);
 
 /* getTraderInfo 客戶資訊 [GET] */
 export const getTraderInfo = params => get('/tbbManager/manager/getTraderInfo', params);
 
 /* updatePassword 客戶密碼維護 [POST] */
-
 export const updateUserPassword = postData => post('/tbbManager/manager/updatePassword', postData);
+
+/* getIdleTime 閒置時間查詢 */
+export const getIdleTime = params => get('/tbbManager/getIdleTime', params);
 
 /* ---------------------------經理人/契約編號共用 -------------------------   */
 

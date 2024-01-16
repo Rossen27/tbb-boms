@@ -11,6 +11,7 @@ import ModalEdit from './Modal';
 import ButtonExport from './ButtonExport';
 import Loading from './Loading/Loading';
 import CompleteInfo from './CompleteInfo';
+import IdleTimer from './IdleTimer';
 export {
     PersistentDrawer,
     CustomDatePicker,
@@ -25,4 +26,5 @@ export {
     ButtonExport,
     Loading,
     CompleteInfo,
+    IdleTimer,
 };

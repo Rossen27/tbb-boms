@@ -60,7 +60,7 @@
     "react-app-rewired": "^2.2.1"
   },
   "scripts": {
-    "start": "react-app-rewired start",
+    "start": "env-cmd -f .env react-app-rewired start",
     "build:dev": "npm version patch && env-cmd -f .env react-app-rewired build",
     "build:79-dev": "npm version patch && env-cmd -f .env.development.local react-app-rewired build",
     "build:tbb-dev": "npm version patch && env-cmd -f .env.development react-app-rewired build",
