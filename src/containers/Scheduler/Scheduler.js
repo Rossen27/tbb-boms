@@ -207,10 +207,12 @@ const Scheduler = () => {
                                     // const setTimeFormat = timeFormat.join(':');
                                     // updateData('setTimeFormat', setTimeFormat);
                                     if (params.field !== 'execBtn' && params.row.execCMD !== 'UPLOAD') {
-                                        updateData('editWorkTimeModalVisible', true);
                                         updateData('schedulerData', {
                                             ...params.row,
                                         });
+                                        if (sessionStorage.getItem('loginUnit') === '1') {
+                                            updateData('editWorkTimeModalVisible', true);
+                                        }
                                     }
                                 });
                             }}
@@ -223,7 +225,6 @@ const Scheduler = () => {
                             //         });
                             //     });
                             // }}
-                            hideFooter={true}
                         />
                     ) : (
                         <CompleteInfo loadingFail={loadingFail} msg={msg} />

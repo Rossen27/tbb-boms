@@ -227,7 +227,14 @@ const TraderList = () => {
                                     updateData('traderData', {
                                         ...params.row,
                                     });
-                                    updateData('editTraderModalVisible', true);
+
+                                    if (sessionStorage.getItem('loginUnit') === '1') {
+                                        updateData('editTraderModalVisible', true);
+                                    } else {
+                                        if (sessionStorage.getItem('loginTraderID') === params.id) {
+                                            updateData('editTraderModalVisible', true);
+                                        }
+                                    }
                                 });
                             }}
                         />
